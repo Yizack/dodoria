@@ -25,13 +25,19 @@ export const CHEER = {
 
 export const EDUCAR = {
   name: "educar",
-  description: "Educa a un usuario.",
+  description: "Intenta educar a un usuario.",
   options: [
     {
       "name": "usuario",
-      "description": "El usuario que quieres educar.",
+      "description": "El usuario que deseas educar.",
       "type": 6,
       "required": true
     }
   ]
+};
+
+export const COMANDOS = {
+  name: "comandos",
+  description: "Conoce la lista de comandos disponibles.",
+  options: []
 };
