@@ -1,0 +1,16 @@
+name = "dodoria"
+main = "src/bot.js"
+compatibility_date = "2022-12-04"
+usage_model = "bundled"
+kv_namespaces = [
+  { binding = "EDUCAR", id = "2aac573a74024f7594f231fe687e70f6" }
+]
+
+[triggers]
+crons = [ ]
+
+# [secrets]
+# DISCORD_TOKEN
+# DISCORD_PUBLIC_KEY
+# DISCORD_APPLICATION_ID
+# DISCORD_TEST_GUILD_ID
