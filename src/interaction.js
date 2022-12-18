@@ -19,37 +19,31 @@ const toDiscord = (body) => {
   return new JsonResponse(body);
 };
 
-class Interaction {
+const pong = () => {
+  return toDiscord({
+    type: InteractionResponseType.PONG,
+  });
+};
 
-  create = (type, func) => {
-    switch (type) {
-      case InteractionType.PING:
-        return this.pong();
-      case InteractionType.APPLICATION_COMMAND:
-        return func();
-    }
-  };
-
-  pong() {
-    return toDiscord({
-      type: InteractionResponseType.PONG,
-    });
+export const create = (type, func) => {
+  switch (type) {
+    case InteractionType.PING:
+      return pong();
+    case InteractionType.APPLICATION_COMMAND:
+      return func();
   }
+};
 
-  reply(content, options) {
-    return toDiscord({
-      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-      data: {
-        content: content,
-        embeds: options?.embeds
-      },
-    });
-  }
+export const reply = (content, options) => {
+  return toDiscord({
+    type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+    data: {
+      content: content,
+      embeds: options?.embeds
+    },
+  });
+};
 
-  error(message, code) {
-    return toDiscord({ error: message }, { status: code });
-  }
-
-}
-
-export default new Interaction();
+export const error = (message, code) => {
+  return toDiscord({ error: message }, { status: code });
+};

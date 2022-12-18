@@ -3,17 +3,16 @@
  */
 import { Router } from "itty-router";
 import { verifyKey } from "discord-interactions";
-import interaction from "./interaction.js";
+import { create, reply, error } from "./interaction.js";
 import { getValue, getRandom } from "./functions.js";
-import { ME_MIDE, ME_CABE, CHEER, EDUCAR, COMANDOS } from "./commands.js";
-import { angarSad, angarMonkas, angarGasm, angarL } from "./emojis.js";
+import { ME_MIDE, ME_CABE, CHEER, EDUCAR, BUENO_GENTE, COMANDOS } from "./commands.js";
+import { getEmoji, getEmojiURL } from "./emojis.js";
 import { avatar, guide, yizack } from "./images.js";
-import { emojiURL } from "./emojisUrls.js";
+import { CONSTANTS } from "./constants.js";
+
+const { COLOR, CHANNEL, CHANNEL_PRUEBAS, BOT, VOZ, OWNER } = CONSTANTS;
 
 const router = Router();
-const color = 0xf697c8;
-const channel = "1053711825650335764";
-const channel_pruebas = "1048659746137317498";
 
 router.get("/", (req, env) => {
   return new Response(`👋 ${env.DISCORD_APPLICATION_ID}`);
@@ -21,9 +20,8 @@ router.get("/", (req, env) => {
  
 router.post("/", async (req, env) => {
   const { type, data, member, guild_id, channel_id } = await req.json();
-  const { create, reply, error } = interaction;
 
-  if (channel_id === channel || channel_id === channel_pruebas) {
+  if (channel_id === CHANNEL || channel_id === CHANNEL_PRUEBAS) {
     return create(type, async () => {
       const { name, options } = data;
 
@@ -31,42 +29,50 @@ router.post("/", async (req, env) => {
         // Comando /memide
         case ME_MIDE.name: {
           const cm = getRandom(32);
-          const emoji = cm >= 15 ? angarMonkas : angarSad;
+          const emoji = cm >= 15 ? getEmoji("angarMonkas") : getEmoji("angarSad");
           return reply(`A <@${member.user.id}> le mide **${cm}** centímetros. ${emoji}`);
         }
         // Comando /mecabe
         case ME_CABE.name: {
           const cm = getRandom(43);
-          const emoji = cm >= 10 ? angarGasm : angarL;
+          const emoji = cm >= 10 ? getEmoji("angarGasm") : getEmoji("angarL");
           return reply(`A <@${member.user.id}> le caben **${cm}** centímetros. ${emoji}`);
         }
         // Comando /cheer
         case CHEER.name: {
           const mensaje = getValue("mensaje", options);
+          const bits = [
+            getEmojiURL("Cheer100"),
+            getEmojiURL("Cheer1k"),
+            getEmojiURL("Cheer5k"),
+            getEmojiURL("Cheer10k"),
+            getEmojiURL("Cheer25k"),
+            getEmojiURL("Cheer50k")
+          ];
           if (mensaje.length <= 500) {
             const response = await fetch("https://ttsmp3.com/makemp3_new.php", {
               method: "POST",
               headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
               },
-              body: `msg=${mensaje}&lang=Miguel&source=ttsmp3`
+              body: `msg=${mensaje}&lang=${VOZ}&source=ttsmp3`
             });
             const body = await response.json();
             return reply(`<@${member.user.id}> abre el enlace para escuchar.`, {embeds : [{
               title: "🔊 Escuchar",
               url: body.URL,
               description: `\`${mensaje}\`\n\n*${body.MP3}*`,
-              color: color,
+              color: COLOR,
               author: {
                 name: `${member.user.username}#${member.user.discriminator}`,
                 icon_url: `https://cdn.discordapp.com/avatars/${member.user.id}/${member.user.avatar}.png`
               },
               thumbnail: {
-                url: emojiURL.angarG2
+                url: getEmojiURL("angarG2")
               },
               footer: {
-                text: `Voz: Miguel. Caracteres: ${mensaje.length} de 500.`,
-                icon_url: [emojiURL.Cheer100, emojiURL.Cheer1k, emojiURL.Cheer5k, emojiURL.Cheer10k, emojiURL.Cheer25k, emojiURL.Cheer50k][getRandom(5)]
+                text: `Voz: ${VOZ}. Caracteres: ${mensaje.length} de 500.`,
+                icon_url: bits[getRandom(bits.length - 1)]
               }
             }]});
           }
@@ -94,25 +100,50 @@ router.post("/", async (req, env) => {
             message = `<@${usuario}> te educaron.`;
             embeds.push({
               description: `**${member.user.username}** ha educado a **<@${usuario}>**.\n*<@${usuario}> ha sido educado **${counter}** ${veces} en total.*`,
-              color: color
+              color: COLOR
             });
           }
           return reply(message, { embeds: embeds });
         }
-        case COMANDOS.name: {
+        // comando /buenogente
+        case BUENO_GENTE.name: {
           return reply(null, { embeds: [{
             title: "Lista de comandos",
             description: `Conoce la lista de comandos disponibles.\n\n-  \`/${CHEER.name}\` *${CHEER.description}*\n\n-  \`/${ME_MIDE.name}\` *${ME_MIDE.description}*\n\n- \`/${ME_CABE.name}\` *${ME_CABE.description}*\n\n- \`/${EDUCAR.name}\` *${EDUCAR.description}*\n\n\nEscribe el comando que desees en la caja de enviar mensajes de discord y selecciona la opción que se muestra junto al avatar del bot. Se irán añadiendo más comandos divertidos con el tiempo.`,
-            color: color,
+            color: COLOR,
             author: {
-              name: "Dodoria",
+              name: BOT,
               icon_url: avatar
             },
             image: {
               url: guide
             },
             footer: {
-              text: "Creado por Yizack.",
+              text: `Creado por ${OWNER}.`,
+              icon_url: yizack
+            }
+          }]});
+        }
+        // comando /comandos
+        case COMANDOS.name: {
+          return reply(null, { embeds: [{
+            title: "Lista de comandos",
+            description: "Conoce la lista de comandos disponibles.\n\n" +
+                          `-  \`/${CHEER.name}\` *${CHEER.description}*\n\n` + 
+                          `-  \`/${ME_MIDE.name}\` *${ME_MIDE.description}*\n\n` +
+                          `- \`/${ME_CABE.name}\` *${ME_CABE.description}*\n\n` +
+                          `- \`/${EDUCAR.name}\` *${EDUCAR.description}*\n\n\n` +
+                          "Escribe el comando que desees en la caja de enviar mensajes de discord y selecciona la opción que se muestra junto al avatar del bot. Se irán añadiendo más comandos divertidos con el tiempo.",
+            color: COLOR,
+            author: {
+              name: BOT,
+              icon_url: avatar
+            },
+            image: {
+              url: guide
+            },
+            footer: {
+              text: `Creado por ${OWNER}.`,
               icon_url: yizack
             }
           }]});

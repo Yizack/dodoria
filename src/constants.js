@@ -1,0 +1,8 @@
+export const CONSTANTS = {
+  BOT: "Dodoria",
+  COLOR: 0xf697c8,
+  CHANNEL: "1053711825650335764",
+  CHANNEL_PRUEBAS: "1048659746137317498",
+  VOZ: "Miguel",
+  OWNER: "Yizack"
+};

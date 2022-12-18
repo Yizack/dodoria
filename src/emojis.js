@@ -1,4 +1,21 @@
-export const angarMonkas = "<:angarMonkas:1053394137707200553>";
-export const angarSad = "<:angarSad:1053394389789065329>";
-export const angarGasm = "<:angarGasm:1053394521993519154>";
-export const angarL = "<:angarL:1053397269925343243>";
+const angarEmojis = {
+  angarMonkas: "1053394137707200553",
+  angarSad: "1053394389789065329",
+  angarGasm: "1053394521993519154",
+  angarL: "1053397269925343243",
+  angarG2: "1053622609130049658",
+  Cheer100: "1053629269194047488",
+  Cheer1k: "1053629071935938590",
+  Cheer5k: "1053628502135549972",
+  Cheer10k: "1053627826655461457",
+  Cheer25k: "1053624911693881344",
+  Cheer50k: "1053628988293136526"
+};
+
+export const getEmoji = (name) => {
+  return name in angarEmojis ? `<:${name}:${angarEmojis[name]}>` : "";
+};
+
+export const getEmojiURL = (name) => {
+  return name in angarEmojis ? `https://cdn.discordapp.com/emojis/${angarEmojis[name]}.webp` : "";
+};

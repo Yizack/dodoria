@@ -36,6 +36,12 @@ export const EDUCAR = {
   ]
 };
 
+export const BUENO_GENTE = {
+  name: "buenogente",
+  description: "Angar se despide de la gente.",
+  options: []
+};
+
 export const COMANDOS = {
   name: "comandos",
   description: "Conoce la lista de comandos disponibles.",
