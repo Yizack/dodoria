@@ -7,7 +7,7 @@ import { create, reply, error } from "./interaction.js";
 import { getValue, getRandom } from "./functions.js";
 import { ME_MIDE, ME_CABE, CHEER, EDUCAR, BUENO_GENTE, COMANDOS } from "./commands.js";
 import { getEmoji, getEmojiURL } from "./emojis.js";
-import { avatar, guide, yizack } from "./images.js";
+import { avatar, guide, yizack, buenogente } from "./images.js";
 import { CONSTANTS } from "./constants.js";
 
 const { COLOR, CHANNEL, CHANNEL_PRUEBAS, BOT, VOZ, OWNER } = CONSTANTS;
@@ -105,11 +105,17 @@ router.post("/", async (req, env) => {
           }
           return reply(message, { embeds: embeds });
         }
-        // comando /buenogente
-        case BUENO_GENTE.name: {
+        // comando /comandos
+        case COMANDOS.name: {
           return reply(null, { embeds: [{
             title: "Lista de comandos",
-            description: `Conoce la lista de comandos disponibles.\n\n-  \`/${CHEER.name}\` *${CHEER.description}*\n\n-  \`/${ME_MIDE.name}\` *${ME_MIDE.description}*\n\n- \`/${ME_CABE.name}\` *${ME_CABE.description}*\n\n- \`/${EDUCAR.name}\` *${EDUCAR.description}*\n\n\nEscribe el comando que desees en la caja de enviar mensajes de discord y selecciona la opción que se muestra junto al avatar del bot. Se irán añadiendo más comandos divertidos con el tiempo.`,
+            description: "Conoce la lista de comandos disponibles.\n\n" +
+                          `-  \`/${CHEER.name}\` *${CHEER.description}*\n\n` + 
+                          `-  \`/${ME_MIDE.name}\` *${ME_MIDE.description}*\n\n` +
+                          `- \`/${ME_CABE.name}\` *${ME_CABE.description}*\n\n` +
+                          `- \`/${EDUCAR.name}\` *${EDUCAR.description}*\n\n` +
+                          `- \`/${BUENO_GENTE.name}\` *${BUENO_GENTE.description}*\n\n\n` +
+                          "Escribe el comando que desees en la caja de enviar mensajes de discord y selecciona la opción que se muestra junto al avatar del bot. Se irán añadiendo más comandos divertidos con el tiempo.",
             color: COLOR,
             author: {
               name: BOT,
@@ -124,27 +130,18 @@ router.post("/", async (req, env) => {
             }
           }]});
         }
-        // comando /comandos
-        case COMANDOS.name: {
+        // comando /buenogente
+        case BUENO_GENTE.name: {
           return reply(null, { embeds: [{
-            title: "Lista de comandos",
-            description: "Conoce la lista de comandos disponibles.\n\n" +
-                          `-  \`/${CHEER.name}\` *${CHEER.description}*\n\n` + 
-                          `-  \`/${ME_MIDE.name}\` *${ME_MIDE.description}*\n\n` +
-                          `- \`/${ME_CABE.name}\` *${ME_CABE.description}*\n\n` +
-                          `- \`/${EDUCAR.name}\` *${EDUCAR.description}*\n\n\n` +
-                          "Escribe el comando que desees en la caja de enviar mensajes de discord y selecciona la opción que se muestra junto al avatar del bot. Se irán añadiendo más comandos divertidos con el tiempo.",
+            title: "🖐 ANGAR se ha despedido con un \"BUENO GENTE\"",
+            description: "¡Bueno gente! 🖐🖐👊",
             color: COLOR,
             author: {
               name: BOT,
               icon_url: avatar
             },
             image: {
-              url: guide
-            },
-            footer: {
-              text: `Creado por ${OWNER}.`,
-              icon_url: yizack
+              url: buenogente[getRandom(buenogente.length - 1)]
             }
           }]});
         }
