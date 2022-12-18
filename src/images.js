@@ -9,5 +9,9 @@ export const buenogente = [
   "https://dodoria.yizack.com/images/buenogente_5.jpg",
   "https://dodoria.yizack.com/images/buenogente_6.jpg",
   "https://dodoria.yizack.com/images/buenogente_7.jpg",
-  "https://dodoria.yizack.com/images/buenogente_8.jpg"
+  "https://dodoria.yizack.com/images/buenogente_8.jpg",
+  "https://dodoria.yizack.com/images/buenogente_9.jpg",
+  "https://dodoria.yizack.com/images/buenogente_10.jpg",
+  "https://dodoria.yizack.com/images/buenogente_11.jpg",
+  "https://dodoria.yizack.com/images/buenogente_12.jpg"
 ];
