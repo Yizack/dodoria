@@ -40,7 +40,7 @@ router.post("/", async (req, env) => {
         }
         // Comando /cheer
         case CHEER.name: {
-          const mensaje = getValue("mensaje", options);
+          const mensaje = getValue("mensaje", options).replace(/(<([^>]+)>)/gi, "").trim();
           const bits = [
             getEmojiURL("Cheer100"),
             getEmojiURL("Cheer1k"),
@@ -55,7 +55,7 @@ router.post("/", async (req, env) => {
               headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
               },
-              body: `msg=${mensaje}&lang=${VOZ}&source=ttsmp3`
+              body: `msg=${encodeURIComponent(mensaje)}&lang=${VOZ}&source=ttsmp3`
             });
             const body = await response.json();
             return reply(`<@${member.user.id}> abre el enlace para escuchar.`, {embeds : [{
