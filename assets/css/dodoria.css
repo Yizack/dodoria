@@ -1,0 +1,28 @@
+.bg-primary {
+  background-color: #36393f!important
+}
+
+.bg-dark {
+  background-color: #292b2f!important
+}
+
+.dodoria {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%)
+}
+
+code, a {
+  color: #f697c8!important
+}
+
+.scale-on-hover {
+  transition: transform .2s ease-in-out
+}
+
+.scale-on-hover:hover {
+  box-shadow: 0 10px 10px #00000026!important;
+  transform: scale(1.05)
+}
