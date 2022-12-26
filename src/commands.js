@@ -47,13 +47,13 @@ export const SHIP = {
   description: "Calcula el porcentaje de compatibilidad amorosa entre dos personas.",
   options: [
     {
-      "name": "usuario1",
+      "name": "persona1",
       "description": "El primer usuario.",
       "type": 6,
       "required": true
     },
     {
-      "name": "usuario2",
+      "name": "persona2",
       "description": "Con quien lo shipeas.",
       "type": 6,
       "required": true

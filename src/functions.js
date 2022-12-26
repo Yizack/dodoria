@@ -6,6 +6,7 @@ export const getValue = (name, options) => {
   return option?.value ?? null;
 };
 
-export const getRandom = (min = 1, max) => {
-  return Math.round((Math.random() * (max - min)) + min);
+export const getRandom = (options) => {
+  const min = options.min ?? 1;
+  return Math.round((Math.random() * (options.max - min)) + min);
 };

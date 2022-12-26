@@ -28,13 +28,13 @@ router.post("/", async (req, env) => {
       switch (name) {
         // Comando /memide
         case ME_MIDE.name: {
-          const cm = getRandom(32);
+          const cm = getRandom({max: 32});
           const emoji = cm >= 15 ? getEmoji("angarMonkas") : getEmoji("angarSad");
           return reply(`A <@${member.user.id}> le mide **${cm}** centímetros. ${emoji}`);
         }
         // Comando /mecabe
         case ME_CABE.name: {
-          const cm = getRandom(43);
+          const cm = getRandom({max: 43});
           const emoji = cm >= 10 ? getEmoji("angarGasm") : getEmoji("angarL");
           return reply(`A <@${member.user.id}> le caben **${cm}** centímetros. ${emoji}`);
         }
@@ -72,7 +72,7 @@ router.post("/", async (req, env) => {
               },
               footer: {
                 text: `Voz: ${VOZ}. Caracteres: ${mensaje.length} de 500.`,
-                icon_url: bits[getRandom(bits.length - 1)]
+                icon_url: bits[getRandom({max: bits.length - 1})]
               }
             }]});
           }
@@ -87,7 +87,7 @@ router.post("/", async (req, env) => {
           let message = `<@${member.user.id}> no ha podido educar a <@${usuario}>`;
           let embeds = [];
 
-          const percent = getRandom(100);
+          const percent = getRandom({max: 100});
           if (percent < 33) {
             const key = guild_id + "-" + usuario;
 
@@ -142,15 +142,15 @@ router.post("/", async (req, env) => {
               icon_url: avatar
             },
             image: {
-              url: buenogente[getRandom(buenogente.length - 1)]
+              url: buenogente[getRandom({max: buenogente.length - 1})]
             }
           }]});
         }
         // comando /ship
         case SHIP.name: {
-          const u1 = getValue("usuario1", options);
-          const u2 = getValue("usuario2", options);
-          const p = getRandom(0, 100);
+          const u1 = getValue("persona1", options);
+          const u2 = getValue("persona2", options);
+          const p = getRandom({min: 0, max: 100});
           const { users } = resolved;
           const letras_nombre1 = users[u1].username.substring(0, 3);
           const letras_nombre2 = users[u2].username.substring(users[u2].username.length - 2);
