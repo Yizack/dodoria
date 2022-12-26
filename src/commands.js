@@ -42,6 +42,25 @@ export const BUENO_GENTE = {
   options: []
 };
 
+export const SHIP = {
+  name: "ship",
+  description: "Calcula el porcentaje de compatibilidad amorosa entre dos personas.",
+  options: [
+    {
+      "name": "usuario1",
+      "description": "El primer usuario.",
+      "type": 6,
+      "required": true
+    },
+    {
+      "name": "usuario2",
+      "description": "Con quien lo shipeas.",
+      "type": 6,
+      "required": true
+    }
+  ]
+};
+
 export const COMANDOS = {
   name: "comandos",
   description: "Conoce la lista de comandos disponibles.",

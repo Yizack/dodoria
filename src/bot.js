@@ -5,7 +5,7 @@ import { Router } from "itty-router";
 import { verifyKey } from "discord-interactions";
 import { create, reply, error } from "./interaction.js";
 import { getValue, getRandom } from "./functions.js";
-import { ME_MIDE, ME_CABE, CHEER, EDUCAR, BUENO_GENTE, COMANDOS } from "./commands.js";
+import { ME_MIDE, ME_CABE, CHEER, EDUCAR, BUENO_GENTE, SHIP, COMANDOS } from "./commands.js";
 import { getEmoji, getEmojiURL } from "./emojis.js";
 import { avatar, guide, yizack, buenogente } from "./images.js";
 import { CONSTANTS } from "./constants.js";
@@ -23,7 +23,7 @@ router.post("/", async (req, env) => {
 
   if (channel_id === CHANNEL || channel_id === CHANNEL_PRUEBAS) {
     return create(type, async () => {
-      const { name, options } = data;
+      const { name, options, resolved } = data;
 
       switch (name) {
         // Comando /memide
@@ -114,7 +114,8 @@ router.post("/", async (req, env) => {
                           `-  \`/${ME_MIDE.name}\` *${ME_MIDE.description}*\n\n` +
                           `- \`/${ME_CABE.name}\` *${ME_CABE.description}*\n\n` +
                           `- \`/${EDUCAR.name}\` *${EDUCAR.description}*\n\n` +
-                          `- \`/${BUENO_GENTE.name}\` *${BUENO_GENTE.description}*\n\n\n` +
+                          `- \`/${BUENO_GENTE.name}\` *${BUENO_GENTE.description}*\n\n` +
+                          `- \`/${SHIP.name}\` *${SHIP.description}*\n\n\n` +
                           "Escribe el comando que desees en la caja de enviar mensajes de discord y selecciona la opción que se muestra junto al avatar del bot. Se irán añadiendo más comandos divertidos con el tiempo.",
             color: COLOR,
             author: {
@@ -144,6 +145,42 @@ router.post("/", async (req, env) => {
               url: buenogente[getRandom(buenogente.length - 1)]
             }
           }]});
+        }
+        // comando /ship
+        case SHIP.name: {
+          const u1 = getValue("usuario1", options);
+          const u2 = getValue("usuario2", options);
+          const p = getRandom(0, 100);
+          const { users } = resolved;
+          const letras_nombre1 = users[u1].username.substring(0, 3);
+          const letras_nombre2 = users[u2].username.substring(users[u2].username.length - 2);
+          const nombre_ship = `${letras_nombre1}${letras_nombre2}`;
+          const image = `https://dodoria-ship.vercel.app/api?u1=${u1}&u2=${u2}&p=${p}`;
+          let emoji = getEmoji("angarSad");
+          if (p >= 90) {
+            emoji = getEmoji("angarH");
+          }
+          else if (p >= 70 && p < 90) {
+            emoji = getEmoji("angarShy");
+          }
+          else if (p >= 50 && p < 70) {
+            emoji = getEmoji("angarJu");
+          }
+          else if (p >= 30 && p < 50) {
+            emoji = getEmoji("angarG");
+          }
+          else if (p >= 10 && p < 30) {
+            emoji = getEmoji("angarSadge");
+          }
+          return reply(`Ship entre <@${u1}> y <@${u2}>. ${emoji}`, { 
+            embeds: [{
+              color: COLOR,
+              description: `❤️ | <@${u1}> y <@${u2}> son **${p}%** compatibles.\n❤️ | El nombre del ship es **${nombre_ship}**.`,
+              image: {
+                url: image
+              }
+            }]
+          });
         }
         default:
           return error("Unknown Type", 400);

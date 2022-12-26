@@ -2,11 +2,11 @@
  * Register slash commands with a local run
  */
 import { REST, Routes } from "discord.js";
-import { ME_MIDE, ME_CABE, CHEER, EDUCAR, BUENO_GENTE, COMANDOS } from "./commands.js";
+import { ME_MIDE, ME_CABE, CHEER, EDUCAR, BUENO_GENTE, SHIP, COMANDOS } from "./commands.js";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-const commands = [ME_MIDE, ME_CABE, CHEER, EDUCAR, BUENO_GENTE, COMANDOS];
+const commands = [ME_MIDE, ME_CABE, CHEER, EDUCAR, BUENO_GENTE, SHIP, COMANDOS];
 const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
 
 (async () => {
