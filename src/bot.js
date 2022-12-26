@@ -155,7 +155,7 @@ router.post("/", async (req, env) => {
           const letras_nombre1 = users[u1].username.substring(0, 3);
           const letras_nombre2 = users[u2].username.substring(users[u2].username.length - 2);
           const nombre_ship = `${letras_nombre1}${letras_nombre2}`;
-          const image = `https://dodoria-ship.vercel.app/api?u1=${u1}&u2=${u2}&p=${p}`;
+          const image = `https://dodoria-ship.vercel.app/api?u=${[u1, u2]}&a=${[users[u1].avatar, users[u2].avatar]}&d=${[users[u1].discriminator, users[u2].discriminator]}&p=${p}`;
           let emoji = getEmoji("angarSad");
           if (p >= 90) {
             emoji = getEmoji("angarH");
