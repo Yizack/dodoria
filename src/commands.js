@@ -1,13 +1,15 @@
 export const ME_MIDE = {
   name: "memide",
   description: "Conoce cuántos centímetros te mide.",
-  options: []
+  options: [],
+  cid: "1053392162194194523"
 };
 
 export const ME_CABE = {
   name: "mecabe",
   description: "Conoce cuántos centímetros te caben.",
-  options: []
+  options: [],
+  cid: "1053392162194194524"
 };
 
 export const CHEER = {
@@ -20,7 +22,8 @@ export const CHEER = {
       "type": 3,
       "required": true
     }
-  ]
+  ],
+  cid: "1053398798786904096"
 };
 
 export const EDUCAR = {
@@ -33,13 +36,15 @@ export const EDUCAR = {
       "type": 6,
       "required": true
     }
-  ]
+  ],
+  cid: "1053578283347882024"
 };
 
 export const BUENO_GENTE = {
   name: "buenogente",
   description: "Angar se despide de la gente.",
-  options: []
+  options: [],
+  cid: "1053871637306540082"
 };
 
 export const SHIP = {
@@ -58,11 +63,13 @@ export const SHIP = {
       "type": 6,
       "required": true
     }
-  ]
+  ],
+  cid: "1056821755487997952"
 };
 
 export const COMANDOS = {
   name: "comandos",
   description: "Conoce la lista de comandos disponibles.",
-  options: []
+  options: [],
+  cid: "1053738012619571342"
 };

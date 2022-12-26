@@ -109,7 +109,7 @@ router.post("/", async (req, env) => {
         case C.COMANDOS.name: {
           let list = [];
           Object.values(C).forEach((command) => {
-            list.push(`-  \`/${command.name}\` *${command.description}*\n\n`);
+            list.push(`-  </${command.name}:${command.cid}> *${command.description}*\n\n`);
           });
 
           return reply(null, { embeds: [{
