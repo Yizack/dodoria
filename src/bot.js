@@ -5,7 +5,7 @@ import { Router } from "itty-router";
 import { verifyKey } from "discord-interactions";
 import { create, reply, error } from "./interaction.js";
 import { getValue, getRandom } from "./functions.js";
-import { ME_MIDE, ME_CABE, CHEER, EDUCAR, BUENO_GENTE, SHIP, COMANDOS } from "./commands.js";
+import * as C from "./commands.js";
 import { getEmoji, getEmojiURL } from "./emojis.js";
 import { avatar, guide, yizack, buenogente } from "./images.js";
 import { CONSTANTS } from "./constants.js";
@@ -27,19 +27,19 @@ router.post("/", async (req, env) => {
 
       switch (name) {
         // Comando /memide
-        case ME_MIDE.name: {
+        case C.ME_MIDE.name: {
           const cm = getRandom({max: 32});
           const emoji = cm >= 15 ? getEmoji("angarMonkas") : getEmoji("angarSad");
           return reply(`A <@${member.user.id}> le mide **${cm}** centímetros. ${emoji}`);
         }
         // Comando /mecabe
-        case ME_CABE.name: {
+        case C.ME_CABE.name: {
           const cm = getRandom({max: 43});
           const emoji = cm >= 10 ? getEmoji("angarGasm") : getEmoji("angarL");
           return reply(`A <@${member.user.id}> le caben **${cm}** centímetros. ${emoji}`);
         }
         // Comando /cheer
-        case CHEER.name: {
+        case C.CHEER.name: {
           const mensaje = getValue("mensaje", options).replace(/(<([^>]+)>)/gi, "").trim();
           const bits = [
             getEmojiURL("Cheer100"),
@@ -81,7 +81,7 @@ router.post("/", async (req, env) => {
           }
         }
         // Comando /educar
-        case EDUCAR.name: {
+        case C.EDUCAR.name: {
           const usuario = getValue("usuario", options);
         
           let message = `<@${member.user.id}> no ha podido educar a <@${usuario}>`;
@@ -106,16 +106,16 @@ router.post("/", async (req, env) => {
           return reply(message, { embeds: embeds });
         }
         // comando /comandos
-        case COMANDOS.name: {
+        case C.COMANDOS.name: {
+          let list = [];
+          Object.values(C).forEach((command) => {
+            list.push(`-  \`/${command.name}\` *${command.description}*\n\n`);
+          });
+
           return reply(null, { embeds: [{
             title: "Lista de comandos",
             description: "Conoce la lista de comandos disponibles.\n\n" +
-                          `-  \`/${CHEER.name}\` *${CHEER.description}*\n\n` + 
-                          `-  \`/${ME_MIDE.name}\` *${ME_MIDE.description}*\n\n` +
-                          `- \`/${ME_CABE.name}\` *${ME_CABE.description}*\n\n` +
-                          `- \`/${EDUCAR.name}\` *${EDUCAR.description}*\n\n` +
-                          `- \`/${BUENO_GENTE.name}\` *${BUENO_GENTE.description}*\n\n` +
-                          `- \`/${SHIP.name}\` *${SHIP.description}*\n\n\n` +
+                          `${list.join("")}` +
                           "Escribe el comando que desees en la caja de enviar mensajes de discord y selecciona la opción que se muestra junto al avatar del bot. Se irán añadiendo más comandos divertidos con el tiempo.",
             color: COLOR,
             author: {
@@ -132,7 +132,7 @@ router.post("/", async (req, env) => {
           }]});
         }
         // comando /buenogente
-        case BUENO_GENTE.name: {
+        case C.BUENO_GENTE.name: {
           return reply(null, { embeds: [{
             title: "🖐 ANGAR se ha despedido con un \"BUENO GENTE\"",
             description: "¡Bueno gente! 🖐🖐👊",
@@ -147,7 +147,7 @@ router.post("/", async (req, env) => {
           }]});
         }
         // comando /ship
-        case SHIP.name: {
+        case C.SHIP.name: {
           const u1 = getValue("persona1", options);
           const u2 = getValue("persona2", options);
           const p = getRandom({min: 0, max: 100});

@@ -11,7 +11,17 @@
   left: 50%;
   top: 50%;
   -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%)
+  transform: translate(-50%, -50%);
+  width: 400px
+}
+
+.dodoria ul {
+  list-style: none;
+  padding-left: 0
+}
+
+.dodoria a:hover code {
+  color: #ffc2e1!important
 }
 
 code, a {
