@@ -7,10 +7,11 @@ import { create, reply, error } from "./interaction.js";
 import { getValue, getRandom } from "./functions.js";
 import * as C from "./commands.js";
 import { getEmoji, getEmojiURL } from "./emojis.js";
-import { avatar, guide, yizack, buenogente } from "./images.js";
+import { avatar, guide, yizack, buenogente, fuck } from "./images.js";
 import { CONSTANTS } from "./constants.js";
 
-const { COLOR, CHANNEL, CHANNEL_PRUEBAS, BOT, VOZ, OWNER } = CONSTANTS;
+const { COLOR, CHANNEL, CHANNEL_PRUEBAS, CHANNEL_FUCK, CHANNEL_FUCK_TEST, BOT, VOZ, OWNER } = CONSTANTS;
+const allow = true;
 
 const router = Router();
 
@@ -20,8 +21,7 @@ router.get("/", (req, env) => {
  
 router.post("/", async (req, env) => {
   const { type, data, member, guild_id, channel_id } = await req.json();
-
-  if (channel_id === CHANNEL || channel_id === CHANNEL_PRUEBAS) {
+  if (channel_id === CHANNEL || channel_id === CHANNEL_PRUEBAS || allow) {
     return create(type, async () => {
       const { name, options, resolved } = data;
 
@@ -72,7 +72,7 @@ router.post("/", async (req, env) => {
               },
               footer: {
                 text: `Voz: ${VOZ}. Caracteres: ${mensaje.length} de 500.`,
-                icon_url: bits[getRandom({max: bits.length - 1})]
+                icon_url: bits[getRandom({min: 0, max: bits.length - 1})]
               }
             }]});
           }
@@ -142,7 +142,7 @@ router.post("/", async (req, env) => {
               icon_url: avatar
             },
             image: {
-              url: buenogente[getRandom({max: buenogente.length - 1})]
+              url: buenogente[getRandom({min: 0, max: buenogente.length - 1})]
             }
           }]});
         }
@@ -181,6 +181,38 @@ router.post("/", async (req, env) => {
               }
             }]
           });
+        }
+        // comando /fuck
+        case C.FUCK.name: {
+          if (channel_id === CHANNEL_FUCK || channel_id === CHANNEL_FUCK_TEST) {
+            const usuario = getValue("usuario", options);
+            const mensaje = `<@${member.user.id}> se ha follado a <@${usuario}>. ${getEmoji("angarGasm")}`;
+            
+            const key = guild_id + "-" + usuario;
+            const image = fuck[getRandom({min: 0, max: fuck.length - 1})];
+            let counter = Number(await env.FUCK.get(key));
+            counter = counter ? counter + 1 : 1;
+            await env.FUCK.put(key, counter);
+  
+            const veces = counter === 1 ? "vez" : "veces";
+
+            const { users } = resolved;
+            const username = users[usuario].username;
+
+            return reply(mensaje , { 
+              embeds: [{
+                color: COLOR,
+                description: `<@${member.user.id}> le ha dado tremenda cogida a <@${usuario}>. ${getEmoji("angarGasm")}`,
+                image: {
+                  url: image
+                },
+                footer: {
+                  text: `Se han cogido a ${username} ${counter} ${veces} en total.`
+                }
+              }]
+            });
+          }
+          break;
         }
         default:
           return error("Unknown Type", 400);

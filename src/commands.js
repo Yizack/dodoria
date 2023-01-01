@@ -73,3 +73,17 @@ export const COMANDOS = {
   options: [],
   cid: "1053738012619571342"
 };
+
+export const FUCK = {
+  name: "fuck",
+  description: "Te follas a alguien.",
+  options: [
+    {
+      "name": "usuario",
+      "description": "El usuario que deseas follarte.",
+      "type": 6,
+      "required": true
+    }
+  ],
+  cid: "1058884331013148773"
+};
