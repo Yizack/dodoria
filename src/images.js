@@ -1,6 +1,6 @@
 export const guide = "https://cdn.discordapp.com/attachments/1053733972645003365/1053734183849181264/image.png";
 export const avatar = "https://cdn.discordapp.com/avatars/1053376373269463091/97b104cc47d607f77b47047435483602.png";
-export const yizack = "https://cdn.discordapp.com/avatars/305875206415712256//633f06e66fa4852e8d3e7adca4b75628.png";
+export const yizack = "https://cdn.discordapp.com/avatars/305875206415712256//32ac1165d3d24719db9dc1a52916a857.png";
 export const buenogente = [
   "https://dodoria.yizack.com/images/buenogente_1.jpg",
   "https://dodoria.yizack.com/images/buenogente_2.jpg",
@@ -16,7 +16,8 @@ export const buenogente = [
   "https://dodoria.yizack.com/images/buenogente_12.jpg",
   "https://dodoria.yizack.com/images/buenogente_13.jpg",
   "https://dodoria.yizack.com/images/buenogente_14.jpg",
-  "https://dodoria.yizack.com/images/buenogente_15.jpg"
+  "https://dodoria.yizack.com/images/buenogente_15.jpg",
+  "https://dodoria.yizack.com/images/buenogente_16.jpg"
 ];
 
 export const fuck = [
@@ -37,5 +38,28 @@ export const fuck = [
   "https://cdn.discordapp.com/attachments/609549634712371201/1058885924773187704/--Ovu-eb.gif",
   "https://cdn.discordapp.com/attachments/609549634712371201/1058960095620374608/pic_2_big.gif",
   "https://cdn.discordapp.com/attachments/609549634712371201/1058960292542959678/h30.gif",
-  "https://cdn.discordapp.com/attachments/609549634712371201/1058961551207436348/Hentai-Anal-Gif-3.gif"
+  "https://cdn.discordapp.com/attachments/609549634712371201/1058961551207436348/Hentai-Anal-Gif-3.gif",
+  "https://cdn.discordapp.com/attachments/609549634712371201/1058963981047431248/16857141.gif",
+  "https://cdn.discordapp.com/attachments/609549634712371201/1058964726266200094/gif-sniper_0.gif",
+  "https://nekocdn.com/images/ZrT4z_5-.gif",
+  "https://nekocdn.com/images/i6pFgCLJ.gif",
+  "https://nekocdn.com/images/OJc-BuBA.gif",
+  "https://nekocdn.com/images/oL_ou-x4.gif",
+  "https://nekocdn.com/images/WnRX7yqh.gif",
+  "https://nekocdn.com/images/gHSJORx9.gif",
+  "https://nekocdn.com/images/qWEOTuaJ.gif",
+  "https://nekocdn.com/images/nicS4oRv.gif",
+  "https://nekocdn.com/images/izvPVyJs.gif",
+  "https://nekocdn.com/images/TP2vJt4G.gif",
+  "https://nekocdn.com/images/JXyCmuVY.gif",
+  "https://nekocdn.com/images/eMqaCn7v.gif",
+  "https://nekocdn.com/images/dOsR4lpj.gif",
+  "https://nekocdn.com/images/sGr8SmzQ.gif",
+  "https://nekocdn.com/images/GLkLZjkq.gif",
+  "https://nekocdn.com/images/8lV8S-3-.gif",
+  "https://nekocdn.com/images/tXmSkrw3.gif",
+  "https://nekocdn.com/images/hkKxXYXm.gif",
+  "https://nekocdn.com/images/Z3d9Rucp.gif",
+  "https://nekocdn.com/images/9ZlzP1Mi.gif",
+  "https://nekocdn.com/images/HK8vJ-Iy.gif"
 ];
