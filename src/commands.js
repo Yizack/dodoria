@@ -85,5 +85,5 @@ export const FUCK = {
       "required": true
     }
   ],
-  cid: "1058884331013148773"
+  cid: "1059919293954920459"
 };
