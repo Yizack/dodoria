@@ -13,7 +13,8 @@
     "postinstall": "nuxt prepare",
     "start": "wrangler dev",
     "deploy": "wrangler publish",
-    "register": "node src/register.js"
+    "register": "node src/register.js",
+    "local": "nodemon local/bot.js"
   },
   "dependencies": {
     "bootstrap": "^5.2.3",

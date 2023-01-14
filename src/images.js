@@ -30,7 +30,6 @@ export const fuck = [
   "https://cdn.discordapp.com/attachments/1055709981527244830/1058893664505577553/4fa3c0ae84b05749ab937c4d3d43c28b.gif",
   "https://cdn.discordapp.com/attachments/1055709981527244830/1058893664815939684/7a885516d21e98a63be0906ebf599154.gif",
   "https://cdn.discordapp.com/attachments/1055709981527244830/1058893665273126912/7c4da856b407eeaded5d63f74b0e227e.gif",
-  "https://cdn.discordapp.com/attachments/1055709981527244830/1058893665700954142/06142f3b53a9ab21ae522f1066d47902.gif",
   "https://cdn.discordapp.com/attachments/1055709981527244830/1058893666036482219/b24ad227510ec5150a107ad43f32a36a.gif",
   "https://cdn.discordapp.com/attachments/609549634712371201/1058885923770749010/-Dla9y8V.gif",
   "https://cdn.discordapp.com/attachments/609549634712371201/1058885924106289244/ML8yNBKH.gif",
@@ -61,5 +60,13 @@ export const fuck = [
   "https://nekocdn.com/images/hkKxXYXm.gif",
   "https://nekocdn.com/images/Z3d9Rucp.gif",
   "https://nekocdn.com/images/9ZlzP1Mi.gif",
-  "https://nekocdn.com/images/HK8vJ-Iy.gif"
+  "https://nekocdn.com/images/HK8vJ-Iy.gif",
+  "https://nekocdn.com/images/XrcUf9JZ.gif",
+  "https://nekocdn.com/images/2Mkdt7g3.gif",
+  "https://nekocdn.com/images/BufvEJuZ.gif",
+  "https://nekocdn.com/images/SEBOTPdx.gif",
+  "https://nekocdn.com/images/y5sPAoit.gif",
+  "https://nekocdn.com/images/DlXB__Bc.gif",
+  "https://nekocdn.com/images/8LCh6awV.gif",
+  "https://nekocdn.com/images/Vz6Dv2m2.gif"
 ];

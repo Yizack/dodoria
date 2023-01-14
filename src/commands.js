@@ -87,3 +87,17 @@ export const FUCK = {
   ],
   cid: "1059919293954920459"
 };
+/*
+export const IA = {
+  name: "ia",
+  description: "Habla con la inteligencia artificial de Angar.",
+  options: [
+    {
+      "name": "mensaje",
+      "description": "El mensaje que quieres enviar a la inteligencia artificial.",
+      "type": 3,
+      "required": true
+    }
+  ]
+};
+*/
