@@ -14,7 +14,7 @@
     "start": "wrangler dev",
     "deploy": "wrangler publish",
     "register": "node src/register.js",
-    "local": "nodemon local/bot.js"
+    "local": "node local/bot.js"
   },
   "dependencies": {
     "bootstrap": "^5.2.3",
@@ -22,12 +22,13 @@
     "itty-router": "^3.0.10"
   },
   "devDependencies": {
+    "characterai.js": "^1.0.0",
     "discord.js": "^14.7.1",
     "dotenv": "^16.0.3",
     "eslint": "^8.30.0",
     "eslint-plugin-vue": "^9.8.0",
     "nuxt": "^3.0.0",
     "stylelint": "^14.16.0",
-    "wrangler": "2.6.2"
+    "wrangler": "^2.7.1"
   }
 }

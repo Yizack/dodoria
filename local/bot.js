@@ -1,8 +1,15 @@
 import { Client, GatewayIntentBits } from "discord.js";
+import CharacterAI from "characterai.js";
 import * as dotenv from "dotenv";
-import { getIA } from "./../src/functions.js";
 
 dotenv.config();
+
+const getCharResponse = async (message) => {
+  const characterAI = new CharacterAI(process.env.AI_KEY, process.env.CHARACTER_ID);
+  const chat = await characterAI.continueOrCreateChat();
+  const response = await chat.sendAndAwaitResponse({ message, singleReply: true });
+  return response;
+};
 
 const client = new Client({ intents: [
   GatewayIntentBits.Guilds,
@@ -17,16 +24,16 @@ client.on("ready", () => {
 
 client.on("messageCreate", async message => {
   if (message.content.startsWith("!ia")) {
-    console.log("se recibio un mensaje");
     await message.channel.sendTyping();
     const mensaje = message.content.split("!ia ")[1];
+    console.log(mensaje);
     const { username } = message.author;
     try {
-      console.log(`${username} says:\n${mensaje}`);
-      const respuesta = await getIA(`${username} says:\n${mensaje}`, process.env.IA_CHAT);
+      const respuesta = await getCharResponse(`${username} says:\n${mensaje}`);
       console.log(respuesta);
       await message.reply(`${respuesta}`);
-    } catch (error) {
+    }
+    catch (error) {
       console.log(error);
     }
   }

@@ -4,7 +4,7 @@
 import { Router } from "itty-router";
 import { verifyKey } from "discord-interactions";
 import { create, reply, error } from "./interaction.js";
-import { getValue, getRandom } from "./functions.js";
+import { getValue, getRandom, getIA } from "./functions.js";
 import * as C from "./commands.js";
 import { getEmoji, getEmojiURL } from "./emojis.js";
 import { avatar, guide, yizack, buenogente, fuck } from "./images.js";
@@ -211,6 +211,17 @@ router.post("/", async (req, env) => {
                 }
               }]
             });
+          }
+          break;
+        }
+        // comando /ia
+        case C.IA.name: {
+          try {
+            const mensaje = getValue("mensaje", options);
+            const respuesta = await getIA(`${member.user.username} says:\n${mensaje}`, env.IA_CHAT);
+            return reply(`<@${member.user.id}>. ${respuesta}`);
+          } catch (error) {
+            console.log(error);
           }
           break;
         }
