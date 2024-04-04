@@ -24,7 +24,7 @@ jobs:
         cache: 'pnpm'
 
     - run: |
-        npm ci
+        pnpm i
         npm run generate
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@v4
