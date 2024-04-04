@@ -1,3 +1,5 @@
+import { CONSTANTS } from "./constants.js";
+
 export const ME_MIDE = {
   name: "memide",
   description: "Conoce cuántos centímetros te mide.",
@@ -74,6 +76,7 @@ export const COMANDOS = {
   cid: "1053738012619571342"
 };
 
+/*
 export const FUCK = {
   name: "fuck",
   description: "Te follas a alguien.",
@@ -87,7 +90,7 @@ export const FUCK = {
   ],
   cid: "1059919293954920459"
 };
-/*
+
 export const IA = {
   name: "ia",
   description: "Habla con la inteligencia artificial de Angar.",
@@ -114,4 +117,62 @@ export const VIDEO = {
     }
   ],
   cid: "1225295750930501724",
+};
+
+export const LOLMMR = {
+  name: "lolmmr",
+  description: "Calcula el ELO MMR aproximado de una cuenta basado en el emparejamiento de las partidas.",
+  options: [
+    {
+      "name": "riot_id",
+      "description": "Riot ID. Ej: (Name#TAG).",
+      "type": 3,
+      "required": true
+    },
+    {
+      "name": "servidor",
+      "description": "El servidor del invocador",
+      "type": 3,
+      "required": true,
+      "choices": CONSTANTS.LOL_SERVERS
+    },
+    {
+      "name": "cola",
+      "description": "Tipo de cola clasificatoria",
+      "type": 3,
+      "required": true,
+      "choices": [
+        {
+          "name": "Solo/Duo",
+          "value": "SoloQ"
+        },
+        {
+          "name": "Flexible",
+          "value": "Flex"
+        }
+      ]
+    }
+  ],
+  cid: "1225469964274630748"
+};
+
+export const LOLPROFILE = {
+  name: "lolperfil",
+  description: "Consulta información de un usuario de League of Legends",
+  options: [
+    {
+      "name": "riot_id",
+      "description": "Riot ID. Ej: (Name#TAG).",
+      "type": 3,
+      "required": true
+    },
+    {
+      "name": "servidor",
+      "description": "El servidor donde juega.",
+      "type": 3,
+      "required": true,
+      "choices": CONSTANTS.LOL_SERVERS
+    }
+  ],
+  cid: "1225468160279580736",
 };

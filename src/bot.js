@@ -6,13 +6,13 @@ import { verifyKey } from "discord-interactions";
 import { create, reply, error, deferReply, deferUpdate, getGuild } from "./interaction.js";
 import { getValue, getRandom, esUrl, imbedUrlsFromString, obtenerIDDesdeURL, errorEmbed } from "./functions.js";
 import * as C from "./commands.js";
-import { getEmoji, getEmojiURL, getSocial } from "./emojis.js";
-import { avatar, guide, yizack, buenogente, fuck } from "./images.js";
+import { getEmoji, getEmojiURL, getSocial, getLeagueEmblem, getLolSpell } from "./emojis.js";
+import { avatar, guide, yizack, buenogente } from "./images.js";
 import { CONSTANTS } from "./constants.js";
 import { ButtonStyleTypes, MessageComponentTypes, InteractionType } from "discord-interactions";
 import { hash } from "ohash";
 
-const { COLOR, CHANNEL, CHANNEL_PRUEBAS, CHANNEL_FUCK, CHANNEL_FUCK_TEST, BOT, VOZ, OWNER, VIDEO_SOCIALS } = CONSTANTS;
+const { COLOR, CHANNEL, CHANNEL_PRUEBAS, BOT, VOZ, OWNER, VIDEO_SOCIALS } = CONSTANTS;
 const allow = true;
 
 const router = IttyRouter();
@@ -194,7 +194,7 @@ router.post("/", async (req, env, context) => {
             }]
           });
         }
-        // comando /fuck
+        /*// comando /fuck
         case C.FUCK.name: {
           if (channel_id === CHANNEL_FUCK || channel_id === CHANNEL_FUCK_TEST) {
             const usuario = getValue("usuario", options);
@@ -227,7 +227,6 @@ router.post("/", async (req, env, context) => {
           break;
         }
         // comando /ia
-        /*
         case C.IA.name: {
           try {
             const mensaje = getValue("mensaje", options);
@@ -286,7 +285,7 @@ router.post("/", async (req, env, context) => {
                 const maxSize = guild.premium_tier >= 2 ? 50000000 : 25000000;
                 if (fileSize > 100 && fileSize < maxSize) {
                   const encodedScrappedUrl = encodeURIComponent(url_scrapped);
-                  const upload = await fetch(`https://dev.ahmedrangel.com/put-r2-chokis?video_url=${encodedScrappedUrl}`);
+                  const upload = await fetch(`https://dev.ahmedrangel.com/put/video?url=${encodedScrappedUrl}&bot_name=${CONSTANTS.BOT}`);
                   const url_uploaded = await upload.text();
                   const urlId = obtenerIDDesdeURL(url_uploaded);
                   files.push({
@@ -331,13 +330,241 @@ router.post("/", async (req, env, context) => {
           context.waitUntil(followUpRequest());
           return deferReply();
         }
+        case C.LOLPROFILE.name: {
+          const followUpRequest = async () => {
+            const riotId = (getValue("riot_id", options)).replace(/ /g, "").split("#");
+            const region = getValue("servidor", options);
+            const riotName = riotId[0];
+            const riotTag = riotId[1];
+            if (!riotTag || !riotName) {
+              return deferUpdate("", { token, application_id: env.DISCORD_APPLICATION_ID,
+                embeds: [{
+                  color: COLOR,
+                  description: ":x: Ingrese correctamente el **Riot ID**. Ej: **Name#TAG**",
+                }]
+              });
+            }
+            const embeds = [];
+            let components = [];
+            let button = [];
+            let mensaje = "";
+            let remake, footer, titleName;
+        
+            const profileF = await fetch(`https://dev.ahmedrangel.com/lol/profile/${region}/${riotName}/${riotTag}`);
+            const profile = await profileF.json();
+            if (profile.status_code !== 404) {
+              if (profile.titleName !== "") {
+                titleName = `*${profile.titleName}*`;
+              } else {
+                titleName = "";
+              }
+              let queue = "";
+              const nivel = {
+                name: "Nivel",
+                value: `${profile.summonerLevel}`,
+                inline: true
+              };
+              const history = [];
+              const fields = [];
+              profile.rankProfile.forEach((rank) => {
+                if (rank.queueType == "RANKED_SOLO_5x5") {
+                  queue = "Solo/Duo";
+                } else if (rank.queueType == "RANKED_FLEX_SR") {
+                  queue = "Flexible";
+                } else if (rank.queueType == "RANKED_TFT_DOUBLE_UP") {
+                  queue = "TFT Dúo Dinámico";
+                }
+                const winrate = Math.round((rank.wins/(rank.wins + rank.losses))*100);
+                const tierEmoji = getLeagueEmblem(rank.tier);
+                let rankNumber;
+                if (rank.tier == "MAESTRO" || rank.tier == "GRAN MAESTRO" || rank.tier == "RETADOR") {
+                  rankNumber = "";
+                } else {
+                  rankNumber = rank.rank;
+                }
+                fields.push({
+                  name: `${queue}: ${tierEmoji} ${rank.tier.toUpperCase()} ${rankNumber}`,
+                  value: `${rank.leaguePoints} LP・${rank.wins}V - ${rank.losses}D **(${winrate}% WR)**`,
+                  inline: true
+                });
+              });
+        
+              profile.matchesHistory.forEach((match) => {
+                let resultado;
+                if (match.remake) {
+                  resultado = "⬜";
+                  remake = true;
+                } else {
+                  resultado = match.win ? "🟦" : "🟥";
+                }
+                const championName = match.championName.replaceAll(" ", "");
+                const k = match.kills;
+                const d = match.deaths;
+                const a = match.assists;
+                const queueName = match.queueName;
+                const strTime = match.strTime;
+                const spell1 = getLolSpell(match.summoner1Id);
+                const spell2 = getLolSpell(match.summoner2Id);
+                history.push(`${resultado} ${spell1}${spell2} ${championName}・**${k}/${d}/${a}**・${queueName}・*${strTime}*`);
+              });
+              fields.push({
+                name: "Partidas recientes:",
+                value: history.join("\n"),
+                inline: false
+              });
+              if (remake) {
+                footer = "🟦 = victoriaㅤ🟥 = derrotaㅤ⬜ = remake";
+              } else {
+                footer = "🟦 = victoriaㅤ🟥 = derrota";
+              }
+              embeds.push({
+                type: "rich",
+                title: profile.region.toUpperCase(),
+                description: `${titleName}`,
+                color: COLOR,
+                fields: [nivel, ...fields],
+                author: {
+                  name: `${profile.riotName} #${profile.riotTag}`,
+                  icon_url: profile.profileIconUrl
+                },
+                footer: {
+                  text: footer,
+                  icon_url: "https://cdn.ahmedrangel.com/LOL_Icon.png"
+                }
+              });
+              button.push(
+                {
+                  type: MessageComponentTypes.BUTTON,
+                  style: ButtonStyleTypes.LINK,
+                  label: "Ver en OP.GG",
+                  url: `https://op.gg/summoners/${profile.region}/${encodeURIComponent(profile.riotName)}-${encodeURIComponent(profile.riotTag)}`
+                },/*
+                {
+                  type: MessageComponentTypes.BUTTON,
+                  style: ButtonStyleTypes.LINK,
+                  label: "Ver en U.GG",
+                  url: `https://u.gg/lol/profile/${profile.route}/${encodeURIComponent(profile.summonerName)}/overview`
+                }*/);
+              components.push({
+                type: MessageComponentTypes.ACTION_ROW,
+                components: button
+              });
+            } else {
+              let errorName;
+              switch(profile.errorName) {
+                case "riotId":
+                  errorName = "No se ha encontrado el **Riot ID**.";
+                  break;
+                case "region":
+                  errorName= "La **región** ingresada es incorrecta.";
+                  break;
+              }
+              embeds.push({
+                color: COLOR,
+                description: `:x: Error. ${errorName}`,
+              });
+            }
+            console.log(embeds);
+            // Return del refer
+            return deferUpdate(mensaje, {
+              token,
+              application_id: env.DISCORD_APPLICATION_ID,
+              embeds,
+              components
+            });
+          };
+        
+          context.waitUntil(followUpRequest());
+          return deferReply();
+        }
+        case C.LOLMMR.name: {
+          const followUpRequest = async () => {
+            const riotId = (getValue("riot_id", options)).replace(/ /g, "").split("#");
+            const region = getValue("servidor", options);
+            const queue = getValue("cola", options);
+            const riotName = riotId[0];
+            const riotTag = riotId[1];
+            if (!riotTag || !riotName) {
+              return deferUpdate("", { token, application_id: env.DISCORD_APPLICATION_ID,
+                embeds: [{
+                  color: COLOR,
+                  description: ":x: Ingrese correctamente el **Riot ID**. Ej: **Name#TAG**",
+                }]
+              });
+            }
+            const embeds = [];
+            let mensaje = "";
+            let footer;
+            const profileF = await fetch(`https://dev.ahmedrangel.com/lol/mmr/${region}/${riotName}/${riotTag}/${queue}`);
+            const profile = await profileF.json();
+            if (profile.status_code !== 404) {
+              const queueName = profile.ranked.queueName === "Flex" ? "Flexible" : "Solo/Duo";
+              const tierEmoji = getLeagueEmblem(profile?.ranked?.tier);
+              const avgTierEmoji = getLeagueEmblem(profile?.avg?.tier);
+              const wins = profile?.ranked.wins;
+              const losses = profile?.ranked.losses;
+              const winrate = Math.round((wins/(wins + losses))*100);
+              embeds.push({
+                type: "rich",
+                title: profile?.region.toUpperCase(),
+                color: COLOR,
+                fields: [
+                  {
+                    name: `${queueName}: ${tierEmoji} ${profile?.ranked?.tier.toUpperCase()} ${profile?.ranked?.rank}`,
+                    value: `${profile?.ranked?.leaguePoints} LP・${wins}V - ${losses}D **(${winrate}% WR)**`,
+                    inline: false
+                  },
+                  {
+                    name: `ELO MMR aproximado: ${avgTierEmoji} ${profile?.avg?.tier.toUpperCase()} ${profile?.avg?.rank}`,
+                    value: "",
+                    inline: false,
+                  }
+                ],
+                author: {
+                  name: `${profile?.riotName} #${profile?.riotTag}`,
+                  icon_url: profile?.profileIconUrl
+                },
+                footer: {
+                  text: footer,
+                  icon_url: "https://cdn.ahmedrangel.com/LOL_Icon.png"
+                }
+              });
+            } else {
+              let errorName;
+              switch(profile?.errorName) {
+                case "riotId":
+                  errorName = "No se ha encontrado el **Riot ID**.";
+                  break;
+                case "region":
+                  errorName= "La **región** ingresada es incorrecta.";
+                  break;
+                case "ranked":
+                  errorName= `La cuenta es **unranked** en **${queue}**`;
+                  break;
+              }
+              embeds.push({
+                color: COLOR,
+                description: `:x: Error. ${errorName}`,
+              });
+            }
+            console.log(embeds);
+            // Return del refer
+            return deferUpdate(mensaje, {
+              token,
+              application_id: env.DISCORD_APPLICATION_ID,
+              embeds
+            });
+          };
+        
+          context.waitUntil(followUpRequest());
+          return deferReply();
+        }
         default:
           return error("Unknown Type", 400);
       }
       
     });
   }
-  
 });
 
 router.all("*", () => new Response("Not Found.", { status: 404 }));
