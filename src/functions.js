@@ -1,8 +1,7 @@
 /**
  * General functions
  */
-
-import CharacterAI from "./characterAI/Client.js";
+import { CONSTANTS } from "./constants.js";
 
 export const getValue = (name, options) => {
   const option = options.find((option) => option.name === name);
@@ -14,9 +13,31 @@ export const getRandom = (options) => {
   return Math.round((Math.random() * (options.max - min)) + min);
 };
 
-export const getIA = async (mensaje, IA_CHAT) => {
-  const characterAi = new CharacterAI();
-  const chat = await characterAi.continueOrCreateChat(IA_CHAT);
-  const response = await chat.sendAndAwaitResponse({ mensaje, singleReply: true});
-  return response;
+export const esUrl = (cadena) => {
+  const regex = /^(?:https?:\/\/)?(?:www\.)?([a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,})(?:\/\S*)?$/;
+  return regex.test(cadena);
+};
+
+export const imbedUrlsFromString = (str) => {
+  const regex = /(https?:\/\/[^\s]+)/g;
+  return str.replace(regex, "<$1>");
+};
+
+export const obtenerIDDesdeURL = (url) => {
+  const expresionRegular = /\/([a-zA-Z0-9_-]+)(?:\.[a-zA-Z0-9]+)?(?:\?|$|\/\?|\/$)/;
+  const resultado = expresionRegular.exec(url);
+  if (resultado && resultado.length > 1) {
+    return resultado[1];
+  } else {
+    return null;
+  }
+};
+
+export const errorEmbed = (error_msg) => {
+  const embeds = [];
+  embeds.push({
+    color: CONSTANTS.COLOR,
+    description: error_msg,
+  });
+  return embeds;
 };

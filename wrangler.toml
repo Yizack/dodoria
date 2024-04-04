@@ -1,7 +1,6 @@
 name = "dodoria"
 main = "src/bot.js"
 compatibility_date = "2022-12-04"
-usage_model = "bundled"
 kv_namespaces = [
   { binding = "EDUCAR", id = "2aac573a74024f7594f231fe687e70f6" },
   { binding = "FUCK", id = "89f8ae8bb23b4e19a4c5d8e90e00e7b3" }

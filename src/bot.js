@@ -1,26 +1,37 @@
 /**
  * Cloudflare worker.
  */
-import { Router } from "itty-router";
+import { IttyRouter } from "itty-router";
 import { verifyKey } from "discord-interactions";
-import { create, reply, error } from "./interaction.js";
-import { getValue, getRandom, getIA } from "./functions.js";
+import { create, reply, error, deferReply, deferUpdate, getGuild } from "./interaction.js";
+import { getValue, getRandom, esUrl, imbedUrlsFromString, obtenerIDDesdeURL, errorEmbed } from "./functions.js";
 import * as C from "./commands.js";
-import { getEmoji, getEmojiURL } from "./emojis.js";
+import { getEmoji, getEmojiURL, getSocial } from "./emojis.js";
 import { avatar, guide, yizack, buenogente, fuck } from "./images.js";
 import { CONSTANTS } from "./constants.js";
+import { ButtonStyleTypes, MessageComponentTypes, InteractionType } from "discord-interactions";
+import { hash } from "ohash";
 
-const { COLOR, CHANNEL, CHANNEL_PRUEBAS, CHANNEL_FUCK, CHANNEL_FUCK_TEST, BOT, VOZ, OWNER } = CONSTANTS;
+const { COLOR, CHANNEL, CHANNEL_PRUEBAS, CHANNEL_FUCK, CHANNEL_FUCK_TEST, BOT, VOZ, OWNER, VIDEO_SOCIALS } = CONSTANTS;
 const allow = true;
 
-const router = Router();
+const router = IttyRouter();
 
 router.get("/", (req, env) => {
   return new Response(`👋 ${env.DISCORD_APPLICATION_ID}`);
 });
  
-router.post("/", async (req, env) => {
-  const { type, data, member, guild_id, channel_id } = await req.json();
+router.post("/", async (req, env, context) => {
+  const { type, data, member, guild_id, channel_id, token } = await req.json();
+  if (type === InteractionType.PING) {
+    /**
+     * The `PING` message is used during the initial webhook handshake, and is
+       required to configure the webhook in the developer portal.
+     */
+    console.log("Handling Ping request");
+    return create(type);
+  }
+
   if (channel_id === CHANNEL || channel_id === CHANNEL_PRUEBAS || allow) {
     return create(type, async () => {
       const { name, options, resolved } = data;
@@ -49,36 +60,37 @@ router.post("/", async (req, env) => {
             getEmojiURL("Cheer25k"),
             getEmojiURL("Cheer50k")
           ];
-          if (mensaje.length <= 500) {
-            const response = await fetch("https://ttsmp3.com/makemp3_new.php", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-              },
-              body: `msg=${encodeURIComponent(mensaje)}&lang=${VOZ}&source=ttsmp3`
+          if (mensaje.length > 500) return reply(`<@${member.user.id}> El mensaje no puede tener más de 500 caracteres.`);
+          const followUpRequest = async () => {
+            const text = encodeURIComponent(mensaje);
+            const response = await fetch(`https://api.streamelements.com/kappa/v2/speech?voice=${VOZ}&text=${text}`);
+            const blob = await response.blob();
+            const files = [{ name: `${hash(text)}.mp3`, file: blob }];
+        
+            return deferUpdate("", {
+              embeds : [{
+                description: `\`${mensaje}\``,
+                color: COLOR,
+                author: {
+                  name: `${member.user.username}#${member.user.discriminator}`,
+                  icon_url: `https://cdn.discordapp.com/avatars/${member.user.id}/${member.user.avatar}.png`
+                },
+                thumbnail: {
+                  url: getEmojiURL("angarG2")
+                },
+                footer: {
+                  text: `Voz: ${VOZ}. Caracteres: ${mensaje.length} de 500.`,
+                  icon_url: bits[getRandom({min: 0, max: bits.length - 1})]
+                }
+              }],
+              token,
+              application_id: env.DISCORD_APPLICATION_ID,
+              files
             });
-            const body = await response.json();
-            return reply(`<@${member.user.id}> abre el enlace para escuchar.`, {embeds : [{
-              title: "🔊 Escuchar",
-              url: body.URL,
-              description: `\`${mensaje}\`\n\n*${body.MP3}*`,
-              color: COLOR,
-              author: {
-                name: `${member.user.username}#${member.user.discriminator}`,
-                icon_url: `https://cdn.discordapp.com/avatars/${member.user.id}/${member.user.avatar}.png`
-              },
-              thumbnail: {
-                url: getEmojiURL("angarG2")
-              },
-              footer: {
-                text: `Voz: ${VOZ}. Caracteres: ${mensaje.length} de 500.`,
-                icon_url: bits[getRandom({min: 0, max: bits.length - 1})]
-              }
-            }]});
-          }
-          else {
-            return reply(`<@${member.user.id}> El mensaje no puede tener más de 500 caracteres.`);
-          }
+          };
+        
+          context.waitUntil(followUpRequest());
+          return deferReply();
         }
         // Comando /educar
         case C.EDUCAR.name: {
@@ -215,6 +227,7 @@ router.post("/", async (req, env) => {
           break;
         }
         // comando /ia
+        /*
         case C.IA.name: {
           try {
             const mensaje = getValue("mensaje", options);
@@ -224,6 +237,99 @@ router.post("/", async (req, env) => {
             console.log(error);
           }
           break;
+        }
+        */
+        case C.VIDEO.name: {
+          const followUpRequest = async () => {
+            let mensaje, emoji;
+            let embeds = [], files = [], button = [], components = [];
+            let supported = false;
+            let red_social = "Instagram / Facebook / TikTok / Twitter / YouTube / Twitch";
+            const url = getValue("link", options);
+            for (const key in VIDEO_SOCIALS) {
+              const sns = VIDEO_SOCIALS[key];
+              if (sns.domains.some(domains => url.includes(domains))) {
+                red_social = sns.name;
+                emoji = getSocial(red_social);
+                supported = true;
+                break;
+              }
+            }
+            if (esUrl(url) && supported == true) {
+              const encodedUrl = encodeURIComponent(url);
+              const scrappingUrl = `https://dev.ahmedrangel.com/dc/${red_social.toLowerCase()}-video-scrapper?url=${encodedUrl}&filter=video`;
+              const scrapping = await fetch(scrappingUrl);
+              const json_scrapped = await scrapping.json();
+              const url_scrapped = json_scrapped?.video_url;
+              const short_url = json_scrapped?.short_url;
+              const status = json_scrapped?.status;
+              console.log(status);
+              if (status === 200 && esUrl(url_scrapped)) {
+                let retryCount = 0;
+                const fetchScraped = async() => {
+                  const sizeCheckerF = await fetch(url_scrapped);
+                  const caption = `${json_scrapped?.caption ? json_scrapped?.caption?.replace(/#[^\s#]+(\s#[^\s#]+)*$/g, "").replace(/.\n/g,"").trim() : ""}`;
+                  const blob = await sizeCheckerF.blob();
+                  const fileSize = blob.size;
+                  console.log("Tamaño: " + fileSize);
+                  return {blob: blob, fileSize: fileSize, caption: imbedUrlsFromString(caption)};
+                };
+                let {blob, fileSize, caption} = await fetchScraped();
+                while (fileSize < 100 && retryCount < 3) {
+                  console.log("El tamaño del archivo es 0. Volviendo a intentar...");
+                  await new Promise(resolve => setTimeout(resolve, 1000));
+                  ({ blob, fileSize, caption } = await fetchScraped());
+                  retryCount++;
+                  console.log("Intento: " + retryCount);
+                }
+                const guild = await getGuild(guild_id, env.DISCORD_TOKEN);
+                const maxSize = guild.premium_tier >= 2 ? 50000000 : 25000000;
+                if (fileSize > 100 && fileSize < maxSize) {
+                  const encodedScrappedUrl = encodeURIComponent(url_scrapped);
+                  const upload = await fetch(`https://dev.ahmedrangel.com/put-r2-chokis?video_url=${encodedScrappedUrl}`);
+                  const url_uploaded = await upload.text();
+                  const urlId = obtenerIDDesdeURL(url_uploaded);
+                  files.push({
+                    name: `${urlId}.mp4`,
+                    file: blob
+                  });
+                  button.push({
+                    type: MessageComponentTypes.BUTTON,
+                    style: ButtonStyleTypes.LINK,
+                    label: "Descargar MP4",
+                    url: url_uploaded
+                  });
+                  components.push ({
+                    type: MessageComponentTypes.ACTION_ROW,
+                    components: button
+                  });
+                  mensaje = `${emoji} **${red_social}**: [${short_url.replace("https://", "")}](<${short_url}>)\n${caption}`;
+                } else if (retryCount === 3) {
+                  const error = ":x: Error. Ha ocurrido un error obteniendo el video.";
+                  embeds = errorEmbed(error);
+                } else {
+                  const error = "⚠️ Error. El video es muy pesado o demasiado largo.";
+                  embeds = errorEmbed(error);
+                }
+              } else {
+                const error = ":x: Error. Ha ocurrido un error obteniendo el video.";
+                embeds = errorEmbed(error);
+              }
+            } else {
+              const error = `⚠️ Error. El texto ingresado no es un link válido de **${red_social}**`;
+              embeds = errorEmbed(error);
+            }
+            // Return del refer
+            return deferUpdate(mensaje, {
+              token,
+              application_id: env.DISCORD_APPLICATION_ID,
+              embeds,
+              components,
+              files
+            });
+          };
+          context.waitUntil(followUpRequest());
+          return deferReply();
         }
         default:
           return error("Unknown Type", 400);
@@ -237,7 +343,7 @@ router.post("/", async (req, env) => {
 router.all("*", () => new Response("Not Found.", { status: 404 }));
  
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, context) {
     const { method, headers } = request;
     if (method === "POST") {
       const signature = headers.get("x-signature-ed25519");
@@ -253,6 +359,6 @@ export default {
         return new Response("Bad request signature.", { status: 401 });
       }
     }
-    return router.handle(request, env);
+    return router.fetch(request, env, context);
   },
 };

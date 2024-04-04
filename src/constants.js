@@ -6,5 +6,31 @@ export const CONSTANTS = {
   CHANNEL_FUCK: "609549634712371201",
   CHANNEL_FUCK_TEST: "1055709981527244830",
   VOZ: "Miguel",
-  OWNER: "Yizack"
+  OWNER: "Yizack",
+  VIDEO_SOCIALS: {
+    instagram: {
+      domains: ["instagram.com/p/", "instagram.com/reel/", "instagram.com/reels/", "instagram.com/stories"],
+      name: "Instagram"
+    },
+    tiktok: {
+      domains: ["tiktok.com/@", "vm.tiktok.com/", "m.tiktok.com/", "tiktok.com/t/"],
+      name: "TikTok"
+    },
+    twitter: {
+      domains: ["twitter.com/", "x.com/"],
+      name: "Twitter"
+    },
+    facebook: {
+      domains: ["facebook.com/", "fb.watch/", "fb.gg/"],
+      name: "Facebook"
+    },
+    youtube: {
+      domains: ["youtube.com/shorts", "youtu.be/", "youtube.com/watch?v="],
+      name: "YouTube"
+    },
+    twitch: {
+      domains: ["clips.twitch.tv/", "twitch.tv/"],
+      name: "Twitch"
+    }
+  }  
 };

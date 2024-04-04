@@ -101,3 +101,17 @@ export const IA = {
   ]
 };
 */
+
+export const VIDEO = {
+  name: "video",
+  description: "Obtener un video de Instagram, Facebook, TikTok, Twitter, YouTube o Clip de Twitch en formato MP4.",
+  options: [
+    {
+      "name": "link",
+      "description": "Link de Instagram, Facebook, TikTok, Twitter, YouTube o Twitch.",
+      "type": 3,
+      "required": true
+    }
+  ],
+  cid: "1225295750930501724",
+};
