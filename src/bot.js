@@ -282,7 +282,7 @@ router.post("/", async (req, env, context) => {
                   console.log("Intento: " + retryCount);
                 }
                 const guild = await getGuild(guild_id, env.DISCORD_TOKEN);
-                const maxSize = guild.premium_tier >= 2 ? 50000000 : 25000000;
+                const maxSize = guild.premium_tier >= 3 ? 100000000 : (guild.premium_tier === 2 ? 50000000 : 25000000);
                 if (fileSize > 100 && fileSize < maxSize) {
                   const encodedScrappedUrl = encodeURIComponent(url_scrapped);
                   const upload = await fetch(`https://dev.ahmedrangel.com/put/video?url=${encodedScrappedUrl}&bot_name=${CONSTANTS.BOT}`);
