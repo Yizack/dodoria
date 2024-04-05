@@ -72,7 +72,7 @@ router.post("/", async (req, env, context) => {
                 description: `\`${mensaje}\``,
                 color: COLOR,
                 author: {
-                  name: `${member.user.username}#${member.user.discriminator}`,
+                  name: `${member.user.username}`,
                   icon_url: `https://cdn.discordapp.com/avatars/${member.user.id}/${member.user.avatar}.png`
                 },
                 thumbnail: {
