@@ -62,7 +62,8 @@ const toDiscordEndpoint = (endpoint, body, method, authorization) => {
   const endpoint_url = `${API.BASE}${endpoint}`;
   if (!body.files) {
     return fetch(new JsonRequest(endpoint_url, body, { method }, authorization));
-  } else {
+  }
+  else {
     return fetch(new JsonFileRequest(endpoint_url, body, { method }, authorization));
   }
 };
@@ -75,10 +76,10 @@ const pong = () => {
 
 export const create = (type, func) => {
   switch (type) {
-    case InteractionType.PING:
-      return pong();
-    case InteractionType.APPLICATION_COMMAND:
-      return func();
+  case InteractionType.PING:
+    return pong();
+  case InteractionType.APPLICATION_COMMAND:
+    return func();
   }
 };
 

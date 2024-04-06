@@ -2,7 +2,7 @@
 const nuxtApp = useNuxtApp();
 nuxtApp.$router.options.scrollBehavior = (to) => {
   if (to.hash === "") {
-    return { left: 0, top: 0 }; 
+    return { left: 0, top: 0 };
   }
   else {
     return new Promise((resolve) => {
@@ -15,10 +15,12 @@ nuxtApp.$router.options.scrollBehavior = (to) => {
 </script>
 
 <template>
-  <NuxtLayout>
-    <NuxtLoadingIndicator/>
-    <NuxtPage/>
-  </NuxtLayout>
+  <div>
+    <NuxtLayout>
+      <NuxtLoadingIndicator />
+      <NuxtPage />
+    </NuxtLayout>
+  </div>
 </template>
 
 <style scoped>
@@ -26,9 +28,3 @@ nuxtApp.$router.options.scrollBehavior = (to) => {
   background: repeating-linear-gradient(to right,#f697c8 0%,#f1e0e9 50%,#f697c8 100%)!important;
 }
 </style>
-
-<script>
-export default {
-  name: "App"
-};
-</script>

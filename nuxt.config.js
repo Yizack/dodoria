@@ -1,7 +1,5 @@
-export default {
+export default defineNuxtConfig({
   app: {
-    rootId: "app",
-    buildAssetsDir: "/_app/",
     head: {
       htmlAttrs: {
         lang: "es"
@@ -28,4 +26,4 @@ export default {
   features: {
     inlineStyles: false
   }
-};
+});

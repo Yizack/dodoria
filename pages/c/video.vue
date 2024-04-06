@@ -8,7 +8,7 @@ definePageMeta({ layout: "site" });
   <div class="container text-white text-center">
     <div class="py-4">
       <NuxtLink class="text-white text-decoration-none" to="/">
-        <img class="img-fluid rounded-circle mb-2" src="/images/dodoria.png">  
+        <img class="img-fluid rounded-circle mb-2" src="/images/dodoria.png">
         <h1>Dodoria</h1>
       </NuxtLink>
       <div class="mb-3">

@@ -4,7 +4,7 @@ const SITE = {
   protocol: "https",
   meta_description: "",
   description: "",
-  keywords: "" 
+  keywords: ""
 };
 
 SITE.url = `${SITE.protocol}://${SITE.domain}`;
