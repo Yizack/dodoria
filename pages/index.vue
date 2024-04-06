@@ -1,5 +1,4 @@
 <script setup>
-import { SITE } from "~/site-info.js";
 definePageMeta({ layout: "site" });
 
 useHead({
