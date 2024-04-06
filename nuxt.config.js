@@ -25,8 +25,7 @@ export default {
     "bootstrap/dist/css/bootstrap.min.css",
     "~/assets/css/dodoria.css"
   ],
-  nitro: {
-    crawlLinks: true,
-    routes: ["/"]
+  features: {
+    inlineStyles: false
   }
 };
