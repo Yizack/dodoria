@@ -1,8 +1,11 @@
 <script setup>
 import { buenogente } from "~/src/images.js";
 definePageMeta({ layout: "site" });
-</script>
 
+const open = (link) => {
+  window.open(link, "_blank");
+};
+</script>
 
 <template>
   <div class="container text-white text-center">
@@ -24,13 +27,3 @@ definePageMeta({ layout: "site" });
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  methods: {
-    open(link) {
-      window.open(link, "_blank");
-    }
-  }
-};
-</script>

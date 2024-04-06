@@ -1,5 +1,7 @@
 <script setup>
 import * as CM from "~/src/commands.js";
+
+const comandos = ref(Object.entries(CM).map(([, { name, description }]) => ({ name, description })).sort((a, b) => a.name.localeCompare(b.name)));
 </script>
 
 <template>
@@ -15,7 +17,7 @@ import * as CM from "~/src/commands.js";
         </svg>
         <h4 class="mb-3">Comandos</h4>
         <ul>
-          <li class="px-1 d-inline-block mb-4" v-for="command in CM">
+          <li class="px-1 d-inline-block mb-4" v-for="command in comandos">
             <NuxtLink class="text-decoration-none" :to="`/c/${command.name}/`" :title="command.description">
               <code class="bg-primary p-2 rounded-3">/{{ command.name }} </code>
             </NuxtLink>
