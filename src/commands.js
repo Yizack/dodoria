@@ -176,3 +176,10 @@ export const LOLPROFILE = {
   ],
   cid: "1225468160279580736",
 };
+
+export const ANGAR = {
+  name: "angar",
+  description: "Devuelve una foto random de Angar.",
+  options: [],
+  cid: "1228534441996062740",
+};

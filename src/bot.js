@@ -4,10 +4,10 @@
 import { IttyRouter } from "itty-router";
 import { verifyKey } from "discord-interactions";
 import { create, reply, error, deferReply, deferUpdate, getGuild } from "./interaction.js";
-import { getValue, getRandom, esUrl, imbedUrlsFromString, obtenerIDDesdeURL, errorEmbed } from "./functions.js";
+import { getValue, getRandom, esUrl, imbedUrlsFromString, obtenerIDDesdeURL, errorEmbed, getRandomAngar, getRandomBuenoGente } from "./functions.js";
 import * as C from "./commands.js";
 import { getEmoji, getEmojiURL, getSocial, getLeagueEmblem, getLolSpell } from "./emojis.js";
-import { avatar, guide, yizack, buenogente } from "./images.js";
+import { avatar, guide, yizack } from "./images.js";
 import { CONSTANTS } from "./constants.js";
 import { ButtonStyleTypes, MessageComponentTypes, InteractionType } from "discord-interactions";
 import { hash } from "ohash";
@@ -154,7 +154,7 @@ router.post("/", async (req, env, context) => {
             icon_url: avatar
           },
           image: {
-            url: buenogente[getRandom({min: 0, max: buenogente.length - 1})]
+            url: getRandomBuenoGente()
           }
         }]});
       }
@@ -570,6 +570,20 @@ router.post("/", async (req, env, context) => {
 
         context.waitUntil(followUpRequest());
         return deferReply();
+      }
+      case C.ANGAR.name: {
+        return reply(null, { embeds: [{
+          title: "Te presento el angar que te representa",
+          description: "",
+          color: COLOR,
+          author: {
+            name: BOT,
+            icon_url: avatar
+          },
+          image: {
+            url: getRandomAngar()
+          }
+        }]});
       }
       default:
         return error("Unknown Type", 400);
