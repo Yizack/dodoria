@@ -66,5 +66,5 @@ export const getRandomAngarMessage = () => {
     "Este ANGAR en particular se alinea con tu estado de ánimo actual.",
     "¡Descubre el ANGAR que te acompaña en este momento!"
   ];
-  return messages[Math.floor(Math.random() * messages.length)];
+  return messages[getRandom({ min: 0, max: messages.length - 1 })];
 };
