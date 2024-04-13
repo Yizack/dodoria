@@ -26,11 +26,9 @@ const open = (link) => {
       <p>Colección de fotos de ANGAR.</p>
     </div>
     <div class="row">
-      <MasonryWall :items="angarArray" :ssr-columns="1" :gap="10" :max-columns="5" :column-width="150">
+      <MasonryWall :items="angarArray" :ssr-columns="5" :gap="10" :max-columns="5" :column-width="0">
         <template #default="{ item: link }">
-          <div role="button" @click="open(link)">
-            <img class="img-fluid rounded scale-on-hover border border-2 border-dark" :src="link">
-          </div>
+          <img class="img-fluid rounded scale-on-hover border border-2 border-dark" :src="link" role="button" @click="open(link)">
         </template>
       </MasonryWall>
     </div>
