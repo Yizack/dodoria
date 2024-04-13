@@ -24,13 +24,13 @@ const open = (link) => {
         <code class="bg-dark p-2 rounded-3">/angar</code>
       </div>
       <p>Colección de fotos de ANGAR.</p>
-    </div>
-    <div class="row">
-      <MasonryWall :items="angarArray" :ssr-columns="5" :gap="10" :max-columns="5" :column-width="0">
-        <template #default="{ item: link }">
-          <img class="img-fluid rounded scale-on-hover border border-2 border-dark" :src="link" role="button" @click="open(link)">
-        </template>
-      </MasonryWall>
+      <div class="py-2">
+        <MasonryWall :items="angarArray" :ssr-columns="5" :gap="10" :max-columns="5" :column-width="0">
+          <template #default="{ item: link }">
+            <img class="img-fluid rounded scale-on-hover border border-2 border-dark" :src="link" role="button" @click="open(link)">
+          </template>
+        </MasonryWall>
+      </div>
     </div>
   </div>
 </template>
