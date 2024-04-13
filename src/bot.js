@@ -577,8 +577,8 @@ router.post("/", async (req, env, context) => {
           description: "",
           color: COLOR,
           author: {
-            name: BOT,
-            icon_url: avatar
+            name: `${member.user.username}`,
+            icon_url: `https://cdn.discordapp.com/avatars/${member.user.id}/${member.user.avatar}.png`
           },
           image: {
             url: getRandomAngar()
