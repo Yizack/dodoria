@@ -19,7 +19,7 @@ const comandos = ref(Object.entries(CM).map(([, { name, description }]) => ({ na
         <h4 class="mb-3">Comandos</h4>
         <ul>
           <li v-for="command in comandos" :key="command.name" class="px-1 d-inline-block mb-4">
-            <NuxtLink class="text-decoration-none" :to="`/c/${command.name}/`" :title="command.description">
+            <NuxtLink class="text-decoration-none" :to="`/c/${command.name}`" :title="command.description">
               <code class="bg-primary p-2 rounded-3">/{{ command.name }} </code>
             </NuxtLink>
           </li>
