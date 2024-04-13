@@ -4,7 +4,7 @@ definePageMeta({ layout: "site" });
 
 const angarArray = [];
 
-for (let i = 1; i < CONSTANTS.ANGAR; i++) {
+for (let i = 1; i <= CONSTANTS.ANGAR; i++) {
   angarArray.push(`/images/angar_${i}.jpg`);
 }
 
