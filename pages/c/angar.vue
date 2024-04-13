@@ -2,6 +2,12 @@
 import { CONSTANTS } from "~/src/constants.js";
 definePageMeta({ layout: "site" });
 
+const angarArray = [];
+
+for (let i = 1; i < CONSTANTS.ANGAR; i++) {
+  angarArray.push(`/images/angar_${i}.jpg`);
+}
+
 const open = (link) => {
   window.open(link, "_blank");
 };
@@ -20,10 +26,13 @@ const open = (link) => {
       <p>Colección de fotos de ANGAR.</p>
     </div>
     <div class="row">
-      <div v-for="(n) in CONSTANTS.ANGAR" :key="n" class="col-lg-4 mb-4" role="button" @click="open(`/images/angar_${n}.jpg`)">
-        <img class="img-fluid rounded scale-on-hover" :src="`/images/angar_${n}.jpg`">
-        <p>angar_{{ n }}.jpg</p>
-      </div>
+      <MasonryWall :items="angarArray" :ssr-columns="1" :gap="10" :max-columns="5" :column-width="150">
+        <template #default="{ item: link }">
+          <div role="button" @click="open(link)">
+            <img class="img-fluid rounded scale-on-hover border border-2 border-dark" :src="link">
+          </div>
+        </template>
+      </MasonryWall>
     </div>
   </div>
 </template>

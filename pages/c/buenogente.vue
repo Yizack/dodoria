@@ -22,7 +22,6 @@ const open = (link) => {
     <div class="row">
       <div v-for="(n) in CONSTANTS.BUENOGENTE" :key="n" class="col-lg-4 mb-4" role="button" @click="open(`/images/buenogente_${n}.jpg`)">
         <img class="img-fluid rounded scale-on-hover" :src="`/images/buenogente_${n}.jpg`">
-        <p>buenogente_{{ n }}.jpg</p>
       </div>
     </div>
   </div>
