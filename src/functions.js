@@ -52,3 +52,19 @@ export const errorEmbed = (error_msg) => {
   });
   return embeds;
 };
+
+export const getRandomAngarMessage = () => {
+  const messages = [
+    "Te presento el ANGAR que te representa en este momento.",
+    "Hoy estás en este mood, y el ANGAR lo refleja perfectamente.",
+    "Este es el ANGAR que captura tu esencia hoy.",
+    "El ANGAR de hoy refleja tu estado de ánimo actual.",
+    "Descubre el ANGAR que encaja con tu vibra de hoy.",
+    "Este ANGAR coincide con tu energía en este día.",
+    "El ANGAR de hoy está en sintonía con tu estado de ánimo.",
+    "Hoy te presento el ANGAR que mejor representa tu vibe.",
+    "Este ANGAR en particular se alinea con tu estado de ánimo actual.",
+    "¡Descubre el ANGAR que te acompaña en este momento!"
+  ];
+  return messages[Math.floor(Math.random() * messages.length)];
+};

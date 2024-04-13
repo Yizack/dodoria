@@ -4,7 +4,7 @@
 import { IttyRouter } from "itty-router";
 import { verifyKey } from "discord-interactions";
 import { create, reply, error, deferReply, deferUpdate, getGuild } from "./interaction.js";
-import { getValue, getRandom, esUrl, imbedUrlsFromString, obtenerIDDesdeURL, errorEmbed, getRandomAngar, getRandomBuenoGente } from "./functions.js";
+import { getValue, getRandom, esUrl, imbedUrlsFromString, obtenerIDDesdeURL, errorEmbed, getRandomAngar, getRandomBuenoGente, getRandomAngarMessage } from "./functions.js";
 import * as C from "./commands.js";
 import { getEmoji, getEmojiURL, getSocial, getLeagueEmblem, getLolSpell } from "./emojis.js";
 import { avatar, guide, yizack } from "./images.js";
@@ -573,7 +573,7 @@ router.post("/", async (req, env, context) => {
       }
       case C.ANGAR.name: {
         return reply(null, { embeds: [{
-          title: "Te presento el angar que te representa",
+          title: getRandomAngarMessage(),
           description: "",
           color: COLOR,
           author: {
