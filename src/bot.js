@@ -572,18 +572,33 @@ router.post("/", async (req, env, context) => {
         return deferReply();
       }
       case C.ANGAR.name: {
-        return reply(null, { embeds: [{
-          title: getRandomAngarMessage(),
-          description: "",
-          color: COLOR,
-          author: {
-            name: `${member.user.username}`,
-            icon_url: `https://cdn.discordapp.com/avatars/${member.user.id}/${member.user.avatar}.png`
-          },
-          image: {
-            url: getRandomAngar()
-          }
-        }]});
+        const button = [{
+          type: MessageComponentTypes.BUTTON,
+          style: ButtonStyleTypes.LINK,
+          label: "Ver galería",
+          url: "https://dodoria.yizack.com/c/angar"
+        }];
+
+        const components = [{
+          type: MessageComponentTypes.ACTION_ROW,
+          components: button
+        }];
+
+        return reply(null, {
+          components,
+          embeds: [{
+            title: getRandomAngarMessage(),
+            description: "",
+            color: COLOR,
+            author: {
+              name: `${member.user.username}`,
+              icon_url: `https://cdn.discordapp.com/avatars/${member.user.id}/${member.user.avatar}.png`
+            },
+            image: {
+              url: getRandomAngar()
+            }
+          }]
+        });
       }
       default:
         return error("Unknown Type", 400);

@@ -88,7 +88,8 @@ export const reply = (content, options) => {
     type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
     data: {
       content: content,
-      embeds: options?.embeds
+      embeds: options?.embeds,
+      components: options?.components
     },
   });
 };
