@@ -1,5 +1,18 @@
 import { CONSTANTS } from "./constants.js";
 
+const IntegrationTypes = {
+  GUILD_INSTALL: 0,
+  USER_INSTALL: 1,
+  ALL: [0, 1]
+};
+
+const Contexts = {
+  GUILD: 0,
+  BOT_DM: 1,
+  PRIVATE_CHANNEL: 2,
+  ALL: [0, 1, 2]
+};
+
 export const ME_MIDE = {
   name: "memide",
   description: "Conoce cuántos centímetros te mide.",
@@ -108,6 +121,8 @@ export const IA = {
 export const VIDEO = {
   name: "video",
   description: "Obtener un video de Instagram, Facebook, TikTok, Twitter, YouTube o Clip de Twitch en formato MP4.",
+  integration_types: IntegrationTypes.ALL,
+  contexts: Contexts.ALL,
   options: [
     {
       "name": "link",
