@@ -274,7 +274,7 @@ router.post("/", async (req, env, context) => {
                 return {blob: blob, fileSize: fileSize, caption: imbedUrlsFromString(caption)};
               };
               let {blob, fileSize, caption} = await fetchScraped();
-              while (fileSize < 100 && retryCount < 3) {
+              while (fileSize < 100 && retryCount <= 3) {
                 console.log("El tamaño del archivo es 0. Volviendo a intentar...");
                 await new Promise(resolve => setTimeout(resolve, 1000));
                 ({ blob, fileSize, caption } = await fetchScraped());
@@ -304,12 +304,12 @@ router.post("/", async (req, env, context) => {
                 });
                 mensaje = `${emoji} **${red_social}**: [${short_url.replace("https://", "")}](<${short_url}>)\n${caption}`;
               }
-              else if (retryCount === 3) {
-                const error = ":x: Error. Ha ocurrido un error obteniendo el video.";
+              else if (fileSize > maxSize) {
+                const error = "⚠️ Error. El video es muy pesado o demasiado largo.";
                 embeds = errorEmbed(error);
               }
               else {
-                const error = "⚠️ Error. El video es muy pesado o demasiado largo.";
+                const error = ":x: Error. Ha ocurrido un error obteniendo el video.";
                 embeds = errorEmbed(error);
               }
             }
