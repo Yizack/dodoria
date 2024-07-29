@@ -11,7 +11,7 @@ export const CONSTANTS = {
   OWNER: "Yizack",
   VIDEO_SOCIALS: {
     instagram: {
-      domains: ["instagram.com/p/", "instagram.com/reel/", "instagram.com/reels/", "instagram.com/stories"],
+      domains: ["instagram.com/p/", "instagram.com/reel/", "instagram.com/reels/", "instagram.com/stories", "instagram.com/"],
       name: "Instagram"
     },
     tiktok: {
