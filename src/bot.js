@@ -306,7 +306,7 @@ router.post("/", async (req, env, context) => {
             });
           }
       
-          if (!blob || fileSize < 100 || !["video/mp4", "binary/octet-stream"].includes(contentType)) {
+          if (!blob || fileSize < 100 || !["video/mp4", "binary/octet-stream", "application/octet-stream"].includes(contentType)) {
             const error = ":x: Error. Ha ocurrido un error obteniendo el video.";
             return deferUpdate("", {
               token,
