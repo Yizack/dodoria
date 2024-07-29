@@ -33,6 +33,10 @@ export const CONSTANTS = {
     twitch: {
       domains: ["clips.twitch.tv/", "twitch.tv/"],
       name: "Twitch"
+    },
+    kick: {
+      domains: ["kick.com/"],
+      name: "Kick"
     }
   },
   LOL_SERVERS: [
