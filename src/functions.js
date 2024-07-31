@@ -4,7 +4,7 @@
 import { CONSTANTS } from "./constants.js";
 
 export const getValue = (name, options) => {
-  const option = options.find((option) => option.name === name);
+  const option = options.find(option => option.name === name);
   return option?.value ?? null;
 };
 
@@ -48,7 +48,7 @@ export const errorEmbed = (error_msg) => {
   const embeds = [];
   embeds.push({
     color: CONSTANTS.COLOR,
-    description: error_msg,
+    description: error_msg
   });
   return embeds;
 };
@@ -90,7 +90,7 @@ export const getRandomAngarMessage = () => {
     "Hoy te presento el ANGAR que podría ser presidente.",
     "Este ANGAR es tan monumental que debería estar en los libros de historia.",
     "¡Este ANGAR es tan legendario que merece su propia saga!",
-    "Este es el ANGAR que podría hacer que los gigantes se sientan pequeños.",,
+    "Este es el ANGAR que podría hacer que los gigantes se sientan pequeños.",
     "Este ANGAR es tan influyente que debería tener su propio ejército de seguidores.",
     "¡Este ANGAR es tan impresionante que merece su propio emoji!",
     "Hoy te presento el ANGAR que hace que los millonarios se sientan humildes.",

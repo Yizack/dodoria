@@ -19,22 +19,22 @@ const client = new Client({ intents: [
 ] });
 
 client.on("ready", () => {
-  console.log(`Logged in as ${client.user.tag}!`);
+  console.info(`Logged in as ${client.user.tag}!`);
 });
 
-client.on("messageCreate", async message => {
+client.on("messageCreate", async (message) => {
   if (message.content.startsWith("!ia")) {
     await message.channel.sendTyping();
     const mensaje = message.content.split("!ia ")[1];
-    console.log(mensaje);
+    console.info(mensaje);
     const { username } = message.author;
     try {
       const respuesta = await getCharResponse(`${username} says:\n${mensaje}`);
-      console.log(respuesta);
+      console.info(respuesta);
       await message.reply(`${respuesta}`);
     }
     catch (error) {
-      console.log(error);
+      console.info(error);
     }
   }
 });

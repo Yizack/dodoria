@@ -8,7 +8,7 @@ const API = {
 };
 
 class JsonResponse extends Response {
-  constructor(body, init) {
+  constructor (body, init) {
     const jsonBody = JSON.stringify(body);
     const options = init || {
       headers: {
@@ -20,8 +20,8 @@ class JsonResponse extends Response {
 }
 
 class JsonRequest extends Request {
-  constructor(url, body, init, authorization) {
-    console.log(body);
+  constructor (url, body, init, authorization) {
+    console.info(body);
     const options = {
       ...init,
       headers: {
@@ -35,10 +35,10 @@ class JsonRequest extends Request {
 }
 
 class JsonFileRequest extends Request {
-  constructor(url, body, init) {
+  constructor (url, body, init) {
     const formData = new FormData();
     const { files } = body;
-    console.log(body);
+    console.info(body);
     if (files) {
       files.forEach((file, i) => {
         formData.append(`files[${i}]`, file.file, file.name);
@@ -59,27 +59,27 @@ const toDiscord = (body) => {
 };
 
 const toDiscordEndpoint = (endpoint, body, method, authorization) => {
-  const endpoint_url = `${API.BASE}${endpoint}`;
+  const endpointURL = `${API.BASE}${endpoint}`;
   if (!body.files) {
-    return fetch(new JsonRequest(endpoint_url, body, { method }, authorization));
+    return fetch(new JsonRequest(endpointURL, body, { method }, authorization));
   }
   else {
-    return fetch(new JsonFileRequest(endpoint_url, body, { method }, authorization));
+    return fetch(new JsonFileRequest(endpointURL, body, { method }, authorization));
   }
 };
 
 const pong = () => {
   return toDiscord({
-    type: InteractionResponseType.PONG,
+    type: InteractionResponseType.PONG
   });
 };
 
 export const create = (type, func) => {
   switch (type) {
-  case InteractionType.PING:
-    return pong();
-  case InteractionType.APPLICATION_COMMAND:
-    return func();
+    case InteractionType.PING:
+      return pong();
+    case InteractionType.APPLICATION_COMMAND:
+      return func();
   }
 };
 
@@ -90,7 +90,7 @@ export const reply = (content, options) => {
       content: content,
       embeds: options?.embeds,
       components: options?.components
-    },
+    }
   });
 };
 
@@ -104,14 +104,13 @@ export const deferReply = (options) => {
 };
 
 export const deferUpdate = (content, options) => {
-  const { token, application_id } = options;
-  const followup_endpoint = `/webhooks/${application_id}/${token}`;
-  return toDiscordEndpoint(followup_endpoint, {
+  const followupEndpoint = `/webhooks/${options.application_id}/${options.token}`;
+  return toDiscordEndpoint(followupEndpoint, {
     type: InteractionResponseType.DEFERRED_UPDATE_MESSAGE,
     content: content,
     embeds: options?.embeds,
     components: options?.components,
-    files: options?.files,
+    files: options?.files
   }, "POST");
 };
 
@@ -122,7 +121,7 @@ export const error = (message, code) => {
 export const getGuild = async (id, token) => {
   const response = await fetch(`${API.BASE}/guilds/${id}`, {
     headers: {
-      "Authorization": `Bot ${token}`
+      Authorization: `Bot ${token}`
     }
   });
   const data = await response.json();

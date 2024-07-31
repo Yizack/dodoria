@@ -32,10 +32,10 @@ export const CHEER = {
   description: "Has una prueba de tus mensajes antes de enviar bits en el canal de ANGAR.",
   options: [
     {
-      "name": "mensaje",
-      "description": "El mensaje que quieres que lea el bot.",
-      "type": 3,
-      "required": true
+      name: "mensaje",
+      description: "El mensaje que quieres que lea el bot.",
+      type: 3,
+      required: true
     }
   ],
   cid: "1053398798786904096"
@@ -46,10 +46,10 @@ export const EDUCAR = {
   description: "Intenta educar a un usuario.",
   options: [
     {
-      "name": "usuario",
-      "description": "El usuario que deseas educar.",
-      "type": 6,
-      "required": true
+      name: "usuario",
+      description: "El usuario que deseas educar.",
+      type: 6,
+      required: true
     }
   ],
   cid: "1053578283347882024"
@@ -67,16 +67,16 @@ export const SHIP = {
   description: "Calcula el porcentaje de compatibilidad amorosa entre dos personas.",
   options: [
     {
-      "name": "persona1",
-      "description": "El primer usuario.",
-      "type": 6,
-      "required": true
+      name: "persona1",
+      description: "El primer usuario.",
+      type: 6,
+      required: true
     },
     {
-      "name": "persona2",
-      "description": "Con quien lo shipeas.",
-      "type": 6,
-      "required": true
+      name: "persona2",
+      description: "Con quien lo shipeas.",
+      type: 6,
+      required: true
     }
   ],
   cid: "1056821755487997952"
@@ -125,13 +125,13 @@ export const VIDEO = {
   contexts: Contexts.ALL,
   options: [
     {
-      "name": "link",
-      "description": "Link de Instagram, Facebook, TikTok, Twitter, YouTube, Twitch o Kick.",
-      "type": 3,
-      "required": true
+      name: "link",
+      description: "Link de Instagram, Facebook, TikTok, Twitter, YouTube, Twitch o Kick.",
+      type: 3,
+      required: true
     }
   ],
-  cid: "1225295750930501724",
+  cid: "1225295750930501724"
 };
 
 export const LOLMMR = {
@@ -139,31 +139,31 @@ export const LOLMMR = {
   description: "Calcula el ELO MMR aproximado de una cuenta basado en el emparejamiento de las partidas.",
   options: [
     {
-      "name": "riot_id",
-      "description": "Riot ID. Ej: (Name#TAG).",
-      "type": 3,
-      "required": true
+      name: "riot_id",
+      description: "Riot ID. Ej: (Name#TAG).",
+      type: 3,
+      required: true
     },
     {
-      "name": "servidor",
-      "description": "El servidor del invocador",
-      "type": 3,
-      "required": true,
-      "choices": CONSTANTS.LOL_SERVERS
+      name: "servidor",
+      description: "El servidor del invocador",
+      type: 3,
+      required: true,
+      choices: CONSTANTS.LOL_SERVERS
     },
     {
-      "name": "cola",
-      "description": "Tipo de cola clasificatoria",
-      "type": 3,
-      "required": true,
-      "choices": [
+      name: "cola",
+      description: "Tipo de cola clasificatoria",
+      type: 3,
+      required: true,
+      choices: [
         {
-          "name": "Solo/Duo",
-          "value": "SoloQ"
+          name: "Solo/Duo",
+          value: "SoloQ"
         },
         {
-          "name": "Flexible",
-          "value": "Flex"
+          name: "Flexible",
+          value: "Flex"
         }
       ]
     }
@@ -176,25 +176,25 @@ export const LOLPROFILE = {
   description: "Consulta información de un usuario de League of Legends",
   options: [
     {
-      "name": "riot_id",
-      "description": "Riot ID. Ej: (Name#TAG).",
-      "type": 3,
-      "required": true
+      name: "riot_id",
+      description: "Riot ID. Ej: (Name#TAG).",
+      type: 3,
+      required: true
     },
     {
-      "name": "servidor",
-      "description": "El servidor donde juega.",
-      "type": 3,
-      "required": true,
-      "choices": CONSTANTS.LOL_SERVERS
+      name: "servidor",
+      description: "El servidor donde juega.",
+      type: 3,
+      required: true,
+      choices: CONSTANTS.LOL_SERVERS
     }
   ],
-  cid: "1225468160279580736",
+  cid: "1225468160279580736"
 };
 
 export const ANGAR = {
   name: "angar",
   description: "Devuelve una foto random de Angar.",
   options: [],
-  cid: "1228534441996062740",
+  cid: "1228534441996062740"
 };

@@ -1,5 +1,6 @@
 <script setup>
 import { CONSTANTS } from "~/src/constants.js";
+
 definePageMeta({ layout: "site" });
 
 const open = (link) => {

@@ -1,8 +1,8 @@
 <script setup>
 import { CHEER } from "~/src/commands.js";
+
 definePageMeta({ layout: "site" });
 </script>
-
 
 <template>
   <div class="container text-white text-center">

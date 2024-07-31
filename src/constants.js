@@ -41,64 +41,64 @@ export const CONSTANTS = {
   },
   LOL_SERVERS: [
     {
-      "name": "LAN",
-      "value": "LAN"
+      name: "LAN",
+      value: "LAN"
     },
     {
-      "name": "LAS",
-      "value": "LAS"
+      name: "LAS",
+      value: "LAS"
     },
     {
-      "name": "NA",
-      "value": "NA"
+      name: "NA",
+      value: "NA"
     },
     {
-      "name": "BR",
-      "value": "BR"
+      name: "BR",
+      value: "BR"
     },
     {
-      "name": "EUW",
-      "value": "EUW"
+      name: "EUW",
+      value: "EUW"
     },
     {
-      "name": "EUNE",
-      "value": "EUNE"
+      name: "EUNE",
+      value: "EUNE"
     },
     {
-      "name": "KR",
-      "value": "KR"
+      name: "KR",
+      value: "KR"
     },
     {
-      "name": "RU",
-      "value": "RU"
+      name: "RU",
+      value: "RU"
     },
     {
-      "name": "TR",
-      "value": "TR"
+      name: "TR",
+      value: "TR"
     },
     {
-      "name": "JP",
-      "value": "JP"
+      name: "JP",
+      value: "JP"
     },
     {
-      "name": "OCE",
-      "value": "OCE"
+      name: "OCE",
+      value: "OCE"
     },
     {
-      "name": "PH",
-      "value": "PH"
+      name: "PH",
+      value: "PH"
     },
     {
-      "name": "TW",
-      "value": "TW"
+      name: "TW",
+      value: "TW"
     },
     {
-      "name": "VN",
-      "value": "VN"
+      name: "VN",
+      value: "VN"
     },
     {
-      "name": "TH",
-      "value": "TH"
+      name: "TH",
+      value: "TH"
     }
   ]
 };

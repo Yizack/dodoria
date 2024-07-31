@@ -10,7 +10,6 @@
   position: fixed;
   left: 50%;
   top: 50%;
-  -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   width: 400px
 }
@@ -20,12 +19,12 @@
   padding-left: 0
 }
 
-.dodoria a:hover code {
-  color: #ffc2e1!important
-}
-
 code, a {
   color: #f697c8!important
+}
+
+.dodoria a:hover code {
+  color: #ffc2e1!important
 }
 
 .scale-on-hover {

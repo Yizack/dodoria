@@ -2,17 +2,16 @@
  * Cloudflare worker.
  */
 import { IttyRouter } from "itty-router";
-import { verifyKey } from "discord-interactions";
+import { verifyKey, ButtonStyleTypes, MessageComponentTypes, InteractionType } from "discord-interactions";
+import { hash } from "ohash";
+import { withQuery } from "ufo";
+import { $fetch } from "ofetch";
 import { create, reply, error, deferReply, deferUpdate, getGuild } from "./interaction.js";
 import { getValue, getRandom, esUrl, imbedUrlsFromString, obtenerIDDesdeURL, errorEmbed, getRandomAngar, getRandomBuenoGente, getRandomAngarMessage } from "./functions.js";
 import * as C from "./commands.js";
 import { getEmoji, getEmojiURL, getSocial, getLeagueEmblem, getLolSpell } from "./emojis.js";
 import { avatar, guide, yizack } from "./images.js";
 import { CONSTANTS } from "./constants.js";
-import { ButtonStyleTypes, MessageComponentTypes, InteractionType } from "discord-interactions";
-import { hash } from "ohash";
-import { withQuery } from "ufo";
-import { $fetch } from "ofetch";
 
 const { COLOR, CHANNEL, CHANNEL_PRUEBAS, BOT, VOZ, OWNER, VIDEO_SOCIALS } = CONSTANTS;
 const allow = true;
@@ -30,7 +29,7 @@ router.post("/", async (req, env, context) => {
      * The `PING` message is used during the initial webhook handshake, and is
        required to configure the webhook in the developer portal.
      */
-    console.log("Handling Ping request");
+    console.info("Handling Ping request");
     return create(type);
   }
 
@@ -40,163 +39,163 @@ router.post("/", async (req, env, context) => {
 
       switch (name) {
       // Comando /memide
-      case C.ME_MIDE.name: {
-        const cm = getRandom({max: 32});
-        const emoji = cm >= 15 ? getEmoji("angarMonkas") : getEmoji("angarSad");
-        return reply(`A <@${member.user.id}> le mide **${cm}** centímetros. ${emoji}`);
-      }
-      // Comando /mecabe
-      case C.ME_CABE.name: {
-        const cm = getRandom({max: 43});
-        const emoji = cm >= 10 ? getEmoji("angarGasm") : getEmoji("angarL");
-        return reply(`A <@${member.user.id}> le caben **${cm}** centímetros. ${emoji}`);
-      }
-      // Comando /cheer
-      case C.CHEER.name: {
-        const mensaje = getValue("mensaje", options).replace(/(<([^>]+)>)/gi, "").trim();
-        const bits = [
-          getEmojiURL("Cheer100"),
-          getEmojiURL("Cheer1k"),
-          getEmojiURL("Cheer5k"),
-          getEmojiURL("Cheer10k"),
-          getEmojiURL("Cheer25k"),
-          getEmojiURL("Cheer50k")
-        ];
-        if (mensaje.length > 500) return reply(`<@${member.user.id}> El mensaje no puede tener más de 500 caracteres.`);
-        const followUpRequest = async () => {
-          const text = encodeURIComponent(mensaje);
-          const response = await fetch(`https://api.streamelements.com/kappa/v2/speech?voice=${VOZ}&text=${text}`);
-          const blob = await response.blob();
-          const files = [{ name: `${hash(text)}.mp3`, file: blob }];
-
-          return deferUpdate("", {
-            embeds : [{
-              description: `\`${mensaje}\``,
-              color: COLOR,
-              author: {
-                name: `${member.user.username}`,
-                icon_url: `https://cdn.discordapp.com/avatars/${member.user.id}/${member.user.avatar}.png`
-              },
-              thumbnail: {
-                url: getEmojiURL("angarG2")
-              },
-              footer: {
-                text: `Voz: ${VOZ}. Caracteres: ${mensaje.length} de 500.`,
-                icon_url: bits[getRandom({min: 0, max: bits.length - 1})]
-              }
-            }],
-            token,
-            application_id: env.DISCORD_APPLICATION_ID,
-            files
-          });
-        };
-
-        context.waitUntil(followUpRequest());
-        return deferReply();
-      }
-      // Comando /educar
-      case C.EDUCAR.name: {
-        const usuario = getValue("usuario", options);
-
-        let message = `<@${member.user.id}> no ha podido educar a <@${usuario}>`;
-        let embeds = [];
-
-        const percent = getRandom({max: 100});
-        if (percent < 33) {
-          const key = guild_id + "-" + usuario;
-
-          let counter = Number(await env.EDUCAR.get(key));
-          counter = counter ? counter + 1 : 1;
-          await env.EDUCAR.put(key, counter);
-
-          const veces = counter === 1 ? "vez" : "veces";
-
-          message = `<@${usuario}> te educaron.`;
-          embeds.push({
-            description: `**${member.user.username}** ha educado a **<@${usuario}>**.\n*<@${usuario}> ha sido educado **${counter}** ${veces} en total.*`,
-            color: COLOR
-          });
+        case C.ME_MIDE.name: {
+          const cm = getRandom({ max: 32 });
+          const emoji = cm >= 15 ? getEmoji("angarMonkas") : getEmoji("angarSad");
+          return reply(`A <@${member.user.id}> le mide **${cm}** centímetros. ${emoji}`);
         }
-        return reply(message, { embeds: embeds });
-      }
-      // comando /comandos
-      case C.COMANDOS.name: {
-        let list = [];
-        Object.values(C).forEach((command) => {
-          list.push(`-  </${command.name}:${command.cid}> *${command.description}*\n\n`);
-        });
+        // Comando /mecabe
+        case C.ME_CABE.name: {
+          const cm = getRandom({ max: 43 });
+          const emoji = cm >= 10 ? getEmoji("angarGasm") : getEmoji("angarL");
+          return reply(`A <@${member.user.id}> le caben **${cm}** centímetros. ${emoji}`);
+        }
+        // Comando /cheer
+        case C.CHEER.name: {
+          const mensaje = getValue("mensaje", options).replace(/(<([^>]+)>)/gi, "").trim();
+          const bits = [
+            getEmojiURL("Cheer100"),
+            getEmojiURL("Cheer1k"),
+            getEmojiURL("Cheer5k"),
+            getEmojiURL("Cheer10k"),
+            getEmojiURL("Cheer25k"),
+            getEmojiURL("Cheer50k")
+          ];
+          if (mensaje.length > 500) return reply(`<@${member.user.id}> El mensaje no puede tener más de 500 caracteres.`);
+          const followUpRequest = async () => {
+            const text = encodeURIComponent(mensaje);
+            const response = await fetch(`https://api.streamelements.com/kappa/v2/speech?voice=${VOZ}&text=${text}`);
+            const blob = await response.blob();
+            const files = [{ name: `${hash(text)}.mp3`, file: blob }];
 
-        return reply(null, { embeds: [{
-          title: "Lista de comandos",
-          description: "Conoce la lista de comandos disponibles.\n\n" +
-                          `${list.join("")}` +
-                          "Escribe el comando que desees en la caja de enviar mensajes de discord y selecciona la opción que se muestra junto al avatar del bot. Se irán añadiendo más comandos divertidos con el tiempo.",
-          color: COLOR,
-          author: {
-            name: BOT,
-            icon_url: avatar
-          },
-          image: {
-            url: guide
-          },
-          footer: {
-            text: `Creado por ${OWNER}.`,
-            icon_url: yizack
+            return deferUpdate("", {
+              embeds: [{
+                description: `\`${mensaje}\``,
+                color: COLOR,
+                author: {
+                  name: `${member.user.username}`,
+                  icon_url: `https://cdn.discordapp.com/avatars/${member.user.id}/${member.user.avatar}.png`
+                },
+                thumbnail: {
+                  url: getEmojiURL("angarG2")
+                },
+                footer: {
+                  text: `Voz: ${VOZ}. Caracteres: ${mensaje.length} de 500.`,
+                  icon_url: bits[getRandom({ min: 0, max: bits.length - 1 })]
+                }
+              }],
+              token,
+              application_id: env.DISCORD_APPLICATION_ID,
+              files
+            });
+          };
+
+          context.waitUntil(followUpRequest());
+          return deferReply();
+        }
+        // Comando /educar
+        case C.EDUCAR.name: {
+          const usuario = getValue("usuario", options);
+
+          let message = `<@${member.user.id}> no ha podido educar a <@${usuario}>`;
+          let embeds = [];
+
+          const percent = getRandom({ max: 100 });
+          if (percent < 33) {
+            const key = guild_id + "-" + usuario;
+
+            let counter = Number(await env.EDUCAR.get(key));
+            counter = counter ? counter + 1 : 1;
+            await env.EDUCAR.put(key, counter);
+
+            const veces = counter === 1 ? "vez" : "veces";
+
+            message = `<@${usuario}> te educaron.`;
+            embeds.push({
+              description: `**${member.user.username}** ha educado a **<@${usuario}>**.\n*<@${usuario}> ha sido educado **${counter}** ${veces} en total.*`,
+              color: COLOR
+            });
           }
-        }]});
-      }
-      // comando /buenogente
-      case C.BUENO_GENTE.name: {
-        return reply(null, { embeds: [{
-          title: "🖐 ANGAR se ha despedido con un \"BUENO GENTE\"",
-          description: "¡Bueno gente! 🖐🖐👊",
-          color: COLOR,
-          author: {
-            name: BOT,
-            icon_url: avatar
-          },
-          image: {
-            url: getRandomBuenoGente()
-          }
-        }]});
-      }
-      // comando /ship
-      case C.SHIP.name: {
-        const u1 = getValue("persona1", options);
-        const u2 = getValue("persona2", options);
-        const p = getRandom({min: 0, max: 100});
-        const { users } = resolved;
-        const letras_nombre1 = users[u1].username.substring(0, 3);
-        const letras_nombre2 = users[u2].username.substring(users[u2].username.length - 2);
-        const nombre_ship = `${letras_nombre1}${letras_nombre2}`;
-        const image = `https://dodoria-ship.vercel.app/api?u=${[u1, u2]}&a=${[users[u1].avatar, users[u2].avatar]}&d=${[users[u1].discriminator, users[u2].discriminator]}&p=${p}`;
-        let emoji = getEmoji("angarSad");
-        if (p >= 90) {
-          emoji = getEmoji("angarH");
+          return reply(message, { embeds: embeds });
         }
-        else if (p >= 70 && p < 90) {
-          emoji = getEmoji("angarShy");
-        }
-        else if (p >= 50 && p < 70) {
-          emoji = getEmoji("angarJu");
-        }
-        else if (p >= 30 && p < 50) {
-          emoji = getEmoji("angarG");
-        }
-        else if (p >= 10 && p < 30) {
-          emoji = getEmoji("angarSadge");
-        }
-        return reply(`Ship entre <@${u1}> y <@${u2}>. ${emoji}`, {
-          embeds: [{
+        // comando /comandos
+        case C.COMANDOS.name: {
+          let list = [];
+          Object.values(C).forEach((command) => {
+            list.push(`-  </${command.name}:${command.cid}> *${command.description}*\n\n`);
+          });
+
+          return reply(null, { embeds: [{
+            title: "Lista de comandos",
+            description: "Conoce la lista de comandos disponibles.\n\n"
+            + `${list.join("")}`
+            + "Escribe el comando que desees en la caja de enviar mensajes de discord y selecciona la opción que se muestra junto al avatar del bot. Se irán añadiendo más comandos divertidos con el tiempo.",
             color: COLOR,
-            description: `❤️ | <@${u1}> y <@${u2}> son **${p}%** compatibles.\n❤️ | El nombre del ship es **${nombre_ship}**.`,
+            author: {
+              name: BOT,
+              icon_url: avatar
+            },
             image: {
-              url: image
+              url: guide
+            },
+            footer: {
+              text: `Creado por ${OWNER}.`,
+              icon_url: yizack
             }
-          }]
-        });
-      }
-      /*// comando /fuck
+          }] });
+        }
+        // comando /buenogente
+        case C.BUENO_GENTE.name: {
+          return reply(null, { embeds: [{
+            title: "🖐 ANGAR se ha despedido con un \"BUENO GENTE\"",
+            description: "¡Bueno gente! 🖐🖐👊",
+            color: COLOR,
+            author: {
+              name: BOT,
+              icon_url: avatar
+            },
+            image: {
+              url: getRandomBuenoGente()
+            }
+          }] });
+        }
+        // comando /ship
+        case C.SHIP.name: {
+          const u1 = getValue("persona1", options);
+          const u2 = getValue("persona2", options);
+          const p = getRandom({ min: 0, max: 100 });
+          const { users } = resolved;
+          const letras_nombre1 = users[u1].username.substring(0, 3);
+          const letras_nombre2 = users[u2].username.substring(users[u2].username.length - 2);
+          const nombre_ship = `${letras_nombre1}${letras_nombre2}`;
+          const image = `https://dodoria-ship.vercel.app/api?u=${[u1, u2]}&a=${[users[u1].avatar, users[u2].avatar]}&d=${[users[u1].discriminator, users[u2].discriminator]}&p=${p}`;
+          let emoji = getEmoji("angarSad");
+          if (p >= 90) {
+            emoji = getEmoji("angarH");
+          }
+          else if (p >= 70 && p < 90) {
+            emoji = getEmoji("angarShy");
+          }
+          else if (p >= 50 && p < 70) {
+            emoji = getEmoji("angarJu");
+          }
+          else if (p >= 30 && p < 50) {
+            emoji = getEmoji("angarG");
+          }
+          else if (p >= 10 && p < 30) {
+            emoji = getEmoji("angarSadge");
+          }
+          return reply(`Ship entre <@${u1}> y <@${u2}>. ${emoji}`, {
+            embeds: [{
+              color: COLOR,
+              description: `❤️ | <@${u1}> y <@${u2}> son **${p}%** compatibles.\n❤️ | El nombre del ship es **${nombre_ship}**.`,
+              image: {
+                url: image
+              }
+            }]
+          });
+        }
+        /* // comando /fuck
         case C.FUCK.name: {
           if (channel_id === CHANNEL_FUCK || channel_id === CHANNEL_FUCK_TEST) {
             const usuario = getValue("usuario", options);
@@ -235,390 +234,389 @@ router.post("/", async (req, env, context) => {
             const respuesta = await getIA(`${member.user.username} says:\n${mensaje}`, env.IA_CHAT);
             return reply(`<@${member.user.id}>. ${respuesta}`);
           } catch (error) {
-            console.log(error);
+            console.info(error);
           }
           break;
         }
         */
-      case C.VIDEO.name: {
-        const followUpRequest = async () => {
-          const embeds = [], files = [], button = [], components = [];
-          let emoji;
-          let supported = false;
-          let red_social = "Instagram / Facebook / TikTok / Twitter / YouTube / Twitch / Kick";
-          const url = getValue("link", options);
-      
-          for (const key in VIDEO_SOCIALS) {
-            const sns = VIDEO_SOCIALS[key];
-            if (sns.domains.some(domains => url.includes(domains))) {
-              red_social = sns.name;
-              emoji = getSocial(red_social);
-              supported = true;
-              break;
-            }
-          }
-      
-          if (!esUrl(url) && !supported) {
-            const error = `⚠️ Error. El texto ingresado no es un link válido de **${red_social}**`;
-            return deferUpdate("", {
-              token,
-              application_id: env.DISCORD_APPLICATION_ID,
-              embeds: errorEmbed(error),
-            });
-          }
-      
-          const encodedUrl = encodeURIComponent(url);
-          const scraperUrl = `https://dev.ahmedrangel.com/dc/${red_social.toLowerCase()}-video-scrapper`;
-          const scraperQueries = { url: encodedUrl, filter: "video" };
-          const scrapping = await $fetch(withQuery(scraperUrl, scraperQueries), { retry: 3, retryDelay: 1000 }).catch(() => null);
-          const video_url = scrapping?.video_url;
-          const short_url = scrapping?.short_url;
-          const status = scrapping?.status;
-          const caption = imbedUrlsFromString(`${scrapping?.caption ? scrapping?.caption?.replace(/#[^\s#]+(\s#[^\s#]+)*$/g, "").replace(/.\n/g,"").trim() : ""}`);
-          console.log(status);
-      
-          if (status !== 200 && !esUrl(video_url)) {
-            const error = ":x: Error. Ha ocurrido un error obteniendo el video.";
-            return deferUpdate("", {
-              token,
-              application_id: env.DISCORD_APPLICATION_ID,
-              embeds: errorEmbed(error),
-            });
-          }
-      
-          const videoChecker = await $fetch.raw(video_url).catch(() => null);
-          const blob = videoChecker?._data;
-          const fileSize = blob?.size;
-          console.log("Tamaño: " + fileSize);
-          const contentType = videoChecker?.headers.get("content-type");
-          console.log("Content-Type: " + contentType);
-      
-          const guild = await getGuild(guild_id, env.DISCORD_TOKEN);
-          console.log("premium tier: " + guild.premium_tier);
-          const maxSize = guild.premium_tier >= 3 ? 100000000 : (guild.premium_tier === 2 ? 50000000 : 25000000);
-      
-          if (blob && fileSize > maxSize) {
-            const error = "⚠️ Error. El video es muy pesado o demasiado largo.";
-            return deferUpdate("", {
-              token,
-              application_id: env.DISCORD_APPLICATION_ID,
-              embeds: errorEmbed(error),
-            });
-          }
-      
-          if (!blob || fileSize < 100 || !["video/mp4", "binary/octet-stream", "application/octet-stream"].includes(contentType)) {
-            const error = ":x: Error. Ha ocurrido un error obteniendo el video.";
-            return deferUpdate("", {
-              token,
-              application_id: env.DISCORD_APPLICATION_ID,
-              embeds: errorEmbed(error),
-            });
-          }
-      
-          const uploadedUrl = await $fetch(withQuery(`https://dev.ahmedrangel.com/put/video`, { url: video_url, bot_name: CONSTANTS.BOT }));
-          const uploadedId = obtenerIDDesdeURL(uploadedUrl);
-      
-          files.push({
-            name: `${uploadedId}.mp4`,
-            file: blob
-          });
-      
-          button.push({
-            type: MessageComponentTypes.BUTTON,
-            style: ButtonStyleTypes.LINK,
-            label: "Descargar MP4",
-            url: uploadedUrl
-          });
-      
-          components.push ({
-            type: MessageComponentTypes.ACTION_ROW,
-            components: button
-          });
-      
-          const mensaje = `${emoji} **${red_social}**: [${short_url.replace("https://", "")}](<${short_url}>)\n${caption}`;
-          const fixedMsg = mensaje.length > 1000 ? mensaje.substring(0, 1000) + "..." : mensaje;
-          // Return del refer
-          return deferUpdate(fixedMsg, {
-            token,
-            application_id: env.DISCORD_APPLICATION_ID,
-            embeds,
-            components,
-            files
-          });
-        };
-        context.waitUntil(followUpRequest());
-        return deferReply();
-      }
-      case C.LOLPROFILE.name: {
-        const followUpRequest = async () => {
-          const riotId = (getValue("riot_id", options)).replace(/ /g, "").split("#");
-          const region = getValue("servidor", options);
-          const riotName = riotId[0];
-          const riotTag = riotId[1];
-          if (!riotTag || !riotName) {
-            return deferUpdate("", { token, application_id: env.DISCORD_APPLICATION_ID,
-              embeds: [{
-                color: COLOR,
-                description: ":x: Ingrese correctamente el **Riot ID**. Ej: **Name#TAG**",
-              }]
-            });
-          }
-          const embeds = [];
-          let components = [];
-          let button = [];
-          let mensaje = "";
-          let remake, footer, titleName;
+        case C.VIDEO.name: {
+          const followUpRequest = async () => {
+            const embeds = [], files = [], button = [], components = [];
+            let emoji;
+            let supported = false;
+            let red_social = "Instagram / Facebook / TikTok / Twitter / YouTube / Twitch / Kick";
+            const url = getValue("link", options);
 
-          const profileF = await fetch(`https://dev.ahmedrangel.com/lol/profile/${region}/${riotName}/${riotTag}`);
-          const profile = await profileF.json();
-          if (profile.status_code !== 404) {
-            if (profile.titleName !== "") {
-              titleName = `*${profile.titleName}*`;
+            for (const key in VIDEO_SOCIALS) {
+              const sns = VIDEO_SOCIALS[key];
+              if (sns.domains.some(domains => url.includes(domains))) {
+                red_social = sns.name;
+                emoji = getSocial(red_social);
+                supported = true;
+                break;
+              }
             }
-            else {
-              titleName = "";
-            }
-            let queue = "";
-            const nivel = {
-              name: "Nivel",
-              value: `${profile.summonerLevel}`,
-              inline: true
-            };
-            const history = [];
-            const fields = [];
-            profile.rankProfile.forEach((rank) => {
-              if (rank.queueType == "RANKED_SOLO_5x5") {
-                queue = "Solo/Duo";
-              }
-              else if (rank.queueType == "RANKED_FLEX_SR") {
-                queue = "Flexible";
-              }
-              else if (rank.queueType == "RANKED_TFT_DOUBLE_UP") {
-                queue = "TFT Dúo Dinámico";
-              }
-              const winrate = Math.round((rank.wins/(rank.wins + rank.losses))*100);
-              const tierEmoji = getLeagueEmblem(rank.tier);
-              let rankNumber;
-              if (rank.tier == "MAESTRO" || rank.tier == "GRAN MAESTRO" || rank.tier == "RETADOR") {
-                rankNumber = "";
-              }
-              else {
-                rankNumber = rank.rank;
-              }
-              fields.push({
-                name: `${queue}: ${tierEmoji} ${rank.tier.toUpperCase()} ${rankNumber}`,
-                value: `${rank.leaguePoints} LP・${rank.wins}V - ${rank.losses}D **(${winrate}% WR)**`,
-                inline: true
+
+            if (!esUrl(url) && !supported) {
+              const error = `⚠️ Error. El texto ingresado no es un link válido de **${red_social}**`;
+              return deferUpdate("", {
+                token,
+                application_id: env.DISCORD_APPLICATION_ID,
+                embeds: errorEmbed(error)
               });
+            }
+
+            const encodedUrl = encodeURIComponent(url);
+            const scraperUrl = `https://dev.ahmedrangel.com/dc/${red_social.toLowerCase()}-video-scrapper`;
+            const scraperQueries = { url: encodedUrl, filter: "video" };
+            const scrapping = await $fetch(withQuery(scraperUrl, scraperQueries), { retry: 3, retryDelay: 1000 }).catch(() => null);
+            const video_url = scrapping?.video_url;
+            const short_url = scrapping?.short_url;
+            const status = scrapping?.status;
+            const caption = imbedUrlsFromString(`${scrapping?.caption ? scrapping?.caption?.replace(/#[^\s#]+(\s#[^\s#]+)*$/g, "").replace(/.\n/g, "").trim() : ""}`);
+            console.info(status);
+
+            if (status !== 200 && !esUrl(video_url)) {
+              const error = ":x: Error. Ha ocurrido un error obteniendo el video.";
+              return deferUpdate("", {
+                token,
+                application_id: env.DISCORD_APPLICATION_ID,
+                embeds: errorEmbed(error)
+              });
+            }
+
+            const videoChecker = await $fetch.raw(video_url).catch(() => null);
+            const blob = videoChecker?._data;
+            const fileSize = blob?.size;
+            console.info("Tamaño: " + fileSize);
+            const contentType = videoChecker?.headers.get("content-type");
+            console.info("Content-Type: " + contentType);
+
+            const guild = await getGuild(guild_id, env.DISCORD_TOKEN);
+            console.info("premium tier: " + guild.premium_tier);
+            const maxSize = guild.premium_tier >= 3 ? 100000000 : (guild.premium_tier === 2 ? 50000000 : 25000000);
+
+            if (blob && fileSize > maxSize) {
+              const error = "⚠️ Error. El video es muy pesado o demasiado largo.";
+              return deferUpdate("", {
+                token,
+                application_id: env.DISCORD_APPLICATION_ID,
+                embeds: errorEmbed(error)
+              });
+            }
+
+            if (!blob || fileSize < 100 || !["video/mp4", "binary/octet-stream", "application/octet-stream"].includes(contentType)) {
+              const error = ":x: Error. Ha ocurrido un error obteniendo el video.";
+              return deferUpdate("", {
+                token,
+                application_id: env.DISCORD_APPLICATION_ID,
+                embeds: errorEmbed(error)
+              });
+            }
+
+            const uploadedUrl = await $fetch(withQuery("https://dev.ahmedrangel.com/put/video", { url: video_url, bot_name: CONSTANTS.BOT }));
+            const uploadedId = obtenerIDDesdeURL(uploadedUrl);
+
+            files.push({
+              name: `${uploadedId}.mp4`,
+              file: blob
             });
 
-            profile.matchesHistory.forEach((match) => {
-              let resultado;
-              if (match.remake) {
-                resultado = "⬜";
-                remake = true;
+            button.push({
+              type: MessageComponentTypes.BUTTON,
+              style: ButtonStyleTypes.LINK,
+              label: "Descargar MP4",
+              url: uploadedUrl
+            });
+
+            components.push ({
+              type: MessageComponentTypes.ACTION_ROW,
+              components: button
+            });
+
+            const mensaje = `${emoji} **${red_social}**: [${short_url.replace("https://", "")}](<${short_url}>)\n${caption}`;
+            const fixedMsg = mensaje.length > 1000 ? mensaje.substring(0, 1000) + "..." : mensaje;
+            // Return del refer
+            return deferUpdate(fixedMsg, {
+              token,
+              application_id: env.DISCORD_APPLICATION_ID,
+              embeds,
+              components,
+              files
+            });
+          };
+          context.waitUntil(followUpRequest());
+          return deferReply();
+        }
+        case C.LOLPROFILE.name: {
+          const followUpRequest = async () => {
+            const riotId = (getValue("riot_id", options)).replace(/ /g, "").split("#");
+            const region = getValue("servidor", options);
+            const riotName = riotId[0];
+            const riotTag = riotId[1];
+            if (!riotTag || !riotName) {
+              return deferUpdate("", { token, application_id: env.DISCORD_APPLICATION_ID,
+                embeds: [{
+                  color: COLOR,
+                  description: ":x: Ingrese correctamente el **Riot ID**. Ej: **Name#TAG**"
+                }]
+              });
+            }
+            const embeds = [];
+            let components = [];
+            let button = [];
+            let mensaje = "";
+            let remake, footer, titleName;
+
+            const profileF = await fetch(`https://dev.ahmedrangel.com/lol/profile/${region}/${riotName}/${riotTag}`);
+            const profile = await profileF.json();
+            if (profile.status_code !== 404) {
+              if (profile.titleName !== "") {
+                titleName = `*${profile.titleName}*`;
               }
               else {
-                resultado = match.win ? "🟦" : "🟥";
+                titleName = "";
               }
-              const championName = match.championName.replaceAll(" ", "");
-              const k = match.kills;
-              const d = match.deaths;
-              const a = match.assists;
-              const queueName = match.queueName;
-              const strTime = match.strTime;
-              const spell1 = getLolSpell(match.summoner1Id);
-              const spell2 = getLolSpell(match.summoner2Id);
-              history.push(`${resultado} ${spell1}${spell2} ${championName}・**${k}/${d}/${a}**・${queueName}・*${strTime}*`);
-            });
-            fields.push({
-              name: "Partidas recientes:",
-              value: history.join("\n"),
-              inline: false
-            });
-            if (remake) {
-              footer = "🟦 = victoriaㅤ🟥 = derrotaㅤ⬜ = remake";
-            }
-            else {
-              footer = "🟦 = victoriaㅤ🟥 = derrota";
-            }
-            embeds.push({
-              type: "rich",
-              title: profile.region.toUpperCase(),
-              description: `${titleName}`,
-              color: COLOR,
-              fields: [nivel, ...fields],
-              author: {
-                name: `${profile.riotName} #${profile.riotTag}`,
-                icon_url: profile.profileIconUrl
-              },
-              footer: {
-                text: footer,
-                icon_url: "https://cdn.ahmedrangel.com/LOL_Icon.png"
+              let queue = "";
+              const nivel = {
+                name: "Nivel",
+                value: `${profile.summonerLevel}`,
+                inline: true
+              };
+              const history = [];
+              const fields = [];
+              profile.rankProfile.forEach((rank) => {
+                if (rank.queueType == "RANKED_SOLO_5x5") {
+                  queue = "Solo/Duo";
+                }
+                else if (rank.queueType == "RANKED_FLEX_SR") {
+                  queue = "Flexible";
+                }
+                else if (rank.queueType == "RANKED_TFT_DOUBLE_UP") {
+                  queue = "TFT Dúo Dinámico";
+                }
+                const winrate = Math.round((rank.wins / (rank.wins + rank.losses)) * 100);
+                const tierEmoji = getLeagueEmblem(rank.tier);
+                let rankNumber;
+                if (rank.tier == "MAESTRO" || rank.tier == "GRAN MAESTRO" || rank.tier == "RETADOR") {
+                  rankNumber = "";
+                }
+                else {
+                  rankNumber = rank.rank;
+                }
+                fields.push({
+                  name: `${queue}: ${tierEmoji} ${rank.tier.toUpperCase()} ${rankNumber}`,
+                  value: `${rank.leaguePoints} LP・${rank.wins}V - ${rank.losses}D **(${winrate}% WR)**`,
+                  inline: true
+                });
+              });
+
+              profile.matchesHistory.forEach((match) => {
+                let resultado;
+                if (match.remake) {
+                  resultado = "⬜";
+                  remake = true;
+                }
+                else {
+                  resultado = match.win ? "🟦" : "🟥";
+                }
+                const championName = match.championName.replaceAll(" ", "");
+                const k = match.kills;
+                const d = match.deaths;
+                const a = match.assists;
+                const queueName = match.queueName;
+                const strTime = match.strTime;
+                const spell1 = getLolSpell(match.summoner1Id);
+                const spell2 = getLolSpell(match.summoner2Id);
+                history.push(`${resultado} ${spell1}${spell2} ${championName}・**${k}/${d}/${a}**・${queueName}・*${strTime}*`);
+              });
+              fields.push({
+                name: "Partidas recientes:",
+                value: history.join("\n"),
+                inline: false
+              });
+              if (remake) {
+                footer = "🟦 = victoriaㅤ🟥 = derrotaㅤ⬜ = remake";
               }
-            });
-            button.push(
-              {
-                type: MessageComponentTypes.BUTTON,
-                style: ButtonStyleTypes.LINK,
-                label: "Ver en OP.GG",
-                url: `https://op.gg/summoners/${profile.region}/${encodeURIComponent(profile.riotName)}-${encodeURIComponent(profile.riotTag)}`
-              },/*
+              else {
+                footer = "🟦 = victoriaㅤ🟥 = derrota";
+              }
+              embeds.push({
+                type: "rich",
+                title: profile.region.toUpperCase(),
+                description: `${titleName}`,
+                color: COLOR,
+                fields: [nivel, ...fields],
+                author: {
+                  name: `${profile.riotName} #${profile.riotTag}`,
+                  icon_url: profile.profileIconUrl
+                },
+                footer: {
+                  text: footer,
+                  icon_url: "https://cdn.ahmedrangel.com/LOL_Icon.png"
+                }
+              });
+              button.push(
+                {
+                  type: MessageComponentTypes.BUTTON,
+                  style: ButtonStyleTypes.LINK,
+                  label: "Ver en OP.GG",
+                  url: `https://op.gg/summoners/${profile.region}/${encodeURIComponent(profile.riotName)}-${encodeURIComponent(profile.riotTag)}`
+                } /*
                 {
                   type: MessageComponentTypes.BUTTON,
                   style: ButtonStyleTypes.LINK,
                   label: "Ver en U.GG",
                   url: `https://u.gg/lol/profile/${profile.route}/${encodeURIComponent(profile.summonerName)}/overview`
-                }*/);
-            components.push({
-              type: MessageComponentTypes.ACTION_ROW,
-              components: button
-            });
-          }
-          else {
-            let errorName;
-            switch(profile.errorName) {
-            case "riotId":
-              errorName = "No se ha encontrado el **Riot ID**.";
-              break;
-            case "region":
-              errorName= "La **región** ingresada es incorrecta.";
-              break;
+                } */);
+              components.push({
+                type: MessageComponentTypes.ACTION_ROW,
+                components: button
+              });
             }
-            embeds.push({
-              color: COLOR,
-              description: `:x: Error. ${errorName}`,
-            });
-          }
-          console.log(embeds);
-          // Return del refer
-          return deferUpdate(mensaje, {
-            token,
-            application_id: env.DISCORD_APPLICATION_ID,
-            embeds,
-            components
-          });
-        };
-
-        context.waitUntil(followUpRequest());
-        return deferReply();
-      }
-      case C.LOLMMR.name: {
-        const followUpRequest = async () => {
-          const riotId = (getValue("riot_id", options)).replace(/ /g, "").split("#");
-          const region = getValue("servidor", options);
-          const queue = getValue("cola", options);
-          const riotName = riotId[0];
-          const riotTag = riotId[1];
-          if (!riotTag || !riotName) {
-            return deferUpdate("", { token, application_id: env.DISCORD_APPLICATION_ID,
-              embeds: [{
-                color: COLOR,
-                description: ":x: Ingrese correctamente el **Riot ID**. Ej: **Name#TAG**",
-              }]
-            });
-          }
-          const embeds = [];
-          let mensaje = "";
-          let footer;
-          const profileF = await fetch(`https://dev.ahmedrangel.com/lol/mmr/${region}/${riotName}/${riotTag}/${queue}`);
-          const profile = await profileF.json();
-          if (profile.status_code !== 404) {
-            const queueName = profile.ranked.queueName === "Flex" ? "Flexible" : "Solo/Duo";
-            const tierEmoji = getLeagueEmblem(profile?.ranked?.tier);
-            const avgTierEmoji = getLeagueEmblem(profile?.avg?.tier);
-            const wins = profile?.ranked.wins;
-            const losses = profile?.ranked.losses;
-            const winrate = Math.round((wins/(wins + losses))*100);
-            embeds.push({
-              type: "rich",
-              title: profile?.region.toUpperCase(),
-              color: COLOR,
-              fields: [
-                {
-                  name: `${queueName}: ${tierEmoji} ${profile?.ranked?.tier.toUpperCase()} ${profile?.ranked?.rank}`,
-                  value: `${profile?.ranked?.leaguePoints} LP・${wins}V - ${losses}D **(${winrate}% WR)**`,
-                  inline: false
-                },
-                {
-                  name: `ELO MMR aproximado: ${avgTierEmoji} ${profile?.avg?.tier.toUpperCase()} ${profile?.avg?.rank}`,
-                  value: "",
-                  inline: false,
-                }
-              ],
-              author: {
-                name: `${profile?.riotName} #${profile?.riotTag}`,
-                icon_url: profile?.profileIconUrl
-              },
-              footer: {
-                text: footer,
-                icon_url: "https://cdn.ahmedrangel.com/LOL_Icon.png"
+            else {
+              let errorName;
+              switch (profile.errorName) {
+                case "riotId":
+                  errorName = "No se ha encontrado el **Riot ID**.";
+                  break;
+                case "region":
+                  errorName = "La **región** ingresada es incorrecta.";
+                  break;
               }
-            });
-          }
-          else {
-            let errorName;
-            switch(profile?.errorName) {
-            case "riotId":
-              errorName = "No se ha encontrado el **Riot ID**.";
-              break;
-            case "region":
-              errorName= "La **región** ingresada es incorrecta.";
-              break;
-            case "ranked":
-              errorName= `La cuenta es **unranked** en **${queue}**`;
-              break;
+              embeds.push({
+                color: COLOR,
+                description: `:x: Error. ${errorName}`
+              });
             }
-            embeds.push({
+            console.info(embeds);
+            // Return del refer
+            return deferUpdate(mensaje, {
+              token,
+              application_id: env.DISCORD_APPLICATION_ID,
+              embeds,
+              components
+            });
+          };
+
+          context.waitUntil(followUpRequest());
+          return deferReply();
+        }
+        case C.LOLMMR.name: {
+          const followUpRequest = async () => {
+            const riotId = (getValue("riot_id", options)).replace(/ /g, "").split("#");
+            const region = getValue("servidor", options);
+            const queue = getValue("cola", options);
+            const riotName = riotId[0];
+            const riotTag = riotId[1];
+            if (!riotTag || !riotName) {
+              return deferUpdate("", { token, application_id: env.DISCORD_APPLICATION_ID,
+                embeds: [{
+                  color: COLOR,
+                  description: ":x: Ingrese correctamente el **Riot ID**. Ej: **Name#TAG**"
+                }]
+              });
+            }
+            const embeds = [];
+            let mensaje = "";
+            let footer;
+            const profileF = await fetch(`https://dev.ahmedrangel.com/lol/mmr/${region}/${riotName}/${riotTag}/${queue}`);
+            const profile = await profileF.json();
+            if (profile.status_code !== 404) {
+              const queueName = profile.ranked.queueName === "Flex" ? "Flexible" : "Solo/Duo";
+              const tierEmoji = getLeagueEmblem(profile?.ranked?.tier);
+              const avgTierEmoji = getLeagueEmblem(profile?.avg?.tier);
+              const wins = profile?.ranked.wins;
+              const losses = profile?.ranked.losses;
+              const winrate = Math.round((wins / (wins + losses)) * 100);
+              embeds.push({
+                type: "rich",
+                title: profile?.region.toUpperCase(),
+                color: COLOR,
+                fields: [
+                  {
+                    name: `${queueName}: ${tierEmoji} ${profile?.ranked?.tier.toUpperCase()} ${profile?.ranked?.rank}`,
+                    value: `${profile?.ranked?.leaguePoints} LP・${wins}V - ${losses}D **(${winrate}% WR)**`,
+                    inline: false
+                  },
+                  {
+                    name: `ELO MMR aproximado: ${avgTierEmoji} ${profile?.avg?.tier.toUpperCase()} ${profile?.avg?.rank}`,
+                    value: "",
+                    inline: false
+                  }
+                ],
+                author: {
+                  name: `${profile?.riotName} #${profile?.riotTag}`,
+                  icon_url: profile?.profileIconUrl
+                },
+                footer: {
+                  text: footer,
+                  icon_url: "https://cdn.ahmedrangel.com/LOL_Icon.png"
+                }
+              });
+            }
+            else {
+              let errorName;
+              switch (profile?.errorName) {
+                case "riotId":
+                  errorName = "No se ha encontrado el **Riot ID**.";
+                  break;
+                case "region":
+                  errorName = "La **región** ingresada es incorrecta.";
+                  break;
+                case "ranked":
+                  errorName = `La cuenta es **unranked** en **${queue}**`;
+                  break;
+              }
+              embeds.push({
+                color: COLOR,
+                description: `:x: Error. ${errorName}`
+              });
+            }
+            console.info(embeds);
+            // Return del refer
+            return deferUpdate(mensaje, {
+              token,
+              application_id: env.DISCORD_APPLICATION_ID,
+              embeds
+            });
+          };
+
+          context.waitUntil(followUpRequest());
+          return deferReply();
+        }
+        case C.ANGAR.name: {
+          const button = [{
+            type: MessageComponentTypes.BUTTON,
+            style: ButtonStyleTypes.LINK,
+            label: "Ver galería",
+            url: "https://dodoria.yizack.com/c/angar"
+          }];
+
+          const components = [{
+            type: MessageComponentTypes.ACTION_ROW,
+            components: button
+          }];
+
+          return reply(null, {
+            components,
+            embeds: [{
+              title: getRandomAngarMessage(),
+              description: "",
               color: COLOR,
-              description: `:x: Error. ${errorName}`,
-            });
-          }
-          console.log(embeds);
-          // Return del refer
-          return deferUpdate(mensaje, {
-            token,
-            application_id: env.DISCORD_APPLICATION_ID,
-            embeds
+              author: {
+                name: `${member.user.username}`,
+                icon_url: `https://cdn.discordapp.com/avatars/${member.user.id}/${member.user.avatar}.png`
+              },
+              image: {
+                url: getRandomAngar()
+              }
+            }]
           });
-        };
-
-        context.waitUntil(followUpRequest());
-        return deferReply();
+        }
+        default:
+          return error("Unknown Type", 400);
       }
-      case C.ANGAR.name: {
-        const button = [{
-          type: MessageComponentTypes.BUTTON,
-          style: ButtonStyleTypes.LINK,
-          label: "Ver galería",
-          url: "https://dodoria.yizack.com/c/angar"
-        }];
-
-        const components = [{
-          type: MessageComponentTypes.ACTION_ROW,
-          components: button
-        }];
-
-        return reply(null, {
-          components,
-          embeds: [{
-            title: getRandomAngarMessage(),
-            description: "",
-            color: COLOR,
-            author: {
-              name: `${member.user.username}`,
-              icon_url: `https://cdn.discordapp.com/avatars/${member.user.id}/${member.user.avatar}.png`
-            },
-            image: {
-              url: getRandomAngar()
-            }
-          }]
-        });
-      }
-      default:
-        return error("Unknown Type", 400);
-      }
-
     });
   }
 });
@@ -626,7 +624,7 @@ router.post("/", async (req, env, context) => {
 router.all("*", () => new Response("Not Found.", { status: 404 }));
 
 export default {
-  async fetch(request, env, context) {
+  async fetch (request, env, context) {
     const { method, headers } = request;
     if (method === "POST") {
       const signature = headers.get("x-signature-ed25519");
@@ -643,5 +641,5 @@ export default {
       }
     }
     return router.fetch(request, env, context);
-  },
+  }
 };
