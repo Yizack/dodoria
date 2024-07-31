@@ -25,5 +25,14 @@ export default defineNuxtConfig({
   ],
   features: {
     inlineStyles: false
+  },
+  nitro: {
+    cloudflare: {
+      pages: {
+        routes: {
+          exclude: ["/images/*"]
+        }
+      }
+    }
   }
 });
