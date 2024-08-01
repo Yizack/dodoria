@@ -120,13 +120,13 @@ export const IA = {
 
 export const VIDEO = {
   name: "video",
-  description: "Obtener un video de Instagram, Facebook, TikTok, Twitter, YouTube, Twitch o Kick en formato MP4.",
+  description: "Obtener un video de Instagram, Facebook, TikTok, X, YouTube, Twitch o Kick en formato MP4.",
   integration_types: IntegrationTypes.ALL,
   contexts: Contexts.ALL,
   options: [
     {
       name: "link",
-      description: "Link de Instagram, Facebook, TikTok, Twitter, YouTube, Twitch o Kick.",
+      description: "Link de Instagram, Facebook, TikTok, X, YouTube, Twitch o Kick.",
       type: 3,
       required: true
     }
