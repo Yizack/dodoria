@@ -1,3 +1,5 @@
+import { rollup as unwasm } from "unwasm/plugin";
+
 export default defineNuxtConfig({
   app: {
     head: {
@@ -30,6 +32,12 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    rollupConfig: {
+      // @ts-expect-error Type instantiation is excessively deep and possibly infinite.
+      plugins: [
+        unwasm({})
+      ]
+    },
     cloudflare: {
       pages: {
         routes: {
