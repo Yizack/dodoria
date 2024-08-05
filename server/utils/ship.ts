@@ -4,11 +4,11 @@ import resvgwasm from "@resvg/resvg-wasm/index_bg.wasm?module";
 
 const discordURL = "https://cdn.discordapp.com";
 
-const getAvatarURL = (u: bigint, a: string, d: number) => {
+const getAvatarURL = (u: bigint, a: string | null, d: number) => {
   return a ? `${discordURL}/avatars/${u}/${a}.png?size=256` : `${discordURL}/embed/avatars/${d ? d % 5 : (u >> 22n) % 6n}.png`;
 };
 
-export const getAvatars = (u: bigint[], a: string[], d: number[]) => {
+export const getAvatars = (u: bigint[], a: (string | null)[], d: number[]) => {
   return {
     u1: getAvatarURL(u[0], a[0], d[0]),
     u2: getAvatarURL(u[1], a[1], d[1])
@@ -63,7 +63,7 @@ export const getImage = async (data: {
     const backgroundBase64 = await getBase64Image(background);
     const avatar1Base64 = avatars ? await getBase64Image(avatars.u1) : "";
     const avatar2Base64 = avatars ? await getBase64Image(avatars.u2) : "";
-    const font = await $fetch(`${SITE.url}/assets/OpenSans.ttf`, { responseType: "arrayBuffer" }) as ArrayBuffer;
+    const font = await useStorage("assets/server/fonts").getItemRaw("OpenSans.ttf");
     const fontUint8Array = new Uint8Array(font);
     const svg = `
     <svg xmlns="http://www.w3.org/2000/svg" width="610" height="200" viewBox="0 0 610 200" fill="none" role="img">
