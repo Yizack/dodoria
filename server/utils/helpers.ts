@@ -1,4 +1,4 @@
-import { svg2png, initialize } from "svg2png-wasm";
+// import { svg2png, initialize } from "svg2png-wasm";
 import { SITE as siteInfo } from "~/utils/site-info";
 
 export { z } from "zod";
@@ -66,9 +66,8 @@ export const getImage = async (data: {
     const backgroundBase64 = await getBase64Image(background);
     const avatar1Base64 = avatar ? await getBase64Image(avatar.u1) : "";
     const avatar2Base64 = avatar ? await getBase64Image(avatar.u2) : "";
-    const font = await $fetch("https://fonts.gstatic.com/s/opensans/v25/mem5YaGs126MiZpBA-UN7rgOUuhs.ttf", { responseType: "arrayBuffer" }) as ArrayBuffer;
-    const fontUint8Array = new Uint8Array(font);
-
+    // const font = await $fetch("https://fonts.gstatic.com/s/opensans/v25/mem5YaGs126MiZpBA-UN7rgOUuhs.ttf", { responseType: "arrayBuffer" }) as ArrayBuffer;
+    // const fontUint8Array = new Uint8Array(font);
     const svg = `
     <svg xmlns="http://www.w3.org/2000/svg" width="610" height="200" viewBox="0 0 610 200" fill="none" role="img">
       <defs>
@@ -94,6 +93,8 @@ export const getImage = async (data: {
       <image href="data:image/png;base64,${avatar1Base64}" clip-path="url(#persona1)" x="42.5" y="20" width="160" height="160" preserveAspectRatio="xMidYMid slice" />
       <image href="data:image/png;base64,${avatar2Base64}" clip-path="url(#persona2)" x="407.5" y="20" width="160" height="160" preserveAspectRatio="xMidYMid slice" />
     </svg>`.trim();
+    return svg;
+    /*
     const wasm = await $fetch(`${SITE.url}/assets/svg2png_wasm_bg.wasm`, { responseType: "arrayBuffer" }) as ArrayBuffer;
     await initialize(wasm);
     const png = await svg2png(svg, {
@@ -105,6 +106,7 @@ export const getImage = async (data: {
       }
     });
     return png;
+    */
   }
   catch (e) {
     console.warn(e);
