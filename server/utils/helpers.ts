@@ -1,4 +1,6 @@
 import { Resvg, initWasm } from "@resvg/resvg-wasm";
+// @ts-expect-error - ignore wasm file check
+import resvgwasm from "@resvg/resvg-wasm/index_bg.wasm?module";
 import { SITE as siteInfo } from "~/utils/site-info";
 
 export { z } from "zod";
@@ -92,8 +94,7 @@ export const getImage = async (data: {
       <image href="data:image/png;base64,${avatar1Base64}" clip-path="url(#persona1)" x="42.5" y="20" width="160" height="160" preserveAspectRatio="xMidYMid slice" />
       <image href="data:image/png;base64,${avatar2Base64}" clip-path="url(#persona2)" x="407.5" y="20" width="160" height="160" preserveAspectRatio="xMidYMid slice" />
     </svg>`.trim();
-    const resvgwasm = await import("@resvg/resvg-wasm/index_bg.wasm?module" as string).then(r => r.default);
-    await initWasm(resvgwasm as WebAssembly.Module);
+    await initWasm(resvgwasm as WebAssembly.Module).catch(() => { /* already initialized */ });
     const opts = {
       font: {
         loadSystemFonts: false,
