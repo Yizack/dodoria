@@ -19,13 +19,16 @@ export default defineNuxtConfig({
       ]
     }
   },
+
   css: [
     "bootstrap/dist/css/bootstrap.min.css",
     "~/assets/css/dodoria.css"
   ],
+
   features: {
     inlineStyles: false
   },
+
   nitro: {
     cloudflare: {
       pages: {
@@ -35,13 +38,17 @@ export default defineNuxtConfig({
       }
     }
   },
+
   modules: [
     "@nuxt/eslint"
   ],
+
   eslint: {
     config: {
       autoInit: false,
       stylistic: true
     }
-  }
+  },
+
+  compatibilityDate: "2024-08-04"
 });

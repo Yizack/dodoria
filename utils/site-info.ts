@@ -1,12 +1,9 @@
-const SITE = {
+export const SITE = {
   name: "Dodoria",
   domain: "dodoria.yizack.com",
   protocol: "https",
   meta_description: "",
   description: "",
-  keywords: ""
+  keywords: "",
+  url: import.meta.dev ? "http://localhost:5173" : "https://dodoria.yizack.com"
 };
-
-SITE.url = `${SITE.protocol}://${SITE.domain}`;
-
-export { SITE };

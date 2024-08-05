@@ -9,7 +9,7 @@ useHead({
   ],
   script: [],
   link: [
-    { rel: "canonical", href: `${SITE.url}/` }
+    { rel: "canonical", href: `${SITE.url}` }
   ]
 });
 </script>
