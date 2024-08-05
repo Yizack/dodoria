@@ -5,15 +5,20 @@ import { SITE as siteInfo } from "~/utils/site-info";
 
 export { z } from "zod";
 export const SITE = siteInfo;
+const discordURL = "https://cdn.discordapp.com";
 
-export const getAvatar = (u: string, a: string, d: string) => {
+const getAvatarURL = (u: bigint, a: string, d: number) => {
+  return a ? `${discordURL}/avatars/${u}/${a}.png?size=256` : `${discordURL}/embed/avatars/${d ? d % 5 : (u >> 22n) % 6n}.png`;
+};
+
+export const getAvatars = (u: string, a: string, d: string) => {
   if (u && d) {
-    const user = u.split(",");
+    const user = u.split(",").map(BigInt);
     const avatar = a ? a.split(",") : "";
     const discriminator = d.split(",").map(Number);
     return {
-      u1: avatar[0] ? `https://cdn.discordapp.com/avatars/${user[0]}/${avatar[0]}.png?size=256` : `https://cdn.discordapp.com/embed/avatars/${discriminator[0] % 5}.png`,
-      u2: avatar[1] ? `https://cdn.discordapp.com/avatars/${user[1]}/${avatar[1]}.png?size=256` : `https://cdn.discordapp.com/embed/avatars/${discriminator[1] % 5}.png`
+      u1: getAvatarURL(user[0], avatar[0], discriminator[0]),
+      u2: getAvatarURL(user[1], avatar[1], discriminator[1])
     };
   }
   return null;
@@ -55,18 +60,18 @@ export const getBase64Image = async (url: string) => {
 };
 
 export const getImage = async (data: {
-  p: number;
-  avatar: null | {
+  percent: number;
+  avatars: null | {
     u1: string;
     u2: string;
   };
   background: string;
 }) => {
   try {
-    const { background, avatar, p } = data;
+    const { background, avatars, percent } = data;
     const backgroundBase64 = await getBase64Image(background);
-    const avatar1Base64 = avatar ? await getBase64Image(avatar.u1) : "";
-    const avatar2Base64 = avatar ? await getBase64Image(avatar.u2) : "";
+    const avatar1Base64 = avatars ? await getBase64Image(avatars.u1) : "";
+    const avatar2Base64 = avatars ? await getBase64Image(avatars.u2) : "";
     const font = await $fetch(`${SITE.url}/assets/OpenSans.ttf`, { responseType: "arrayBuffer" }) as ArrayBuffer;
     const fontUint8Array = new Uint8Array(font);
     const svg = `
@@ -84,8 +89,8 @@ export const getImage = async (data: {
       <g transform="translate(215, 20)">
         <path fill="#000000" opacity="0.5" d="M 82.355 151.231 C 78.533 146.948 68.989 138.598 61.146 132.675 C 37.91 115.128 34.747 112.588 25.312 103.901 C 7.92 87.885 0.534 71.795 0.559 49.978 C 0.571 39.327 1.297 35.225 4.279 28.946 C 9.339 18.295 16.794 10.38 26.323 5.54 C 33.073 2.112 36.401 0.589 47.673 0.527 C 59.463 0.462 61.945 1.836 68.881 5.647 C 77.323 10.283 86.012 20.196 87.808 27.236 L 88.918 31.585 L 91.653 25.595 C 107.114 -8.247 156.47 -7.742 173.646 26.438 C 179.095 37.28 179.693 60.43 174.862 73.471 C 168.558 90.484 156.72 103.452 129.355 123.327 C 111.408 136.36 91.095 156.081 89.682 158.85 C 88.04 162.066 89.603 159.354 82.355 151.231 Z"/>
       </g>
-      <g transform="translate(${getPercentX(p)}, 110)">
-        <text x="0" y="0" fill="#ffffff" font-family="sans-serif" font-size="40px" font-weight="600">${Number(p) >= 0 ? p + "%" : ""}</text>
+      <g transform="translate(${getPercentX(percent)}, 110)">
+        <text x="0" y="0" fill="#ffffff" font-family="sans-serif" font-size="40px" font-weight="600">${percent >= 0 ? percent + "%" : ""}</text>
       </g>
       <g>
         <circle cx="122.5" cy="100" r="80" stroke="#ffffff" stroke-width="3" />

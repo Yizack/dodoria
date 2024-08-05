@@ -39,6 +39,11 @@ export default defineNuxtConfig({
     },
     experimental: {
       wasm: true
+    },
+    esbuild: {
+      options: {
+        target: "esnext"
+      }
     }
   },
 

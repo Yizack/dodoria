@@ -6,17 +6,13 @@ export default defineCachedEventHandler(async (event) => {
     d: z.string()
   }).parse);
 
-  const avatar = getAvatar(u, a, d);
-  const card = { // card
-    p: p,
-    avatar: getAvatar(u, a, d),
+  const image = await getImage({ // card
+    percent: p,
+    avatars: getAvatars(u, a, d),
     background: getBackground(p)
-  };
-  const image = await getImage(card); // get Image
+  });
 
-  if (!avatar || !image) {
-    throw createError({ statusCode: 404, message: "Not Found" });
-  }
+  if (!image) throw createError({ statusCode: 404, message: "Not Found" });
 
   setResponseHeaders(event, {
     "Content-Type": "image/png"
