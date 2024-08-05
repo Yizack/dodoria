@@ -21,8 +21,8 @@ const open = (link) => {
       <p>Colección de fotos de angar "BUENO GENTE".</p>
     </div>
     <div class="row">
-      <div v-for="(n) in CONSTANTS.BUENOGENTE" :key="n" class="col-lg-4 mb-4" role="button" @click="open(`/images/buenogente_${n}.jpg`)">
-        <img class="img-fluid rounded scale-on-hover" :src="`/images/buenogente_${n}.jpg`">
+      <div v-for="(n) in CONSTANTS.BUENOGENTE" :key="n" class="col-lg-4 mb-4" role="button" @click="open(`/images/buenogente/${n}.jpg`)">
+        <img class="img-fluid rounded scale-on-hover" :src="`/images/buenogente/${n}.jpg`">
       </div>
     </div>
   </div>

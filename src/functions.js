@@ -15,12 +15,12 @@ export const getRandom = (options) => {
 
 export const getRandomAngar = () => {
   const number = getRandom({ min: 1, max: CONSTANTS.ANGAR });
-  return `https://dodoria.yizack.com/images/angar_${number}.jpg`;
+  return `https://dodoria.yizack.com/images/angar/${number}.jpg`;
 };
 
 export const getRandomBuenoGente = () => {
   const number = getRandom({ min: 1, max: CONSTANTS.BUENOGENTE });
-  return `https://dodoria.yizack.com/images/buenogente_${number}.jpg`;
+  return `https://dodoria.yizack.com/images/buenogente/${number}.jpg`;
 };
 
 export const esUrl = (cadena) => {

@@ -6,7 +6,7 @@ definePageMeta({ layout: "site" });
 const angarArray = [];
 
 for (let i = 1; i <= CONSTANTS.ANGAR; i++) {
-  angarArray.push(`/images/angar_${i}.jpg`);
+  angarArray.push(`/images/angar/${i}.jpg`);
 }
 
 const open = (link) => {
