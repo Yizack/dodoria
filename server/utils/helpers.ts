@@ -1,9 +1,11 @@
+import { z as zod } from "zod";
 import { SITE as siteInfo } from "~/utils/site-info";
 
-export { z } from "zod";
 export { hash } from "ohash";
 export { withQuery } from "ufo";
 export { verifyKey, ButtonStyleTypes, MessageComponentTypes, InteractionType } from "discord-interactions";
+
+export const z = zod;
 export const SITE = siteInfo;
 
 export const decodeCode = (encodedCode: string) => {
