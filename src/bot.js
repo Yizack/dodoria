@@ -168,7 +168,13 @@ router.post("/", async (req, env, context) => {
           const letras_nombre1 = users[u1].username.substring(0, 3);
           const letras_nombre2 = users[u2].username.substring(users[u2].username.length - 2);
           const nombre_ship = `${letras_nombre1}${letras_nombre2}`;
-          const image = `https://dodoria.yizack.com/api/ship?u=${[u1, u2]}&a=${[users[u1].avatar, users[u2].avatar]}&d=${[users[u1].discriminator, users[u2].discriminator]}&p=${p}`;
+          const code = btoa(JSON.stringify({
+            u: [u1, u2].map(String),
+            a: [users[u1].avatar, users[u2].avatar].map(String),
+            d: [users[u1].discriminator, users[u2].discriminator].map(Number),
+            p
+          }));
+          const image = `https://dodoria.yizack.com/api/ship/${code}`;
           let emoji = getEmoji("angarSad");
           if (p >= 90) {
             emoji = getEmoji("angarH");

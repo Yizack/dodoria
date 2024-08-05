@@ -1,10 +1,6 @@
 export default defineCachedEventHandler(async (event) => {
-  const { p, u, a, d } = await getValidatedQuery(event, z.object({
-    p: z.number({ coerce: true }).int().min(0).max(100),
-    u: z.string(),
-    a: z.string(),
-    d: z.string()
-  }).parse);
+  const { code } = getRouterParams(event);
+  const { p, u, a, d } = decodeCode(code);
 
   const image = await getImage({ // card
     percent: p,
@@ -13,8 +9,10 @@ export default defineCachedEventHandler(async (event) => {
   });
 
   if (!image) throw createError({ statusCode: 404, message: "Not Found" });
+  const truncatedCode = code.slice(0, 10) + Date.now();
 
   setResponseHeaders(event, {
+    "Content-Disposition": `inline; filename="ship-${truncatedCode}.png"`,
     "Content-Type": "image/png"
   });
 
