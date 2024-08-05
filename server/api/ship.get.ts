@@ -1,4 +1,4 @@
-export default defineEventHandler(async (event) => {
+export default defineCachedEventHandler(async (event) => {
   const { p, u, a, d } = await getValidatedQuery(event, z.object({
     p: z.number({ coerce: true }).int().min(0).max(100),
     u: z.string(),
@@ -19,9 +19,8 @@ export default defineEventHandler(async (event) => {
   }
 
   setResponseHeaders(event, {
-    // "Cache-Control": "max-age=86400",
     "Content-Type": "image/png"
   });
 
   return image;
-});
+}, { maxAge: 86400 });
