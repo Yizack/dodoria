@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
 
   setResponseHeaders(event, {
     // "Cache-Control": "max-age=86400",
-    "Content-Type": "image/svg+xml"
+    "Content-Type": "image/png"
   });
 
   return image;
