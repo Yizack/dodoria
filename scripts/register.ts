@@ -3,7 +3,7 @@
  */
 import { REST, Routes } from "discord.js";
 import * as dotenv from "dotenv";
-import * as commands from "./commands.js";
+import * as commands from "../server/utils/commands";
 
 dotenv.config();
 

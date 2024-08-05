@@ -8,29 +8,30 @@ const getAvatarURL = (u: bigint, a: string | null, d: number) => {
   return a ? `${discordURL}/avatars/${u}/${a}.png?size=256` : `${discordURL}/embed/avatars/${d ? d % 5 : (u >> 22n) % 6n}.png`;
 };
 
-export const getAvatars = (u: bigint[], a: (string | null)[], d: number[]) => {
-  return {
-    u1: getAvatarURL(u[0], a[0], d[0]),
-    u2: getAvatarURL(u[1], a[1], d[1])
-  };
-};
+export const getAvatars = (
+  u: bigint[],
+  a: (string | null)[],
+  d: number[]
+) => ({ u1: getAvatarURL(u[0]!, a[0]!, d[0]!), u2: getAvatarURL(u[1]!, a[1]!, d[1]!) });
 
 export const getBackground = (percent: number) => {
   let background = "0";
-  if (percent >= 90) {
-    background = "90";
-  }
-  else if (percent >= 70 && percent < 90) {
-    background = "70";
-  }
-  else if (percent >= 50 && percent < 70) {
-    background = "50";
-  }
-  else if (percent >= 30 && percent < 50) {
-    background = "30";
-  }
-  else if (percent >= 10 && percent < 30) {
-    background = "10";
+  switch (true) {
+    case percent >= 90:
+      background = "90";
+      break;
+    case percent >= 70 && percent < 90:
+      background = "70";
+      break;
+    case percent >= 50 && percent < 70:
+      background = "50";
+      break;
+    case percent >= 30 && percent < 50:
+      background = "30";
+      break;
+    case percent >= 10 && percent < 30:
+      background = "10";
+      break;
   }
   return `${SITE.url}/images/ship/${background}.jpg`;
 };

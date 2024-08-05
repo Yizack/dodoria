@@ -17,11 +17,11 @@ const angarEmojis = {
   Cheer50k: "1053628988293136526"
 };
 
-export const getEmoji = (name) => {
+export const getEmoji = (name: string) => {
   return name in angarEmojis ? `<:${name}:${angarEmojis[name]}>` : "";
 };
 
-export const getEmojiURL = (name) => {
+export const getEmojiURL = (name: string) => {
   return name in angarEmojis ? `https://cdn.discordapp.com/emojis/${angarEmojis[name]}.webp` : "";
 };
 
@@ -36,7 +36,7 @@ const socials = {
   kick: "<:kick:1267449535668555788>"
 };
 
-export const getSocial = (name) => {
+export const getSocial = (name: string) => {
   const key = name.toLowerCase();
   return key in socials ? socials[key] : "";
 };
@@ -70,7 +70,7 @@ const leagueEmblems = {
   unranked: "<:Unranked:1155128109981515786>"
 };
 
-export const getLolSpell = (number) => {
+export const getLolSpell = (number: number) => {
   switch (number) {
     case 1:
       return summonerspells.cleanse;
@@ -103,7 +103,7 @@ export const getLolSpell = (number) => {
   }
 };
 
-export const getLeagueEmblem = (league) => {
+export const getLeagueEmblem = (league: string) => {
   switch (league?.toLowerCase()) {
     case "hierro":
       return leagueEmblems.iron;

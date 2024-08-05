@@ -1,4 +1,4 @@
-import { CONSTANTS } from "./constants.js";
+import { CONSTANTS } from "./constants";
 
 const IntegrationTypes = {
   GUILD_INSTALL: 0,
@@ -88,35 +88,6 @@ export const COMANDOS = {
   options: [],
   cid: "1053738012619571342"
 };
-
-/*
-export const FUCK = {
-  name: "fuck",
-  description: "Te follas a alguien.",
-  options: [
-    {
-      "name": "usuario",
-      "description": "El usuario que deseas follarte.",
-      "type": 6,
-      "required": true
-    }
-  ],
-  cid: "1059919293954920459"
-};
-
-export const IA = {
-  name: "ia",
-  description: "Habla con la inteligencia artificial de Angar.",
-  options: [
-    {
-      "name": "mensaje",
-      "description": "El mensaje que quieres enviar a la inteligencia artificial.",
-      "type": 3,
-      "required": true
-    }
-  ]
-};
-*/
 
 export const VIDEO = {
   name: "video",

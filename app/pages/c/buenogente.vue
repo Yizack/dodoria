@@ -1,11 +1,5 @@
-<script setup>
-import { CONSTANTS } from "~/src/constants.js";
-
+<script setup lang="ts">
 definePageMeta({ layout: "site" });
-
-const open = (link) => {
-  window.open(link, "_blank");
-};
 </script>
 
 <template>

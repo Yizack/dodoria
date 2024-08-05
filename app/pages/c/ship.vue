@@ -1,6 +1,4 @@
-<script setup>
-import { ME_CABE } from "~/src/commands.js";
-
+<script setup lang="ts">
 definePageMeta({ layout: "site" });
 </script>
 
@@ -12,9 +10,9 @@ definePageMeta({ layout: "site" });
         <h1>Dodoria</h1>
       </NuxtLink>
       <div class="mb-3">
-        <code class="bg-dark p-2 rounded-3">/{{ ME_CABE.name }}</code>
+        <code class="bg-dark p-2 rounded-3">/{{ COMMANDS.SHIP.name }}</code>
       </div>
-      <p>{{ ME_CABE.description }}</p>
+      <p>{{ COMMANDS.SHIP.description }}</p>
     </div>
   </div>
 </template>

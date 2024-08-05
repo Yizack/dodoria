@@ -1,14 +1,14 @@
 /**
  * General functions
  */
-import { CONSTANTS } from "./constants.js";
 
-export const getValue = (name, options) => {
+export const getValue = (name: string, options: Record<string, string>[] | null) => {
+  if (!options) return "";
   const option = options.find(option => option.name === name);
-  return option?.value ?? null;
+  return option?.value ?? "";
 };
 
-export const getRandom = (options) => {
+export const getRandom = (options: { min?: number, max: number }) => {
   const min = options.min ?? 1;
   return Math.round((Math.random() * (options.max - min)) + min);
 };
@@ -23,17 +23,17 @@ export const getRandomBuenoGente = () => {
   return `https://dodoria.yizack.com/images/buenogente/${number}.jpg`;
 };
 
-export const esUrl = (cadena) => {
+export const esUrl = (cadena: string) => {
   const regex = /^(?:https?:\/\/)?(?:www\.)?([a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,})(?:\/\S*)?$/;
   return regex.test(cadena);
 };
 
-export const imbedUrlsFromString = (str) => {
+export const imbedUrlsFromString = (str: string) => {
   const regex = /(https?:\/\/[^\s]+)/g;
   return str.replace(regex, "<$1>");
 };
 
-export const obtenerIDDesdeURL = (url) => {
+export const obtenerIDDesdeURL = (url: string) => {
   const expresionRegular = /\/([a-zA-Z0-9_-]+)(?:\.[a-zA-Z0-9]+)?(?:\?|$|\/\?|\/$)/;
   const resultado = expresionRegular.exec(url);
   if (resultado && resultado.length > 1) {
@@ -44,7 +44,7 @@ export const obtenerIDDesdeURL = (url) => {
   }
 };
 
-export const errorEmbed = (error_msg) => {
+export const errorEmbed = (error_msg: string) => {
   const embeds = [];
   embeds.push({
     color: CONSTANTS.COLOR,

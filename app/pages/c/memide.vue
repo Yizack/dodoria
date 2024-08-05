@@ -1,6 +1,4 @@
-<script setup>
-import { COMANDOS } from "~/src/commands.js";
-
+<script setup lang="ts">
 definePageMeta({ layout: "site" });
 </script>
 
@@ -12,9 +10,9 @@ definePageMeta({ layout: "site" });
         <h1>Dodoria</h1>
       </NuxtLink>
       <div class="mb-3">
-        <code class="bg-dark p-2 rounded-3">/{{ COMANDOS.name }}</code>
+        <code class="bg-dark p-2 rounded-3">/{{ COMMANDS.ME_MIDE.name }}</code>
       </div>
-      <p>{{ COMANDOS.description }}</p>
+      <p>{{ COMMANDS.ME_MIDE.description }}</p>
     </div>
   </div>
 </template>

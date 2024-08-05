@@ -74,16 +74,16 @@ const pong = () => {
   });
 };
 
-export const create = (type, func) => {
+export const create = (type: number, func?: () => void) => {
   switch (type) {
     case InteractionType.PING:
       return pong();
     case InteractionType.APPLICATION_COMMAND:
-      return func();
+      if (func) return func();
   }
 };
 
-export const reply = (content, options) => {
+export const reply = (content: any, options?: any) => {
   return toDiscord({
     type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
     data: {
@@ -94,7 +94,7 @@ export const reply = (content, options) => {
   });
 };
 
-export const deferReply = (options) => {
+export const deferReply = (options?: any) => {
   return toDiscord({
     type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
     data: {

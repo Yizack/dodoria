@@ -1,29 +1,15 @@
-/**
- * Cloudflare worker.
- */
-import { IttyRouter } from "itty-router";
-import { verifyKey, ButtonStyleTypes, MessageComponentTypes, InteractionType } from "discord-interactions";
-import { hash } from "ohash";
-import { withQuery } from "ufo";
-import { $fetch } from "ofetch";
-import { create, reply, error, deferReply, deferUpdate } from "./interaction.js";
-import { getValue, getRandom, esUrl, imbedUrlsFromString, errorEmbed, getRandomAngar, getRandomBuenoGente, getRandomAngarMessage } from "./functions.js";
-import * as C from "./commands.js";
-import { getEmoji, getEmojiURL, getSocial, getLeagueEmblem, getLolSpell } from "./emojis.js";
-import { avatar, guide, yizack } from "./images.js";
-import { CONSTANTS } from "./constants.js";
+import * as C from "../../server/utils/commands";
 
 const { COLOR, CHANNEL, CHANNEL_PRUEBAS, BOT, VOZ, OWNER, VIDEO_SOCIALS } = CONSTANTS;
 const allow = true;
 
-const router = IttyRouter();
+export default defineEventHandler(async (event) => {
+  const isValidWebhook = await isValidDiscordWebhook(event);
+  if (!isValidWebhook) throw createError({ statusCode: 401, message: "Unauthorized: webhook is not valid" });
 
-router.get("/", (req, env) => {
-  return new Response(`👋 ${env.DISCORD_APPLICATION_ID}`);
-});
+  const config = useRuntimeConfig(event);
 
-router.post("/", async (req, env, context) => {
-  const { type, data, member, guild_id, channel_id, token } = await req.json();
+  const { type, data, member, guild_id, channel_id, token } = await readBody(event);
   if (type === InteractionType.PING) {
     /**
      * The `PING` message is used during the initial webhook handshake, and is
@@ -85,12 +71,12 @@ router.post("/", async (req, env, context) => {
                 }
               }],
               token,
-              application_id: env.DISCORD_APPLICATION_ID,
+              application_id: config.discord.applicationId,
               files
             });
           };
 
-          context.waitUntil(followUpRequest());
+          event.context.cloudflare.context.waitUntil(followUpRequest());
           return deferReply();
         }
         // Comando /educar
@@ -98,15 +84,14 @@ router.post("/", async (req, env, context) => {
           const usuario = getValue("usuario", options);
 
           let message = `<@${member.user.id}> no ha podido educar a <@${usuario}>`;
-          let embeds = [];
+          const embeds = [];
 
           const percent = getRandom({ max: 100 });
           if (percent < 33) {
             const key = guild_id + "-" + usuario;
-
-            let counter = Number(await env.EDUCAR.get(key));
+            let counter = Number(await event.context.cloudflare.env.EDUCAR.get(key));
             counter = counter ? counter + 1 : 1;
-            await env.EDUCAR.put(key, counter);
+            await event.context.cloudflare.env.EDUCAR.put(key, counter.toString());
 
             const veces = counter === 1 ? "vez" : "veces";
 
@@ -120,7 +105,7 @@ router.post("/", async (req, env, context) => {
         }
         // comando /comandos
         case C.COMANDOS.name: {
-          let list = [];
+          const list = [];
           Object.values(C).forEach((command) => {
             list.push(`-  </${command.name}:${command.cid}> *${command.description}*\n\n`);
           });
@@ -202,50 +187,6 @@ router.post("/", async (req, env, context) => {
             }]
           });
         }
-        /* // comando /fuck
-        case C.FUCK.name: {
-          if (channel_id === CHANNEL_FUCK || channel_id === CHANNEL_FUCK_TEST) {
-            const usuario = getValue("usuario", options);
-            const mensaje = `<@${member.user.id}> se ha follado a <@${usuario}>. ${getEmoji("angarGasm")}`;
-
-            const key = guild_id + "-" + usuario;
-            const image = fuck[getRandom({min: 0, max: fuck.length - 1})];
-            let counter = Number(await env.FUCK.get(key));
-            counter = counter ? counter + 1 : 1;
-            await env.FUCK.put(key, counter);
-
-            const veces = counter === 1 ? "vez" : "veces";
-
-            const { users } = resolved;
-            const username = users[usuario].username;
-
-            return reply(mensaje , {
-              embeds: [{
-                color: COLOR,
-                description: `<@${member.user.id}> le ha dado tremenda cogida a <@${usuario}>. ${getEmoji("angarGasm")}`,
-                image: {
-                  url: image
-                },
-                footer: {
-                  text: `Se han cogido a ${username} ${counter} ${veces} en total.`
-                }
-              }]
-            });
-          }
-          break;
-        }
-        // comando /ia
-        case C.IA.name: {
-          try {
-            const mensaje = getValue("mensaje", options);
-            const respuesta = await getIA(`${member.user.username} says:\n${mensaje}`, env.IA_CHAT);
-            return reply(`<@${member.user.id}>. ${respuesta}`);
-          } catch (error) {
-            console.info(error);
-          }
-          break;
-        }
-        */
         case C.VIDEO.name: {
           const followUpRequest = async () => {
             const embeds = [], button = [], components = [];
@@ -268,7 +209,7 @@ router.post("/", async (req, env, context) => {
               const error = `⚠️ Error. El texto ingresado no es un link válido de **${red_social}**`;
               return deferUpdate("", {
                 token,
-                application_id: env.DISCORD_APPLICATION_ID,
+                application_id: config.discord.applicationId,
                 embeds: errorEmbed(error)
               });
             }
@@ -284,12 +225,12 @@ router.post("/", async (req, env, context) => {
               const error = ":x: Error. Ha ocurrido un error obteniendo el video.";
               return deferUpdate("", {
                 token,
-                application_id: env.DISCORD_APPLICATION_ID,
+                application_id: config.discord.applicationId,
                 embeds: errorEmbed(error)
               });
             }
 
-            const finalReply = (downloadUrl) => {
+            const finalReply = (downloadUrl: string) => {
               button.push({
                 type: MessageComponentTypes.BUTTON,
                 style: ButtonStyleTypes.LINK,
@@ -307,7 +248,7 @@ router.post("/", async (req, env, context) => {
 
               return deferUpdate(fixedMsg, {
                 token,
-                application_id: env.DISCORD_APPLICATION_ID,
+                application_id: config.discord.applicationId,
                 embeds,
                 components
               });
@@ -332,7 +273,7 @@ router.post("/", async (req, env, context) => {
               const error = "⚠️ Error. El video es muy pesado o demasiado largo.";
               return deferUpdate("", {
                 token,
-                application_id: env.DISCORD_APPLICATION_ID,
+                application_id: config.discord.applicationId,
                 embeds: errorEmbed(error)
               });
             }
@@ -341,15 +282,15 @@ router.post("/", async (req, env, context) => {
               const error = ":x: Error. Ha ocurrido un error obteniendo el video.";
               return deferUpdate("", {
                 token,
-                application_id: env.DISCORD_APPLICATION_ID,
+                application_id: config.discord.applicationId,
                 embeds: errorEmbed(error)
               });
             }
 
-            const uploadedUrl = await $fetch(withQuery("https://dev.ahmedrangel.com/put/video", { url: video_url, prefix: "videos", dir: red_social.toLowerCase(), file_id: id }));
+            const uploadedUrl = await $fetch<string>(withQuery("https://dev.ahmedrangel.com/put/video", { url: video_url, prefix: "videos", dir: red_social.toLowerCase(), file_id: id }));
             return finalReply(uploadedUrl);
           };
-          context.waitUntil(followUpRequest());
+          event.context.cloudflare.context.waitUntil(followUpRequest());
           return deferReply();
         }
         case C.LOLPROFILE.name: {
@@ -359,7 +300,7 @@ router.post("/", async (req, env, context) => {
             const riotName = riotId[0];
             const riotTag = riotId[1];
             if (!riotTag || !riotName) {
-              return deferUpdate("", { token, application_id: env.DISCORD_APPLICATION_ID,
+              return deferUpdate("", { token, application_id: config.discord.applicationId,
                 embeds: [{
                   color: COLOR,
                   description: ":x: Ingrese correctamente el **Riot ID**. Ej: **Name#TAG**"
@@ -367,9 +308,9 @@ router.post("/", async (req, env, context) => {
               });
             }
             const embeds = [];
-            let components = [];
-            let button = [];
-            let mensaje = "";
+            const components = [];
+            const button = [];
+            const mensaje = "";
             let remake, footer, titleName;
 
             const profileF = await fetch(`https://dev.ahmedrangel.com/lol/profile/${region}/${riotName}/${riotTag}`);
@@ -387,7 +328,7 @@ router.post("/", async (req, env, context) => {
                 value: `${profile.summonerLevel}`,
                 inline: true
               };
-              const history = [];
+              const history: string[] = [];
               const fields = [];
               profile.rankProfile.forEach((rank) => {
                 if (rank.queueType == "RANKED_SOLO_5x5") {
@@ -497,13 +438,13 @@ router.post("/", async (req, env, context) => {
             // Return del refer
             return deferUpdate(mensaje, {
               token,
-              application_id: env.DISCORD_APPLICATION_ID,
+              application_id: config.discord.applicationId,
               embeds,
               components
             });
           };
 
-          context.waitUntil(followUpRequest());
+          event.context.cloudflare.context.waitUntil(followUpRequest());
           return deferReply();
         }
         case C.LOLMMR.name: {
@@ -514,7 +455,7 @@ router.post("/", async (req, env, context) => {
             const riotName = riotId[0];
             const riotTag = riotId[1];
             if (!riotTag || !riotName) {
-              return deferUpdate("", { token, application_id: env.DISCORD_APPLICATION_ID,
+              return deferUpdate("", { token, application_id: config.discord.applicationId,
                 embeds: [{
                   color: COLOR,
                   description: ":x: Ingrese correctamente el **Riot ID**. Ej: **Name#TAG**"
@@ -522,7 +463,7 @@ router.post("/", async (req, env, context) => {
               });
             }
             const embeds = [];
-            let mensaje = "";
+            const mensaje = "";
             let footer;
             const profileF = await fetch(`https://dev.ahmedrangel.com/lol/mmr/${region}/${riotName}/${riotTag}/${queue}`);
             const profile = await profileF.json();
@@ -581,12 +522,12 @@ router.post("/", async (req, env, context) => {
             // Return del refer
             return deferUpdate(mensaje, {
               token,
-              application_id: env.DISCORD_APPLICATION_ID,
+              application_id: config.discord.applicationId,
               embeds
             });
           };
 
-          context.waitUntil(followUpRequest());
+          event.context.cloudflare.context.waitUntil(followUpRequest());
           return deferReply();
         }
         case C.ANGAR.name: {
@@ -624,26 +565,3 @@ router.post("/", async (req, env, context) => {
     });
   }
 });
-
-router.all("*", () => new Response("Not Found.", { status: 404 }));
-
-export default {
-  async fetch (request, env, context) {
-    const { method, headers } = request;
-    if (method === "POST") {
-      const signature = headers.get("x-signature-ed25519");
-      const timestamp = headers.get("x-signature-timestamp");
-      const body = await request.clone().arrayBuffer();
-      const isValidRequest = verifyKey(
-        body,
-        signature,
-        timestamp,
-        env.DISCORD_PUBLIC_KEY
-      );
-      if (!isValidRequest) {
-        return new Response("Bad request signature.", { status: 401 });
-      }
-    }
-    return router.fetch(request, env, context);
-  }
-};

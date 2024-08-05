@@ -1,4 +1,6 @@
 export default defineNuxtConfig({
+  future: { compatibilityVersion: 4 },
+
   app: {
     head: {
       htmlAttrs: {
@@ -48,8 +50,20 @@ export default defineNuxtConfig({
   },
 
   modules: [
-    "@nuxt/eslint"
+    "@nuxt/eslint",
+    "nuxt-webhook-validators"
   ],
+
+  runtimeConfig: {
+    webhook: {
+      discord: {
+        publicKey: ""
+      }
+    },
+    discord: {
+      applicationId: ""
+    }
+  },
 
   eslint: {
     config: {

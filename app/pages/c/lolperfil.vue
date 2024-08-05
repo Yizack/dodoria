@@ -1,6 +1,4 @@
-<script setup>
-import { CHEER } from "~/src/commands.js";
-
+<script setup lang="ts">
 definePageMeta({ layout: "site" });
 </script>
 
@@ -12,9 +10,9 @@ definePageMeta({ layout: "site" });
         <h1>Dodoria</h1>
       </NuxtLink>
       <div class="mb-3">
-        <code class="bg-dark p-2 rounded-3">/{{ CHEER.name }}</code>
+        <code class="bg-dark p-2 rounded-3">/{{ COMMANDS.LOLPROFILE.name }}</code>
       </div>
-      <p>{{ CHEER.description }}</p>
+      <p>{{ COMMANDS.LOLPROFILE.description }}</p>
     </div>
   </div>
 </template>

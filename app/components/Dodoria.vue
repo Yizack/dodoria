@@ -1,8 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
-<script setup>
-import * as CM from "~/src/commands.js";
-
-const comandos = ref(Object.entries(CM).map(([, { name, description }]) => ({ name, description })).sort((a, b) => a.name.localeCompare(b.name)));
+<script setup lang="ts">
+const comandos = ref(Object.entries(COMMANDS).map(([, { name, description }]) => ({ name, description })).sort((a, b) => a.name.localeCompare(b.name)));
 </script>
 
 <template>

@@ -1,8 +1,10 @@
 export default defineCachedEventHandler(async (event) => {
-  const { code } = getRouterParams(event);
+  const { code } = await getValidatedRouterParams(event, z.object({
+    code: z.string()
+  }).parse);
   const { p, u, a, d } = decodeCode(code);
 
-  const image = await getImage({ // card
+  const image = await getImage({
     percent: p,
     avatars: getAvatars(u, a, d),
     background: getBackground(p)

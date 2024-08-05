@@ -1,17 +1,11 @@
-<script setup>
-import { CONSTANTS } from "~/src/constants.js";
-
+<script setup lang="ts">
 definePageMeta({ layout: "site" });
 
-const angarArray = [];
+const angarArray: string[] = [];
 
 for (let i = 1; i <= CONSTANTS.ANGAR; i++) {
   angarArray.push(`/images/angar/${i}.jpg`);
 }
-
-const open = (link) => {
-  window.open(link, "_blank");
-};
 </script>
 
 <template>
