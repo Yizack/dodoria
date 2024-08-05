@@ -12,7 +12,7 @@ export const decodeCode = (encodedCode: string) => {
     const paramsSchema = z.object({
       p: z.number({ coerce: true }).int().min(0).max(100),
       u: z.array(z.bigint()).length(2),
-      a: z.array(z.string()).length(2),
+      a: z.array(z.string().nullable()).length(2),
       d: z.array(z.number()).length(2)
     });
 
