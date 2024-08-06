@@ -13,10 +13,11 @@
     "postinstall": "nuxt prepare",
     "typecheck": "nuxt typecheck",
     "register": "tsx scripts/register",
-    "lint": "npm run lint:eslint && npm run lint:stylelint",
-    "lint:eslint": "eslint --fix",
-    "lint:stylelint": "stylelint \"**/*.css\" --fix",
-    "dev:cf": "set NITRO_PRESET=cloudflare-pages&&npm run build && wrangler pages dev dist"
+    "lint": "pnpm lint:eslint --fix && pnpm lint:stylelint --fix",
+    "lint:eslint": "eslint --config .config/eslint.mjs",
+    "lint:stylelint": "stylelint \"**/*.{css,scss,sass}\" --config .config/stylelint.json",
+    "dev:cf": "set NITRO_PRESET=cloudflare-pages&&npm run build && wrangler pages dev dist",
+    "test:types": "vue-tsc --noEmit"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240729.0",
@@ -26,7 +27,6 @@
     "bootstrap": "^5.3.3",
     "discord-interactions": "^4.0.0",
     "discord.js": "^14.15.3",
-    "dotenv": "^16.4.5",
     "eslint": "^9.8.0",
     "nuxt": "^3.12.4",
     "nuxt-webhook-validators": "^0.0.6",
@@ -37,6 +37,7 @@
     "typescript": "^5.5.4",
     "ufo": "^1.5.4",
     "unwasm": "^0.3.9",
+    "vue-tsc": "^2.0.29",
     "wrangler": "^3.68.0"
   },
   "packageManager": "pnpm@9.6.0"
