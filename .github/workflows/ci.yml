@@ -80,6 +80,11 @@ jobs:
           node-version: 20
           cache: "pnpm"
 
+      - name: 📄 Create .env file
+        run: |
+          echo "NUXT_DISCORD_TOKEN=${{ secrets.DISCORD_TOKEN }}" > .env
+          echo "NUXT_DISCORD_APPLICATION_ID=${{ secrets.DISCORD_APPLICATION_ID }}" >> .env
+
       - name: 📦 Install dependencies
         run: pnpm install
 
