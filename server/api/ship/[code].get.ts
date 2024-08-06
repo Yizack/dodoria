@@ -4,7 +4,7 @@ export default defineCachedEventHandler(async (event) => {
   }).parse);
   const { p, u, a, d } = decodeCode(code);
 
-  const image = await getImage({
+  const image = await getShipImage({
     percent: p,
     avatars: getAvatars(u, a, d),
     background: getBackground(p)

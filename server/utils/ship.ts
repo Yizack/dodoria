@@ -46,12 +46,12 @@ const getPercentX = (value: number) => {
   return 275;
 };
 
-export const getBase64Image = async (url: string) => {
+const getBase64Image = async (url: string) => {
   const buffer = await $fetch(url, { responseType: "arrayBuffer" }) as ArrayBuffer;
   return Buffer.from(buffer).toString("base64");
 };
 
-export const getImage = async (data: {
+export const getShipImage = async (data: {
   percent: number;
   avatars: {
     u1: string;
