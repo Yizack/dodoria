@@ -44,7 +44,7 @@ export const handlerVideo = async (event: H3Event, body: WebhookBody) => {
     if (!scrapping) {
       return deferUpdateError();
     }
-  
+
     const { id, video_url, short_url, status } = scrapping;
     const caption = imbedUrlsFromString(`${scrapping?.caption ? scrapping?.caption?.replace(/#[^\s#]+(\s#[^\s#]+)*$/g, "").replaceAll(".\n", "").replace(/\n+/g, "\n").trim() : ""}`);
 

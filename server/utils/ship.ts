@@ -61,7 +61,7 @@ export const getShipImage = async (data: {
 }) => {
   try {
     const { background, avatars, percent } = data;
-    const backgroundBase64 = await useStorage("root/public/images/ship").getItemRaw(background).then((res) => Buffer.from(res).toString("base64"));
+    const backgroundBase64 = await useStorage("root/public/images/ship").getItemRaw(background).then(res => Buffer.from(res).toString("base64"));
     const font = await useStorage("assets/server/fonts").getItemRaw("OpenSans.ttf");
     const avatar1Base64 = avatars ? await getBase64Image(avatars.u1) : "";
     const avatar2Base64 = avatars ? await getBase64Image(avatars.u2) : "";
