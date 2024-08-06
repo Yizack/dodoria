@@ -33,7 +33,7 @@ export const getBackground = (percent: number) => {
       background = "10";
       break;
   }
-  return `${background}.jpg`;
+  return `${SITE.url}/images/ship/${background}.jpg`;
 };
 
 const getPercentX = (value: number) => {
@@ -61,8 +61,8 @@ export const getShipImage = async (data: {
 }) => {
   try {
     const { background, avatars, percent } = data;
-    const backgroundBase64 = await useStorage("root/public/images/ship").getItemRaw(background).then(res => Buffer.from(res).toString("base64"));
     const font = await useStorage("assets/server/fonts").getItemRaw("OpenSans.ttf");
+    const backgroundBase64 = await getBase64Image(background);
     const avatar1Base64 = avatars ? await getBase64Image(avatars.u1) : "";
     const avatar2Base64 = avatars ? await getBase64Image(avatars.u2) : "";
     const fontUint8Array = new Uint8Array(font);
