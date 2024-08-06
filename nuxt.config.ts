@@ -32,6 +32,9 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    imports: {
+      dirs: ["server/utils/handlers"]
+    },
     cloudflare: {
       pages: {
         routes: {

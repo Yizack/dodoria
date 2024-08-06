@@ -13,14 +13,14 @@ const Contexts = {
   ALL: [0, 1, 2]
 };
 
-export const ME_MIDE = {
+export const MEMIDE = {
   name: "memide",
   description: "Conoce cuántos centímetros te mide.",
   options: [],
   cid: "1053392162194194523"
 };
 
-export const ME_CABE = {
+export const MECABE = {
   name: "mecabe",
   description: "Conoce cuántos centímetros te caben.",
   options: [],
@@ -55,7 +55,7 @@ export const EDUCAR = {
   cid: "1053578283347882024"
 };
 
-export const BUENO_GENTE = {
+export const BUENOGENTE = {
   name: "buenogente",
   description: "Angar se despide de la gente.",
   options: [],

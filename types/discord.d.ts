@@ -1,6 +1,27 @@
 export {};
 
 declare global {
+  interface WebhookBody {
+    type: number;
+    data: {
+      name: string;
+      options: Record<string, string>[];
+      resolved: {
+        users: Record<string, { username: string, avatar: string, discriminator: string }>;
+      };
+    };
+    member: {
+      user: {
+        id: string;
+        username: string;
+        avatar: string;
+      };
+    };
+    guild_id: string;
+    channel_id: string;
+    token: string;
+  }
+
   interface DiscordEmbed {
     type?: string;
     title?: string;

@@ -10,9 +10,9 @@ definePageMeta({ layout: "site" });
         <h1>Dodoria</h1>
       </NuxtLink>
       <div class="mb-3">
-        <code class="bg-dark p-2 rounded-3">/{{ COMMANDS.ME_MIDE.name }}</code>
+        <code class="bg-dark p-2 rounded-3">/{{ COMMANDS.MEMIDE.name }}</code>
       </div>
-      <p>{{ COMMANDS.ME_MIDE.description }}</p>
+      <p>{{ COMMANDS.MEMIDE.description }}</p>
     </div>
   </div>
 </template>
