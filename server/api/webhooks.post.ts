@@ -10,17 +10,17 @@ export default defineEventHandler(async (event) => {
   }
 
   const commandHandlers: { [key: string]: CommandHandler } = {
-    [COMMANDS.MEMIDE.name]: handlerMeMide, // Comando /memide
-    [COMMANDS.MECABE.name]: handlerMeCabe, // Comando /mecabe
-    [COMMANDS.CHEER.name]: handlerCheer, // Comando /cheer
-    [COMMANDS.EDUCAR.name]: handlerEducar, // Comando /educar
-    [COMMANDS.COMANDOS.name]: handlerComandos, // Comando /comandos
-    [COMMANDS.BUENOGENTE.name]: handlerBuenoGente, // Comando /buenogente
-    [COMMANDS.SHIP.name]: handlerShip, // Comando /ship
-    [COMMANDS.VIDEO.name]: handlerVideo, // Comando /video
-    [COMMANDS.LOLPROFILE.name]: handlerLolProfile, // Comando /lolprofile
-    [COMMANDS.LOLMMR.name]: handlerLolMMR, // Comando /lolmmr
-    [COMMANDS.ANGAR.name]: handlerAngar // Comando /angar
+    [MEMIDE.name]: handlerMeMide, // Comando /memide
+    [MECABE.name]: handlerMeCabe, // Comando /mecabe
+    [CHEER.name]: handlerCheer, // Comando /cheer
+    [EDUCAR.name]: handlerEducar, // Comando /educar
+    [COMANDOS.name]: handlerComandos, // Comando /comandos
+    [BUENOGENTE.name]: handlerBuenoGente, // Comando /buenogente
+    [SHIP.name]: handlerShip, // Comando /ship
+    [VIDEO.name]: handlerVideo, // Comando /video
+    [LOLPROFILE.name]: handlerLolProfile, // Comando /lolprofile
+    [LOLMMR.name]: handlerLolMMR, // Comando /lolmmr
+    [ANGAR.name]: handlerAngar // Comando /angar
   };
 
   if (channel_id === CONSTANTS.CHANNEL || channel_id === CONSTANTS.CHANNEL_PRUEBAS) {
