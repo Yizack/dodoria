@@ -34,23 +34,22 @@ export const handlerVideo = async (event: H3Event, body: WebhookBody) => {
     const scraperUrl = `https://dev.ahmedrangel.com/dc/${red_social.toLowerCase()}-video-scrapper`;
     const scraperQueries = { url: encodedUrl, filter: "video" };
     const scrapping = await $fetch<VideoScrapping>(withQuery(scraperUrl, scraperQueries), { retry: 3, retryDelay: 1000 }).catch(() => null);
+
+    const deferUpdateError = (message?: string) => deferUpdate("", {
+      token,
+      application_id: config.discord.applicationId,
+      embeds: errorEmbed(message || ":x: Error. Ha ocurrido un error obteniendo el video.")
+    });
+
     if (!scrapping) {
-      const error = ":x: Error. Ha ocurrido un error obteniendo el video.";
-      return deferUpdate("", {
-        token,
-        application_id: config.discord.applicationId,
-        embeds: errorEmbed(error)
-      });
+      return deferUpdateError();
     }
+  
     const { id, video_url, short_url, status } = scrapping;
     const caption = imbedUrlsFromString(`${scrapping?.caption ? scrapping?.caption?.replace(/#[^\s#]+(\s#[^\s#]+)*$/g, "").replaceAll(".\n", "").replace(/\n+/g, "\n").trim() : ""}`);
+
     if (status !== 200 && !esUrl(video_url)) {
-      const error = ":x: Error. Ha ocurrido un error obteniendo el video.";
-      return deferUpdate("", {
-        token,
-        application_id: config.discord.applicationId,
-        embeds: errorEmbed(error)
-      });
+      return deferUpdateError();
     }
 
     const finalReply = (downloadUrl: string) => {
@@ -92,21 +91,11 @@ export const handlerVideo = async (event: H3Event, body: WebhookBody) => {
     const maxSize = 100000000;
 
     if (blob && blob?.size > maxSize) {
-      const error = "⚠️ Error. El video es muy pesado o demasiado largo.";
-      return deferUpdate("", {
-        token,
-        application_id: config.discord.applicationId,
-        embeds: errorEmbed(error)
-      });
+      return deferUpdateError("⚠️ Error. El video es muy pesado o demasiado largo.");
     }
 
     if (!blob || blob?.size < 100 || !["video/mp4", "binary/octet-stream", "application/octet-stream"].includes(String(contentType))) {
-      const error = ":x: Error. Ha ocurrido un error obteniendo el video.";
-      return deferUpdate("", {
-        token,
-        application_id: config.discord.applicationId,
-        embeds: errorEmbed(error)
-      });
+      return deferUpdateError();
     }
 
     const uploadedUrl = await $fetch<string>(withQuery("https://dev.ahmedrangel.com/put/video", { url: video_url, prefix: "videos", dir: red_social.toLowerCase(), file_id: id }));
