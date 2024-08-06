@@ -67,7 +67,7 @@ export default defineEventHandler(async (event) => {
                 },
                 footer: {
                   text: `Voz: ${VOZ}. Caracteres: ${mensaje.length} de 500.`,
-                  icon_url: bits[getRandom({ min: 0, max: bits.length - 1 })]
+                  icon_url: bits[getRandom({ min: 0, max: bits.length - 1 })]!
                 }
               }],
               token,
@@ -105,29 +105,31 @@ export default defineEventHandler(async (event) => {
         }
         // comando /comandos
         case C.COMANDOS.name: {
-          const list = [];
+          const list: string[] = [];
           Object.values(C).forEach((command) => {
             list.push(`-  </${command.name}:${command.cid}> *${command.description}*\n\n`);
           });
 
-          return reply(null, { embeds: [{
-            title: "Lista de comandos",
-            description: "Conoce la lista de comandos disponibles.\n\n"
-            + `${list.join("")}`
-            + "Escribe el comando que desees en la caja de enviar mensajes de discord y selecciona la opción que se muestra junto al avatar del bot. Se irán añadiendo más comandos divertidos con el tiempo.",
-            color: COLOR,
-            author: {
-              name: BOT,
-              icon_url: avatar
-            },
-            image: {
-              url: guide
-            },
-            footer: {
-              text: `Creado por ${OWNER}.`,
-              icon_url: yizack
-            }
-          }] });
+          return reply(null, {
+            embeds: [{
+              title: "Lista de comandos",
+              description: "Conoce la lista de comandos disponibles.\n\n"
+              + `${list.join("")}`
+              + "Escribe el comando que desees en la caja de enviar mensajes de discord y selecciona la opción que se muestra junto al avatar del bot. Se irán añadiendo más comandos divertidos con el tiempo.",
+              color: COLOR,
+              author: {
+                name: BOT,
+                icon_url: avatar
+              },
+              image: {
+                url: guide
+              },
+              footer: {
+                text: `Creado por ${OWNER}.`,
+                icon_url: yizack
+              }
+            }]
+          });
         }
         // comando /buenogente
         case C.BUENO_GENTE.name: {
@@ -189,14 +191,14 @@ export default defineEventHandler(async (event) => {
         }
         case C.VIDEO.name: {
           const followUpRequest = async () => {
-            const embeds = [], button = [], components = [];
-            let emoji;
+            const embeds: DiscordEmbed[] = [], button: DiscordButton[] = [], components: DiscordComponent[] = [];
+            let emoji: string;
             let supported = false;
             let red_social = "Instagram / Facebook / TikTok / X / YouTube / Twitch / Kick";
             const url = getValue("link", options);
 
             for (const key in VIDEO_SOCIALS) {
-              const sns = VIDEO_SOCIALS[key];
+              const sns = VIDEO_SOCIALS[key as keyof typeof VIDEO_SOCIALS];
               if (sns.domains.some(domains => url.includes(domains))) {
                 red_social = sns.name;
                 emoji = getSocial(red_social);
@@ -217,10 +219,17 @@ export default defineEventHandler(async (event) => {
             const encodedUrl = encodeURIComponent(url);
             const scraperUrl = `https://dev.ahmedrangel.com/dc/${red_social.toLowerCase()}-video-scrapper`;
             const scraperQueries = { url: encodedUrl, filter: "video" };
-            const scrapping = await $fetch(withQuery(scraperUrl, scraperQueries), { retry: 3, retryDelay: 1000 }).catch(() => null);
+            const scrapping = await $fetch<VideoScrapping>(withQuery(scraperUrl, scraperQueries), { retry: 3, retryDelay: 1000 }).catch(() => null);
+            if (!scrapping) {
+              const error = ":x: Error. Ha ocurrido un error obteniendo el video.";
+              return deferUpdate("", {
+                token,
+                application_id: config.discord.applicationId,
+                embeds: errorEmbed(error)
+              });
+            }
             const { id, video_url, short_url, status } = scrapping;
             const caption = imbedUrlsFromString(`${scrapping?.caption ? scrapping?.caption?.replace(/#[^\s#]+(\s#[^\s#]+)*$/g, "").replaceAll(".\n", "").replace(/\n+/g, "\n").trim() : ""}`);
-
             if (status !== 200 && !esUrl(video_url)) {
               const error = ":x: Error. Ha ocurrido un error obteniendo el video.";
               return deferUpdate("", {
@@ -261,15 +270,14 @@ export default defineEventHandler(async (event) => {
               return finalReply(cdnUrl);
             }
 
-            const videoChecker = await $fetch.raw(video_url).catch(() => null);
+            const videoChecker = await $fetch.raw<Blob>(video_url).catch(() => null);
             const blob = videoChecker?._data;
-            const fileSize = blob?.size;
             const contentType = videoChecker?.headers.get("content-type");
-            console.info("Tamaño: " + fileSize, "Content-Type: " + contentType);
+            console.info("Tamaño: " + blob?.size, "Content-Type: " + contentType);
 
             const maxSize = 100000000;
 
-            if (blob && fileSize > maxSize) {
+            if (blob && blob?.size > maxSize) {
               const error = "⚠️ Error. El video es muy pesado o demasiado largo.";
               return deferUpdate("", {
                 token,
@@ -278,7 +286,7 @@ export default defineEventHandler(async (event) => {
               });
             }
 
-            if (!blob || fileSize < 100 || !["video/mp4", "binary/octet-stream", "application/octet-stream"].includes(contentType)) {
+            if (!blob || blob?.size < 100 || !["video/mp4", "binary/octet-stream", "application/octet-stream"].includes(String(contentType))) {
               const error = ":x: Error. Ha ocurrido un error obteniendo el video.";
               return deferUpdate("", {
                 token,
@@ -330,7 +338,7 @@ export default defineEventHandler(async (event) => {
               };
               const history: string[] = [];
               const fields = [];
-              profile.rankProfile.forEach((rank) => {
+              profile.rankProfile.forEach((rank: LOLRank) => {
                 if (rank.queueType == "RANKED_SOLO_5x5") {
                   queue = "Solo/Duo";
                 }
@@ -356,7 +364,7 @@ export default defineEventHandler(async (event) => {
                 });
               });
 
-              profile.matchesHistory.forEach((match) => {
+              profile.matchesHistory.forEach((match: LOLMatch) => {
                 let resultado;
                 if (match.remake) {
                   resultado = "⬜";
@@ -462,9 +470,8 @@ export default defineEventHandler(async (event) => {
                 }]
               });
             }
-            const embeds = [];
+            const embeds: DiscordEmbed[] = [];
             const mensaje = "";
-            let footer;
             const profileF = await fetch(`https://dev.ahmedrangel.com/lol/mmr/${region}/${riotName}/${riotTag}/${queue}`);
             const profile = await profileF.json();
             if (profile.status_code !== 404) {
@@ -495,7 +502,6 @@ export default defineEventHandler(async (event) => {
                   icon_url: profile?.profileIconUrl
                 },
                 footer: {
-                  text: footer,
                   icon_url: "https://cdn.ahmedrangel.com/LOL_Icon.png"
                 }
               });

@@ -17,11 +17,11 @@ const angarEmojis = {
   Cheer50k: "1053628988293136526"
 };
 
-export const getEmoji = (name: string) => {
+export const getEmoji = (name: keyof typeof angarEmojis) => {
   return name in angarEmojis ? `<:${name}:${angarEmojis[name]}>` : "";
 };
 
-export const getEmojiURL = (name: string) => {
+export const getEmojiURL = (name: keyof typeof angarEmojis) => {
   return name in angarEmojis ? `https://cdn.discordapp.com/emojis/${angarEmojis[name]}.webp` : "";
 };
 
@@ -37,7 +37,7 @@ const socials = {
 };
 
 export const getSocial = (name: string) => {
-  const key = name.toLowerCase();
+  const key = name.toLowerCase() as keyof typeof socials;
   return key in socials ? socials[key] : "";
 };
 
