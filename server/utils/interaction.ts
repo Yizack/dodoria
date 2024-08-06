@@ -7,7 +7,7 @@ const API = {
   BASE: "https://discord.com/api/v10"
 };
 
-const toDiscordEndpoint = (endpoint: string, body: Record<string, unknown>, method: "POST" | "GET" | "PUT", authorization?: string) => {
+const toDiscordEndpoint = (endpoint: string, body: Record<string, unknown>, method: "POST", authorization?: string) => {
   const endpointURL = `${API.BASE}${endpoint}`;
   if (!body.files) {
     return $fetch(endpointURL, {
