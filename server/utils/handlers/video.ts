@@ -98,9 +98,9 @@ export const handlerVideo = async (event: H3Event, body: WebhookBody) => {
       return deferUpdateError();
     }
 
-    const uploadedUrl: { url: string } = await $fetch("https://dev.ahmedrangel.com/cdn", {
+    const uploadedUrl = await $fetch<{ url: string }>("https://dev.ahmedrangel.com/cdn", {
       method: "PUT",
-      headers: { "x-cdn-auth": `${process.env.CDN_TOKEN}` },
+      headers: { "x-cdn-auth": `${config.cdnToken}` },
       body: {
         source: video_url,
         prefix: `videos/${red_social.toLowerCase()}`,
@@ -111,7 +111,9 @@ export const handlerVideo = async (event: H3Event, body: WebhookBody) => {
           "Cache-Control": "public, max-age=432000"
         }
       }
-    });
+    }).catch(() => null);
+
+    if (!uploadedUrl) return deferUpdateError();
 
     return finalReply(uploadedUrl.url);
   };
