@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@cloudflare/workers-types':
-        specifier: ^4.20240729.0
-        version: 4.20240729.0
+        specifier: ^4.20240806.0
+        version: 4.20240806.0
       '@nuxt/eslint':
         specifier: ^0.5.0
         version: 0.5.0(eslint@9.8.0)(magicast@0.3.4)(rollup@4.20.0)(typescript@5.5.4)(vite@5.3.5(@types/node@20.12.5)(terser@5.30.3))
@@ -18,8 +18,8 @@ importers:
         specifier: ^2.6.2
         version: 2.6.2
       '@yeger/vue-masonry-wall':
-        specifier: ^5.0.12
-        version: 5.0.12(vue@3.4.34(typescript@5.5.4))
+        specifier: ^5.0.14
+        version: 5.0.14(vue@3.4.34(typescript@5.5.4))
       bootstrap:
         specifier: ^5.3.3
         version: 5.3.3(@popperjs/core@2.11.8)
@@ -63,8 +63,8 @@ importers:
         specifier: ^2.0.29
         version: 2.0.29(typescript@5.5.4)
       wrangler:
-        specifier: ^3.68.0
-        version: 3.68.0(@cloudflare/workers-types@4.20240729.0)
+        specifier: ^3.69.1
+        version: 3.69.1(@cloudflare/workers-types@4.20240806.0)
 
 packages:
 
@@ -400,8 +400,11 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@cloudflare/workers-types@4.20240729.0':
-    resolution: {integrity: sha512-wfe44YQkv5T9aBr/z95P706r2/Ydg32weJYyBOhvge7FqtdY6mM7l39rybNiJrbJoyN16dd0xxyQMf23aJNC6Q==}
+  '@cloudflare/workers-shared@0.1.0':
+    resolution: {integrity: sha512-SyD4iw6jM4anZaG+ujgVETV4fulF2KHBOW31eavbVN7TNpk2l4aJgwY1YSPK00IKSWsoQuH2TigR446KuT5lqQ==}
+
+  '@cloudflare/workers-types@4.20240806.0':
+    resolution: {integrity: sha512-8lvgrwXGTZEBsUQJ8YUnMk72Anh9omwr6fqWLw/EwVgcw1nQxs/bfdadBEbdP48l9fWXjE4E5XERLUrrFuEpsg==}
 
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -1784,11 +1787,11 @@ packages:
   '@yeger/vue-lib-adapter@2.0.9':
     resolution: {integrity: sha512-FIaKvP596mg8J9bsphng4Ulr+EMghBG2RNrBrJCFvz9uV7YI6X0vNJ0vV/8SqL6Boe92VpRjG+puKe/HYKsnTg==}
 
-  '@yeger/vue-masonry-wall-core@5.0.10':
-    resolution: {integrity: sha512-s4dwP4/mvcwNqa1/2uSSXU8bSaKS1nHb+JmF17fFLFNvacZTk6b3mcW8yjM38sxzhQ+tv7rthMTrF3W+6abRgw==}
+  '@yeger/vue-masonry-wall-core@5.0.11':
+    resolution: {integrity: sha512-3/4v3fyn+KhiUS56CujJCiwjvtIZz8oAaJ5NaQluZ98dJIkYmNiMZutJ9gG4C4xjedXr9IznNjkTv4GD1UeO9Q==}
 
-  '@yeger/vue-masonry-wall@5.0.12':
-    resolution: {integrity: sha512-KpGurtFYZdjWZmSPt7V1RhQS2G1SsLxat6l6RwenC1Rj4RKBGCLIEErd7wEGAyaGHQ0EBODK1ZsaJpmOqebszA==}
+  '@yeger/vue-masonry-wall@5.0.14':
+    resolution: {integrity: sha512-UVwAC/T07Pj1HHBEnVm2m5HPq6mZGZjBXI72sdJdb7sU8wZ9SUnEOLd7Zm275eHhdqQZ+6b7hVgRMvfscu1k5g==}
     peerDependencies:
       vue: ^3.0.0
 
@@ -4665,8 +4668,8 @@ packages:
     engines: {node: '>=16'}
     hasBin: true
 
-  wrangler@3.68.0:
-    resolution: {integrity: sha512-gsIeglkh5nOn1mHJs0bf1pOq/DvIt+umjO/5a867IYYXaN4j/ar5cRR1+F5ue3S7uEjYCLIZZjs8ESiPTSEt+Q==}
+  wrangler@3.69.1:
+    resolution: {integrity: sha512-lqgPsaxIP564OJE6f7RIS/iLy+WaY0EN89p2g83nkrPN6PjuC6vB3eC7jgeVZO1ntWjD0X+mEU5ggbERHr899w==}
     engines: {node: '>=16.17.0'}
     hasBin: true
     peerDependencies:
@@ -5190,7 +5193,9 @@ snapshots:
   '@cloudflare/workerd-windows-64@1.20240725.0':
     optional: true
 
-  '@cloudflare/workers-types@4.20240729.0': {}
+  '@cloudflare/workers-shared@0.1.0': {}
+
+  '@cloudflare/workers-types@4.20240806.0': {}
 
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
@@ -6658,14 +6663,14 @@ snapshots:
 
   '@yeger/vue-lib-adapter@2.0.9': {}
 
-  '@yeger/vue-masonry-wall-core@5.0.10':
+  '@yeger/vue-masonry-wall-core@5.0.11':
     dependencies:
       '@yeger/debounce': 2.0.9
       '@yeger/vue-lib-adapter': 2.0.9
 
-  '@yeger/vue-masonry-wall@5.0.12(vue@3.4.34(typescript@5.5.4))':
+  '@yeger/vue-masonry-wall@5.0.14(vue@3.4.34(typescript@5.5.4))':
     dependencies:
-      '@yeger/vue-masonry-wall-core': 5.0.10
+      '@yeger/vue-masonry-wall-core': 5.0.11
       vue: 3.4.34(typescript@5.5.4)
 
   abbrev@1.1.1: {}
@@ -9877,9 +9882,10 @@ snapshots:
       '@cloudflare/workerd-linux-arm64': 1.20240725.0
       '@cloudflare/workerd-windows-64': 1.20240725.0
 
-  wrangler@3.68.0(@cloudflare/workers-types@4.20240729.0):
+  wrangler@3.69.1(@cloudflare/workers-types@4.20240806.0):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.3.4
+      '@cloudflare/workers-shared': 0.1.0
       '@esbuild-plugins/node-globals-polyfill': 0.2.3(esbuild@0.17.19)
       '@esbuild-plugins/node-modules-polyfill': 0.2.2(esbuild@0.17.19)
       blake3-wasm: 2.1.5
@@ -9897,7 +9903,7 @@ snapshots:
       workerd: 1.20240725.0
       xxhash-wasm: 1.0.2
     optionalDependencies:
-      '@cloudflare/workers-types': 4.20240729.0
+      '@cloudflare/workers-types': 4.20240806.0
       fsevents: 2.3.3
     transitivePeerDependencies:
       - bufferutil
