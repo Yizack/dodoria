@@ -98,8 +98,22 @@ export const handlerVideo = async (event: H3Event, body: WebhookBody) => {
       return deferUpdateError();
     }
 
-    const uploadedUrl = await $fetch<string>(withQuery("https://dev.ahmedrangel.com/put/video", { url: video_url, prefix: "videos", dir: red_social.toLowerCase(), file_id: id }));
-    return finalReply(uploadedUrl);
+    const uploadedUrl: { url: string } = await $fetch("https://dev.ahmedrangel.com/cdn", {
+      method: "PUT",
+      headers: { "x-cdn-auth": `${process.env.CDN_TOKEN}` },
+      body: {
+        source: video_url,
+        prefix: `videos/${red_social.toLowerCase()}`,
+        file_name: `${id}.mp4`,
+        httpMetadata: {
+          "Content-Type": "video/mp4",
+          "Content-Disposition": "inline",
+          "Cache-Control": "public, max-age=432000"
+        }
+      }
+    });
+
+    return finalReply(uploadedUrl.url);
   };
   event.context.cloudflare.context.waitUntil(followUpRequest());
   return deferReply();
