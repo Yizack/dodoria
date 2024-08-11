@@ -65,7 +65,7 @@ export const handlerVideo = async (event: H3Event, body: WebhookBody) => {
         components: button
       });
 
-      const mensaje = `${emoji} **${red_social}**: [${short_url.replace("https://", "")}](${withQuery("https://dev.ahmedrangel.com/dc/fx", { video_url: downloadUrl, redirect_url: short_url })})\n${caption}`;
+      const mensaje = `[${emoji}](${withQuery("https://dev.ahmedrangel.com/dc/fx", { video_url: downloadUrl, redirect_url: short_url })}) **${red_social}**: [${short_url.replace("https://", "")}](<${short_url}>)\n${caption}`;
       const fixedMsg = mensaje.length > 1000 ? mensaje.substring(0, 1000) + "..." : mensaje;
 
       return deferUpdate(fixedMsg, {
