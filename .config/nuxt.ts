@@ -66,7 +66,8 @@ export default defineNuxtConfig({
     discord: {
       token: "",
       applicationId: ""
-    }
+    },
+    cdnToken: ""
   },
 
   eslint: {
