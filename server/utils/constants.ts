@@ -19,7 +19,7 @@ export const CONSTANTS = {
       name: "TikTok"
     },
     x: {
-      domains: ["twitter.com/", "x.com/"],
+      domains: ["twitter.com/", "x.com/", "t.co/"],
       name: "X"
     },
     facebook: {
