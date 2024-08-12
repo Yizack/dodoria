@@ -8,7 +8,7 @@ export const handlerVideo = async (event: H3Event, body: WebhookBody) => {
     const embeds: DiscordEmbed[] = [], button: DiscordButton[] = [], components: DiscordComponent[] = [];
     let emoji: string;
     let supported = false;
-    let red_social = "Instagram / Facebook / TikTok / X / YouTube / Twitch / Kick";
+    let red_social = "Instagram / Facebook / TikTok / X / YouTube / Twitch / Kick / Reddit";
     const url = getValue("link", options);
 
     for (const key in CONSTANTS.VIDEO_SOCIALS) {
