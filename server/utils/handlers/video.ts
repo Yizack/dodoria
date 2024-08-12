@@ -66,7 +66,7 @@ export const handlerVideo = async (event: H3Event, body: WebhookBody) => {
         components: button
       });
 
-      const fxUrl = is_gif ? withQuery(downloadUrl, { c: 1 }) : withQuery("$https://dev.ahmedrangel.com/dc/fx", { video_url: downloadUrl, redirect_url: short_url });
+      const fxUrl = is_gif ? withQuery(downloadUrl, { c: 1 }) : withQuery("https://dev.ahmedrangel.com/dc/fx", { video_url: downloadUrl, redirect_url: short_url });
       const mensaje = `[${emoji}](${fxUrl}) **${red_social}**: [${short_url.replace("https://", "")}](<${short_url}>)\n${caption}`;
       const fixedMsg = mensaje.length > 1000 ? mensaje.substring(0, 1000) + "..." : mensaje;
 
