@@ -45,7 +45,7 @@ export const handlerVideo = async (event: H3Event, body: WebhookBody) => {
       return deferUpdateError();
     }
 
-    const { id, video_url, short_url, status } = scrapping;
+    const { id, video_url, short_url, status, format } = scrapping;
     const caption = imbedUrlsFromString(`${scrapping?.caption ? scrapping?.caption?.replace(/#[^\s#]+(\s#[^\s#]+)*$/g, "").replaceAll(".\n", "").replace(/\n+/g, "\n").trim() : ""}`);
 
     if (status !== 200 && !esUrl(video_url)) {
@@ -53,10 +53,11 @@ export const handlerVideo = async (event: H3Event, body: WebhookBody) => {
     }
 
     const finalReply = (downloadUrl: string) => {
+      const is_gif = downloadUrl.includes(".gif");
       button.push({
         type: MessageComponentTypes.BUTTON,
         style: ButtonStyleTypes.LINK,
-        label: "Descargar MP4",
+        label: `Descargar ${is_gif ? "GIF" : "MP4"}`,
         url: downloadUrl
       });
 
@@ -65,7 +66,8 @@ export const handlerVideo = async (event: H3Event, body: WebhookBody) => {
         components: button
       });
 
-      const mensaje = `[${emoji}](${withQuery("https://dev.ahmedrangel.com/dc/fx", { video_url: downloadUrl, redirect_url: short_url })}) **${red_social}**: [${short_url.replace("https://", "")}](<${short_url}>)\n${caption}`;
+      const fxUrl = is_gif ? withQuery(downloadUrl, { c: 1 }) : withQuery("$https://dev.ahmedrangel.com/dc/fx", { video_url: downloadUrl, redirect_url: short_url });
+      const mensaje = `[${emoji}](${fxUrl}) **${red_social}**: [${short_url.replace("https://", "")}](<${short_url}>)\n${caption}`;
       const fixedMsg = mensaje.length > 1000 ? mensaje.substring(0, 1000) + "..." : mensaje;
 
       return deferUpdate(fixedMsg, {
@@ -76,7 +78,7 @@ export const handlerVideo = async (event: H3Event, body: WebhookBody) => {
       });
     };
 
-    const cdnUrl = `https://cdn.ahmedrangel.com/videos/${red_social.toLowerCase()}/${id}.mp4`;
+    const cdnUrl = `https://cdn.ahmedrangel.com/videos/${red_social.toLowerCase()}/${id}.${format || "mp4"}`;
     const checkCdn = await $fetch.raw(withQuery(cdnUrl, { t: Date.now() })).catch(() => null);
     if (checkCdn?.ok) {
       console.info("Existe en CDN");
@@ -94,7 +96,7 @@ export const handlerVideo = async (event: H3Event, body: WebhookBody) => {
       return deferUpdateError("⚠️ Error. El video es muy pesado o demasiado largo.");
     }
 
-    if (!blob || blob?.size < 100 || !["video/mp4", "binary/octet-stream", "application/octet-stream"].includes(String(contentType))) {
+    if (!blob || blob?.size < 100 || !["video/mp4", "binary/octet-stream", "application/octet-stream", "image/gif"].includes(String(contentType))) {
       return deferUpdateError();
     }
 
@@ -104,9 +106,9 @@ export const handlerVideo = async (event: H3Event, body: WebhookBody) => {
       body: {
         source: video_url,
         prefix: `videos/${red_social.toLowerCase()}`,
-        file_name: `${id}.mp4`,
+        file_name: `${id}.${format || "mp4"}`,
         httpMetadata: {
-          "Content-Type": "video/mp4",
+          "Content-Type": String(contentType).includes("image/gif") ? contentType : "video/mp4",
           "Content-Disposition": "inline",
           "Cache-Control": "public, max-age=432000"
         }

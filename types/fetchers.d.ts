@@ -7,6 +7,7 @@ declare global {
     short_url: string;
     status: number;
     caption: string;
+    format?: string;
   }
 
   interface LOLRank {

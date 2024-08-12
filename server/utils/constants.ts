@@ -39,7 +39,7 @@ export const CONSTANTS = {
       name: "Kick"
     },
     reddit: {
-      domains: ["reddit.com/r/", "reddit.com/user/", "reddit.com/u/"],
+      domains: ["reddit.com/r/", "reddit.com/user/", "reddit.com/u/", "redd.it/"],
       name: "Reddit"
     }
   },
