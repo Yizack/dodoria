@@ -1,6 +1,5 @@
 export const handlerLolProfile: CommandHandler = (event, { body, getValue }) => {
   const { token } = body;
-  const { options } = body.data;
 
   const config = useRuntimeConfig(event);
 

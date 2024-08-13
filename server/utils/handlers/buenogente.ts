@@ -1,4 +1,4 @@
-export const handlerBuenoGente: CommandHandler = (event, { body }) => {
+export const handlerBuenoGente: CommandHandler = () => {
   return reply(null, { embeds: [{
     title: "🖐 ANGAR se ha despedido con un \"BUENO GENTE\"",
     description: "¡Bueno gente! 🖐🖐👊",

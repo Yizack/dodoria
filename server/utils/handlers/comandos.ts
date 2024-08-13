@@ -1,4 +1,4 @@
-export const handlerComandos: CommandHandler = (event, { body }) => {
+export const handlerComandos: CommandHandler = () => {
   const list: string[] = [];
   Object.values(COMMANDS).forEach((command) => {
     list.push(`-  </${command.name}:${command.cid}> *${command.description}*\n\n`);

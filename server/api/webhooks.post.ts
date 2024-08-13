@@ -29,7 +29,7 @@ export default defineEventHandler(async (event) => {
 
     if (commandHandler) {
       return commandHandler(event, { body,
-        getValue: (name) => getOptionsValue(name, options)
+        getValue: name => getOptionsValue(name, options)
       });
     }
 

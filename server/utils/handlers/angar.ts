@@ -1,4 +1,4 @@
-export const handlerAngar: CommandHandler = (event, { body })  => {
+export const handlerAngar: CommandHandler = (event, { body }) => {
   const { member } = body;
 
   const button = [{
