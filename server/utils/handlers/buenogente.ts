@@ -6,7 +6,7 @@ export const handlerBuenoGente: CommandHandler = () => {
       color: CONSTANTS.COLOR,
       author: {
         name: CONSTANTS.BOT,
-        icon_url: avatar
+        icon_url: CONSTANTS.AVATAR
       },
       image: {
         url: getRandomBuenoGente()
