@@ -1,8 +1,8 @@
-export const handlerShip = (event: H3Event, body: WebhookBody) => {
-  const { options, resolved } = body.data;
+export const handlerShip: CommandHandler = (event, { body, getValue }) => {
+  const { resolved } = body.data;
 
-  const u1 = getValue("persona1", options);
-  const u2 = getValue("persona2", options);
+  const u1 = getValue("persona1");
+  const u2 = getValue("persona2");
   const p = getRandom({ min: 0, max: 100 });
   const { users } = resolved;
   const letras_nombre1 = users[u1]!.username.substring(0, 3);

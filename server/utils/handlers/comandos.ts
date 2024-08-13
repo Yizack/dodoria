@@ -1,4 +1,4 @@
-export const handlerComandos = (_event: H3Event, _body: WebhookBody) => {
+export const handlerComandos: CommandHandler = (event, { body }) => {
   const list: string[] = [];
   Object.values(COMMANDS).forEach((command) => {
     list.push(`-  </${command.name}:${command.cid}> *${command.description}*\n\n`);

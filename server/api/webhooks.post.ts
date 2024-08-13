@@ -24,11 +24,13 @@ export default defineEventHandler(async (event) => {
   };
 
   return create(type, () => {
-    const { name } = data;
+    const { name, options } = data;
     const commandHandler = commandHandlers[name];
 
     if (commandHandler) {
-      return commandHandler(event, body);
+      return commandHandler(event, { body,
+        getValue: (name) => getOptionsValue(name, options)
+      });
     }
 
     setResponseStatus(event, 404);

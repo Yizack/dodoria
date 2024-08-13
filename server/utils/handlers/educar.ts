@@ -1,8 +1,7 @@
-export const handlerEducar = async (event: H3Event, body: WebhookBody) => {
+export const handlerEducar: CommandHandler = async (event, { body, getValue }) => {
   const { member, guild_id } = body;
-  const { options } = body.data;
 
-  const usuario = getValue("usuario", options);
+  const usuario = getValue("usuario");
 
   let message = `<@${member.user.id}> no ha podido educar a <@${usuario}>`;
   const embeds = [];

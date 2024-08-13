@@ -1,4 +1,4 @@
-export const handlerMeCabe = (event: H3Event, body: WebhookBody) => {
+export const handlerMeCabe: CommandHandler = (event, { body }) => {
   const { member } = body;
   const cm = getRandom({ max: 43 });
   const emoji = cm >= 10 ? getEmoji("angarGasm") : getEmoji("angarL");

@@ -1,13 +1,12 @@
-export const handlerLolMMR = async (event: H3Event, body: WebhookBody) => {
+export const handlerLolMMR: CommandHandler = (event, { body, getValue }) => {
   const { token } = body;
-  const { options } = body.data;
 
   const config = useRuntimeConfig(event);
 
   const followUpRequest = async () => {
-    const riotId = (getValue("riot_id", options)).replace(/ /g, "").split("#");
-    const region = getValue("servidor", options);
-    const queue = getValue("cola", options);
+    const riotId = (getValue("riot_id")).replace(/ /g, "").split("#");
+    const region = getValue("servidor");
+    const queue = getValue("cola");
     const riotName = riotId[0];
     const riotTag = riotId[1];
     if (!riotTag || !riotName) {

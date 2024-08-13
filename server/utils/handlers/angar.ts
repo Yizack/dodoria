@@ -1,4 +1,4 @@
-export const handlerAngar = (event: H3Event, body: WebhookBody) => {
+export const handlerAngar: CommandHandler = (event, { body })  => {
   const { member } = body;
 
   const button = [{

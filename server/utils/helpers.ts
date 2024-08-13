@@ -1,6 +1,5 @@
-export const getValue = (name: string, options: Record<string, string>[] | null) => {
-  if (!options) return "";
-  const option = options.find(option => option.name === name);
+export const getOptionsValue = (name: string, options: Record<string, string>[] | null) => {
+  const option = options?.find(option => option.name === name);
   return option?.value ?? "";
 };
 

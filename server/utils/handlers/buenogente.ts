@@ -1,4 +1,4 @@
-export const handlerBuenoGente = (_event: H3Event, _body: WebhookBody) => {
+export const handlerBuenoGente: CommandHandler = (event, { body }) => {
   return reply(null, { embeds: [{
     title: "🖐 ANGAR se ha despedido con un \"BUENO GENTE\"",
     description: "¡Bueno gente! 🖐🖐👊",

@@ -1,6 +1,5 @@
-export const handlerVideo = async (event: H3Event, body: WebhookBody) => {
+export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
   const { token } = body;
-  const { options } = body.data;
 
   const config = useRuntimeConfig(event);
 
@@ -9,7 +8,7 @@ export const handlerVideo = async (event: H3Event, body: WebhookBody) => {
     let emoji: string;
     let supported = false;
     let red_social = "Instagram / Facebook / TikTok / X / YouTube / Twitch / Kick / Reddit";
-    const url = getValue("link", options);
+    const url = getValue("link");
 
     for (const key in CONSTANTS.VIDEO_SOCIALS) {
       const sns = CONSTANTS.VIDEO_SOCIALS[key as keyof typeof CONSTANTS.VIDEO_SOCIALS];

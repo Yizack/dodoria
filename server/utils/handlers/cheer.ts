@@ -1,10 +1,9 @@
-export const handlerCheer = (event: H3Event, body: WebhookBody) => {
+export const handlerCheer: CommandHandler = (event, { body, getValue }) => {
   const { member, token } = body;
-  const { options } = body.data;
 
   const config = useRuntimeConfig(event);
 
-  const mensaje = getValue("mensaje", options).replace(/(<([^>]+)>)/gi, "").trim();
+  const mensaje = getValue("mensaje").replace(/(<([^>]+)>)/gi, "").trim();
   const bits = [
     getEmojiURL("Cheer100"),
     getEmojiURL("Cheer1k"),

@@ -5,7 +5,7 @@ declare global {
     type: number;
     data: {
       name: string;
-      options: Record<string, string>[];
+      options: Record<string, string>[] | null;
       resolved: {
         users: Record<string, { username: string, avatar: string, discriminator: string }>;
       };
