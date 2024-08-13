@@ -13,14 +13,13 @@ export const handlerComandos: CommandHandler = () => {
       color: CONSTANTS.COLOR,
       author: {
         name: CONSTANTS.BOT,
-        icon_url: avatar
+        icon_url: CONSTANTS.AVATAR
       },
       image: {
-        url: guide
+        url: CONSTANTS.GUIDE
       },
       footer: {
-        text: `Creado por ${CONSTANTS.OWNER}.`,
-        icon_url: yizack
+        text: `Creado por ${CONSTANTS.OWNER}.`
       }
     }]
   });

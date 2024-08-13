@@ -1,5 +1,7 @@
 export const CONSTANTS = {
   BOT: "Dodoria",
+  GUIDE: "https://cdn.discordapp.com/attachments/1053733972645003365/1053734183849181264/image.png",
+  AVATAR: `${SITE.url}/images/dodoria.png`,
   BUENOGENTE: 16,
   ANGAR: 153,
   COLOR: 0xf697c8,

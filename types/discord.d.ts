@@ -44,7 +44,7 @@ declare global {
     }[];
     footer?: {
       text?: string;
-      icon_url: string;
+      icon_url?: string;
     };
   }
 
