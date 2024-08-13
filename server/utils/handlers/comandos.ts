@@ -7,7 +7,7 @@ export const handlerComandos: CommandHandler = () => {
   return reply(null, {
     embeds: [{
       title: "Lista de comandos",
-      description: "Conoce la lista de comandos disponibles.\n\n"
+      description: "Conoce la lista de comandos disponibles.\n"
       + `${list.join("")}`
       + "Escribe el comando que desees en la caja de enviar mensajes de discord y selecciona la opción que se muestra junto al avatar del bot. Se irán añadiendo más comandos divertidos con el tiempo.",
       color: CONSTANTS.COLOR,

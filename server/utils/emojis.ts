@@ -1,28 +1,28 @@
 const angarEmojis = {
-  angarMonkas: "1225312393958133932",
-  angarSad: "1225312395354701824",
-  angarGasm: "1225312390061752410",
-  angarL: "1225312393240907806",
-  angarShy: "1225313748923973755",
-  angarSadge: "1225312453164929096",
-  angarG: "1225312387092054036",
-  angarJu: "1225312391995199589",
-  angarH: "1225312391030374450.",
-  angarG2: "1225312388501344266",
-  Cheer100: "1053629269194047488",
-  Cheer1k: "1053629071935938590",
-  Cheer5k: "1053628502135549972",
-  Cheer10k: "1053627826655461457",
-  Cheer25k: "1053624911693881344",
-  Cheer50k: "1053628988293136526"
+  angarMonkas: "1272795364381954108",
+  angarSad: "1272795422821322835",
+  angarGasm: "1272794992225812480",
+  angarL: "1272795263609737257",
+  angarShy: "1272795811419525130",
+  angarSadge: "1272795525644685374",
+  angarG: "1272794791196758026",
+  angarJu: "1272795177072726046",
+  angarH: "1272795082340307037",
+  angarG2: "1272794916942118935",
+  Cheer100: "1272795893862498314",
+  Cheer1k: "1272796036175237151",
+  Cheer5k: "1272796077925597234",
+  Cheer10k: "1272795983863873536",
+  Cheer25k: "1272796123970408509",
+  Cheer50k: "1272796169193521235"
 };
 
 export const getEmoji = (name: keyof typeof angarEmojis) => {
-  return name in angarEmojis ? `<:${name}:${angarEmojis[name]}>` : "";
+  return `<:${name}:${angarEmojis[name]}>`;
 };
 
 export const getEmojiURL = (name: keyof typeof angarEmojis) => {
-  return name in angarEmojis ? `https://cdn.discordapp.com/emojis/${angarEmojis[name]}.webp` : "";
+  return `https://cdn.discordapp.com/emojis/${angarEmojis[name]}.webp`;
 };
 
 const socials = {
