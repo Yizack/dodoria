@@ -1,4 +1,4 @@
-export const getOptionsValue = (name: string, options: Record<string, string>[] | null) => {
+export const getOptionsValue = (name: string, options: WebhookBody["data"]["options"]) => {
   const option = options?.find(option => option.name === name);
   return option?.value ?? "";
 };

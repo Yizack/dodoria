@@ -5,7 +5,11 @@ declare global {
     type: number;
     data: {
       name: string;
-      options: Record<string, string>[] | null;
+      options: {
+        type: number;
+        name: string;
+        value: string;
+      }[] | null;
       resolved: {
         users: Record<string, { username: string, avatar: string, discriminator: string }>;
       };
@@ -15,7 +19,12 @@ declare global {
         id: string;
         username: string;
         avatar: string;
+        discriminator: string;
       };
+      roles: string[];
+      joined_at: string;
+      permissions: string;
+      nick: string | null;
     };
     guild_id: string;
     channel_id: string;
