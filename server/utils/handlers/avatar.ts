@@ -3,9 +3,10 @@ export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
   const userId = getValue("usuario");
   const avatarType = getValue("tipo") || "servidor";
 
+  console.info(JSON.stringify(resolved, null, 2));
   const member = resolved ? resolved.members[userId]! : body.member;
   const avatar = (avatarType === "servidor"  && member.avatar ? member.avatar : member.user.avatar);
-  console.info(JSON.stringify(resolved, null, 2));
+
   const button = [{
     type: MessageComponentTypes.BUTTON,
     style: ButtonStyleTypes.LINK,
