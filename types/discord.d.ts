@@ -1,6 +1,22 @@
 export {};
 
 declare global {
+  interface DiscordUser {
+    id: string;
+    username: string;
+    avatar: string | null;
+    discriminator: string;
+  };
+
+  interface DiscordMember {
+    avatar: string | null;
+    user: DiscordUser;
+    roles: string[];
+    joined_at: string;
+    permissions: string;
+    nick: string | null;
+  };
+
   interface WebhookBody {
     type: number;
     data: {
@@ -11,22 +27,11 @@ declare global {
         value: string;
       }[] | null;
       resolved: {
-        users: Record<string, { username: string, avatar: string, discriminator: string }>;
+        users: Record<string, DiscordUser>;
+        members: Record<string, DiscordMember>;
       };
     };
-    member: {
-      avatar: string | null;
-      user: {
-        id: string;
-        username: string;
-        avatar: string | null;
-        discriminator: string;
-      };
-      roles: string[];
-      joined_at: string;
-      permissions: string;
-      nick: string | null;
-    };
+    member: DiscordMember;
     guild_id: string;
     channel_id: string;
     token: string;

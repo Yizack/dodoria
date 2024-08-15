@@ -1,7 +1,7 @@
 export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
   const { resolved } = body.data;
   const userId = getValue("usuario");
-  const member = resolved.users[userId] || body.member;
+  const member = resolved.members[userId] || body.member;
   console.log(member);
   const avatarType = getValue("tipo") || "global";
   const avatar = avatarType === "global" ? member.user.avatar : member.avatar;
@@ -21,10 +21,10 @@ export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
   return reply(null, {
     components,
     embeds: [{
-      title: member.username + Number(member.discriminator) ? `#${member.discriminator}` : "",
+      title: member.user.username + Number(member.user.discriminator) ? `#${member.user.discriminator}` : "",
       color: CONSTANTS.COLOR,
       image: {
-        url: getAvatarURL(userId, avatar, member.discriminator, 1024)
+        url: getAvatarURL(userId, avatar, member.user.discriminator, 1024)
       }
     }]
   });
