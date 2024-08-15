@@ -108,5 +108,5 @@ export const getAvatarURL = (
   const defaultIndex = discriminator ? discriminator % 5 : Number((id >> 22n) % 6n);
   const format = avatarHash?.startsWith("a_") ? "gif" : "png";
 
-  return discordCDN + (avatarHash ? `/avatars/${id}/${avatarHash}.${format}size=${size}` : `/embed/avatars/${defaultIndex}.png?size=${size}`);
+  return discordCDN + (avatarHash ? `/avatars/${id}/${avatarHash}.${format}` : `/embed/avatars/${defaultIndex}.png`) + `?size=${size}`;
 };
