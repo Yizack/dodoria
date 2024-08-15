@@ -16,7 +16,7 @@ export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
     avatar: avatarType === "servidor" && body.member.avatar ? body.member.avatar : body.member.user.avatar,
     discriminator: body.member.user.discriminator
   };
-
+  console.info(resolved ? resolved : body);
   const button = [{
     type: MessageComponentTypes.BUTTON,
     style: ButtonStyleTypes.LINK,
