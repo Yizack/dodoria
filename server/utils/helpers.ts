@@ -107,5 +107,5 @@ export const getAvatarURL = (
   const discriminator = Number(userDiscriminator);
   const defaultIndex = discriminator ? discriminator % 5 : Number((id >> 22n) % 6n);
 
-  return discordCDN + avatarHash ? `/avatars/${id}/${avatarHash}.png?size=${size}` : `/embed/avatars/${defaultIndex}.png?size=${size}`;
+  return discordCDN + (avatarHash ? `/avatars/${id}/${avatarHash}.png?size=${size}` : `/embed/avatars/${defaultIndex}.png?size=${size}`);
 };
