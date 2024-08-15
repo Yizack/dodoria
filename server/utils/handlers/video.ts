@@ -67,7 +67,7 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
 
       const fxUrl = is_gif ? withQuery(downloadUrl, { c: 1 }) : withQuery("https://dev.ahmedrangel.com/dc/fx", { video_url: downloadUrl, redirect_url: short_url });
       const mensaje = `[${emoji}](${fxUrl}) **${red_social}**: [${short_url.replace("https://", "")}](<${short_url}>)\n${caption}`;
-      const fixedMsg = mensaje.length > 1000 ? mensaje.substring(0, 1000) + "..." : mensaje;
+      const fixedMsg = mensaje.length > 400 ? mensaje.substring(0, 400) + "..." : mensaje;
 
       return deferUpdate(fixedMsg, {
         token,
