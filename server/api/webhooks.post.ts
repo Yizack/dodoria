@@ -20,7 +20,8 @@ export default defineEventHandler(async (event) => {
     [VIDEO.name]: handlerVideo, // Comando /video
     [LOLPROFILE.name]: handlerLolProfile, // Comando /lolprofile
     [LOLMMR.name]: handlerLolMMR, // Comando /lolmmr
-    [ANGAR.name]: handlerAngar // Comando /angar
+    [ANGAR.name]: handlerAngar, // Comando /angar
+    [AVATAR.name]: handlerAvatar // Comando /avatar
   };
 
   return create(type, () => {

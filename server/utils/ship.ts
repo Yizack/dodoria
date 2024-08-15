@@ -2,12 +2,6 @@ import { Resvg, initWasm } from "@resvg/resvg-wasm";
 // @ts-expect-error - ignore wasm file check
 import resvgwasm from "@resvg/resvg-wasm/index_bg.wasm?module";
 
-const discordURL = "https://cdn.discordapp.com";
-
-const getAvatarURL = (u: bigint, a: string | null, d: number) => {
-  return a ? `${discordURL}/avatars/${u}/${a}.png?size=256` : `${discordURL}/embed/avatars/${d ? d % 5 : (u >> 22n) % 6n}.png`;
-};
-
 export const getAvatars = (
   u: bigint[],
   a: (string | null)[],

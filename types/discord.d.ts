@@ -15,10 +15,11 @@ declare global {
       };
     };
     member: {
+      avatar: string | null;
       user: {
         id: string;
         username: string;
-        avatar: string;
+        avatar: string | null;
         discriminator: string;
       };
       roles: string[];

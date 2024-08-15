@@ -5,8 +5,8 @@ export const handlerShip: CommandHandler = (event, { body, getValue }) => {
   const u2 = getValue("persona2");
   const p = getRandom({ min: 0, max: 100 });
   const { users } = resolved;
-  const letras_nombre1 = users[u1]!.username.substring(0, 3);
-  const letras_nombre2 = users[u2]!.username.substring(users[u2]!.username.length - 2);
+  const letras_nombre1 = users[u1].username.substring(0, 3);
+  const letras_nombre2 = users[u2].username.substring(users[u2]!.username.length - 2);
   const nombre_ship = `${letras_nombre1}${letras_nombre2}`;
   const params = {
     u: [u1, u2].map(String),

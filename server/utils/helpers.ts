@@ -94,3 +94,18 @@ export const getRandomAngarMessage = () => {
   ];
   return messages[getRandom({ min: 0, max: messages.length - 1 })];
 };
+
+const discordCDN = "https://cdn.discordapp.com";
+
+export const getAvatarURL = (
+  userId: string | bigint,
+  avatarHash: string | null,
+  userDiscriminator: string | number,
+  size: 256 | 512 | 1024 = 256
+): string => {
+  const id = BigInt(userId);
+  const discriminator = Number(userDiscriminator);
+  const defaultIndex = discriminator ? discriminator % 5 : Number((id >> 22n) % 6n);
+  
+  return discordCDN + avatarHash ? `/avatars/${id}/${avatarHash}.png?size=${size}` : `/embed/avatars/${defaultIndex}.png?size=${size}`;
+};

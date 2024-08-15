@@ -21,7 +21,7 @@ export const handlerAngar: CommandHandler = (event, { body }) => {
       color: CONSTANTS.COLOR,
       author: {
         name: `${member.user.username}`,
-        icon_url: `https://cdn.discordapp.com/avatars/${member.user.id}/${member.user.avatar}.png`
+        icon_url: `https://cdn.discordapp.com/avatars/${member.user.id}/${member.user.avatar}.png?size=256`
       },
       image: {
         url: getRandomAngar()
