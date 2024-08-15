@@ -9,7 +9,7 @@ export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
     avatarGlobal: resolved.users[userId]?.avatar,
     avatar: avatarType === "servidor" && resolved.members[userId]?.avatar ? resolved.members[userId]?.avatar : resolved.users[userId]?.avatar,
     discriminator: resolved.users[userId]?.discriminator,
-    guildId: body.guild_id
+    guildId: avatarType === "servidor" ? body.guild_id : undefined
   } : {
     id: body.member.user.id,
     username: body.member.user.username,
