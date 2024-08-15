@@ -8,7 +8,8 @@ export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
     username: resolved.users[userId]?.username,
     avatarGlobal: resolved.users[userId]?.avatar,
     avatar: avatarType === "servidor" && resolved.members[userId]?.avatar ? resolved.members[userId]?.avatar : resolved.users[userId]?.avatar,
-    discriminator: resolved.users[userId]?.discriminator
+    discriminator: resolved.users[userId]?.discriminator,
+    guildId: body.guild_id
   } : {
     id: body.member.user.id,
     username: body.member.user.username,
@@ -16,12 +17,12 @@ export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
     avatar: avatarType === "servidor" && body.member.avatar ? body.member.avatar : body.member.user.avatar,
     discriminator: body.member.user.discriminator
   };
-  console.info(resolved ? resolved : body);
+
   const button = [{
     type: MessageComponentTypes.BUTTON,
     style: ButtonStyleTypes.LINK,
     label: "Global Avatar",
-    url: getAvatarURL(user.id, user.avatarGlobal, user.discriminator, 1024)
+    url: getAvatarURL({ userId: user.id, avatarHash: user.avatarGlobal, userDiscriminator: user.discriminator, imageSize: 1024 })
   }];
 
   const components = [{
@@ -35,7 +36,7 @@ export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
       title: user.username + (Number(user.discriminator) ? `#${user.discriminator}` : ""),
       color: CONSTANTS.COLOR,
       image: {
-        url: getAvatarURL(user.id, user.avatar, user.discriminator, 1024)
+        url: getAvatarURL({ userId: user.id, avatarHash: user.avatarGlobal, userDiscriminator: user.discriminator, imageSize: 1024, guildId: user.guildId })
       }
     }]
   });

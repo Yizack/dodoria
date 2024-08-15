@@ -3,10 +3,21 @@ import { Resvg, initWasm } from "@resvg/resvg-wasm";
 import resvgwasm from "@resvg/resvg-wasm/index_bg.wasm?module";
 
 export const getAvatars = (
-  u: bigint[],
+  u: string[],
   a: (string | null)[],
   d: number[]
-) => ({ u1: getAvatarURL(u[0]!, a[0]!, d[0]!), u2: getAvatarURL(u[1]!, a[1]!, d[1]!) });
+) => ({
+  u1: getAvatarURL({
+    userId: u[0]!,
+    avatarHash: a[0]!,
+    userDiscriminator: d[0]!
+  }),
+  u2: getAvatarURL({
+    userId: u[1]!,
+    avatarHash: a[1]!,
+    userDiscriminator: d[1]!
+  })
+});
 
 export const getBackground = (percent: number) => {
   let background = "0";
@@ -112,14 +123,14 @@ export const decodeCode = (encodedCode: string) => {
 
     const paramsSchema = z.object({
       p: z.number({ coerce: true }).int().min(0).max(100),
-      u: z.array(z.bigint()).length(2),
+      u: z.array(z.string()).length(2),
       a: z.array(z.string().nullable()).length(2),
       d: z.array(z.number()).length(2)
     });
 
     const decodedParams = {
       p: params.p,
-      u: params.u.map(BigInt),
+      u: params.u,
       a: params.a,
       d: params.d.map(Number)
     };

@@ -97,16 +97,19 @@ export const getRandomAngarMessage = () => {
 
 const discordCDN = "https://cdn.discordapp.com";
 
-export const getAvatarURL = (
-  userId: string | bigint,
-  avatarHash: string | null,
-  userDiscriminator: string | number,
-  size: 256 | 512 | 1024 = 256
-): string => {
-  const id = BigInt(userId);
+export const getAvatarURL = (options: {
+  userId: string;
+  avatarHash: string | null;
+  userDiscriminator: string | number;
+  imageSize?: 256 | 512 | 1024;
+  guildId?: string;
+}): string => {
+  const { userId, avatarHash, userDiscriminator, imageSize, guildId } = options;
   const discriminator = Number(userDiscriminator);
-  const defaultIndex = discriminator ? discriminator % 5 : Number((id >> 22n) % 6n);
+  const defaultIndex = discriminator ? discriminator % 5 : Number((BigInt(userId) >> 22n) % 6n);
   const format = avatarHash?.startsWith("a_") ? "gif" : "png";
-
-  return discordCDN + (avatarHash ? `/avatars/${id}/${avatarHash}.${format}` : `/embed/avatars/${defaultIndex}.png`) + `?size=${size}`;
+  const size = imageSize ?? 256;
+  const imageURI = guildId ? `/guilds/${guildId}/users/${userId}/avatars/${avatarHash}` : `/avatars/${userId}/${avatarHash}`;
+  const defaultAvatarURI = `/embed/avatars/${defaultIndex}`;
+  return discordCDN + (avatarHash ? imageURI : defaultAvatarURI) + `.${format}?size=${size}`;
 };
