@@ -6,7 +6,7 @@ declare global {
     username: string;
     avatar: string | null;
     discriminator: string;
-  };
+  }
 
   interface DiscordMember {
     avatar: string | null;
@@ -15,7 +15,7 @@ declare global {
     joined_at: string;
     permissions: string;
     nick: string | null;
-  };
+  }
 
   interface WebhookBody {
     type: number;
