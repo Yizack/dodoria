@@ -28,7 +28,7 @@ declare global {
       }[] | null;
       resolved: {
         users: Record<string, DiscordUser>;
-        members: Record<string, DiscordMember>;
+        members: Record<string, Omit<DiscordMember, "user">>;
       } | null;
     };
     member: DiscordMember;
