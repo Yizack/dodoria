@@ -185,5 +185,5 @@ export const AVATAR = {
       ]
     }
   ],
-  cid: null
+  cid: "1273575196477100064"
 };
