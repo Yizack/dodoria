@@ -19,7 +19,7 @@ export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
     type: MessageComponentTypes.BUTTON,
     style: ButtonStyleTypes.LINK,
     label: "Global Avatar",
-    url: `https://cdn.discordapp.com/avatars/${member.user.id}/${member.user.avatar}.png?size=1024`
+    url: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=1024`
   }];
 
   const components = [{
