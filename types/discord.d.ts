@@ -27,9 +27,9 @@ declare global {
         value: string;
       }[] | null;
       resolved: {
-        users: Record<string, DiscordUser> | null;
-        members: Record<string, DiscordMember> | null;
-      };
+        users: Record<string, DiscordUser>;
+        members: Record<string, DiscordMember>;
+      } | null;
     };
     member: DiscordMember;
     guild_id: string;

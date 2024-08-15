@@ -4,7 +4,7 @@ export const handlerShip: CommandHandler = (event, { body, getValue }) => {
   const u1 = getValue("persona1");
   const u2 = getValue("persona2");
   const p = getRandom({ min: 0, max: 100 });
-  const { users } = resolved;
+  const users = resolved?.users;
   const user1 = users && users[u1];
   const user2 = users && users[u2];
   const letras_nombre1 = user1?.username.substring(0, 3);
