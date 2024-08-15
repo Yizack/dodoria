@@ -5,13 +5,12 @@ export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
 
   const member = resolved ? resolved.members[userId]! : body.member;
   const avatar = (avatarType === "servidor"  && member.avatar ? member.avatar : member.user.avatar);
-  console.info(member);
-
+  console.info(JSON.stringify(resolved, null, 2));
   const button = [{
     type: MessageComponentTypes.BUTTON,
     style: ButtonStyleTypes.LINK,
     label: "Global Avatar",
-    url: `https://cdn.discordapp.com/avatars/${userId}/${member.user.avatar}.png?size=1024`
+    url: `https://cdn.discordapp.com/avatars/${member.user.id}/${member.user.avatar}.png?size=1024`
   }];
 
   const components = [{
@@ -25,7 +24,7 @@ export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
       title: member.user.username + Number(member.user.discriminator) ? `#${member.user.discriminator}` : "",
       color: CONSTANTS.COLOR,
       image: {
-        url: getAvatarURL(userId, avatar, member.user.discriminator, 1024)
+        url: getAvatarURL(member.user.id, avatar, member.user.discriminator, 1024)
       }
     }]
   });
