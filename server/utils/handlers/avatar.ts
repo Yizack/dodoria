@@ -5,6 +5,7 @@ export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
 
   const member = resolved ? resolved.members[userId]! : body.member;
   const avatar = avatarType === "global" ? member.user.avatar : member.avatar;
+  console.info(member);
 
   const button = [{
     type: MessageComponentTypes.BUTTON,
