@@ -99,8 +99,8 @@ const discordCDN = "https://cdn.discordapp.com";
 
 export const getAvatarURL = (options: {
   userId: string;
-  avatarHash: string | null;
-  userDiscriminator: string | number;
+  avatarHash?: string | null;
+  userDiscriminator?: string | number;
   imageSize?: 256 | 512 | 1024;
   guildId?: string;
 }): string => {
