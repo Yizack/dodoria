@@ -1,10 +1,10 @@
 export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
   const { resolved } = body.data;
   const userId = getValue("usuario");
-  const avatarType = getValue("tipo") || "global";
+  const avatarType = getValue("tipo") || "servidor";
 
   const member = resolved ? resolved.members[userId]! : body.member;
-  const avatar = avatarType === "global" ? member.user.avatar : member.avatar;
+  const avatar = (avatarType === "servidor"  && member.avatar ? member.avatar : member.user.avatar);
   console.info(member);
 
   const button = [{
