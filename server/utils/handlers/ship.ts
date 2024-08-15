@@ -5,13 +5,15 @@ export const handlerShip: CommandHandler = (event, { body, getValue }) => {
   const u2 = getValue("persona2");
   const p = getRandom({ min: 0, max: 100 });
   const { users } = resolved;
-  const letras_nombre1 = users[u1]!.username.substring(0, 3);
-  const letras_nombre2 = users[u2]!.username.substring(users[u2]!.username.length - 2);
+  const user1 = users && users[u1];
+  const user2 = users && users[u2];
+  const letras_nombre1 = user1?.username.substring(0, 3);
+  const letras_nombre2 = user2?.username.substring(user2.username.length - 2);
   const nombre_ship = `${letras_nombre1}${letras_nombre2}`;
   const params = {
     u: [u1, u2].map(String),
-    a: [users[u1]!.avatar, users[u2]!.avatar],
-    d: [users[u1]!.discriminator, users[u2]!.discriminator].map(Number),
+    a: [user1?.avatar, user2?.avatar],
+    d: [user1?.discriminator, user2?.discriminator].map(Number),
     p
   };
   const code = btoa(JSON.stringify(params));
