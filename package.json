@@ -38,8 +38,8 @@
     "ufo": "^1.5.4",
     "unwasm": "^0.3.9",
     "vue-tsc": "^2.0.29",
-    "wrangler": "^3.70.0",
+    "wrangler": "^3.71.0",
     "zod": "^3.23.8"
   },
-  "packageManager": "pnpm@9.7.0"
+  "packageManager": "pnpm@9.7.1"
 }

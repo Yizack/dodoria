@@ -184,5 +184,6 @@ export const AVATAR = {
         { name: "Servidor", value: "servidor" }
       ]
     }
-  ]
+  ],
+  cid: null
 };
