@@ -36,7 +36,7 @@ export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
       title: user.username + (Number(user.discriminator) ? `#${user.discriminator}` : ""),
       color: CONSTANTS.COLOR,
       image: {
-        url: getAvatarURL({ userId: user.id, avatarHash: user.avatarGlobal, userDiscriminator: user.discriminator, imageSize: 1024, guildId: user.guildId })
+        url: getAvatarURL({ userId: user.id, avatarHash: user.avatar, userDiscriminator: user.discriminator, imageSize: 1024, guildId: user.guildId })
       }
     }]
   });
