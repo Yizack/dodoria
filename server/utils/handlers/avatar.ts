@@ -14,9 +14,9 @@ export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
     id: body.member.user.id,
     username: body.member.user.username,
     avatarGlobal: body.member.user.avatar,
-    avatar: avatarType === "servidor" && body.member.avatar ? body.member.avatar : body.member.user.avatar,
+    avatar: avatarType === "servidor" && body.member.avatar !== body.member.user.avatar ? body.member.avatar : body.member.user.avatar,
     discriminator: body.member.user.discriminator,
-    guildId: avatarType === "servidor" && body.member.avatar ? body.guild_id : undefined
+    guildId: avatarType === "servidor" && body.member.avatar !== body.member.user.avatar ? body.guild_id : undefined
   };
 
   console.info(user);
