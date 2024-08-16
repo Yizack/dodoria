@@ -9,13 +9,14 @@ export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
     avatarGlobal: resolved.users[userId]?.avatar,
     avatar: avatarType === "servidor" && resolved.members[userId]?.avatar ? resolved.members[userId]?.avatar : resolved.users[userId]?.avatar,
     discriminator: resolved.users[userId]?.discriminator,
-    guildId: avatarType === "servidor" ? body.guild_id : undefined
+    guildId: avatarType === "servidor" && resolved.members[userId] ? body.guild_id : undefined
   } : {
     id: body.member.user.id,
     username: body.member.user.username,
     avatarGlobal: body.member.user.avatar,
     avatar: avatarType === "servidor" && body.member.avatar ? body.member.avatar : body.member.user.avatar,
-    discriminator: body.member.user.discriminator
+    discriminator: body.member.user.discriminator,
+    guildId: avatarType === "servidor" && body.member.avatar ? body.guild_id : undefined
   };
 
   const button = [{
