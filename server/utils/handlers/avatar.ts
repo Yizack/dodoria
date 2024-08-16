@@ -45,7 +45,13 @@ export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
     case 1:
     case 2:
       console.info(body);
-      info.user = {
+      info.user = resolved && userId ? {
+        id: userId,
+        username: resolved.users[userId]?.username,
+        avatarGlobal: resolved.users[userId]?.avatar,
+        avatar: resolved.users[userId]?.avatar,
+        discriminator: resolved.users[userId]?.discriminator
+      } : {
         id: user.id,
         username: user.username,
         avatarGlobal: user.avatar,
@@ -73,7 +79,7 @@ export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
   }];
 
   return reply(null, {
-    components,
+    components: context === 0 ? components : undefined,
     embeds: [{
       title: info.user.username + (Number(info.user.discriminator) ? `#${info.user.discriminator}` : ""),
       color: CONSTANTS.COLOR,
