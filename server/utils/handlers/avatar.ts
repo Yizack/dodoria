@@ -44,6 +44,7 @@ export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
       break;
     case 1:
     case 2:
+      console.info(body);
       info.user = {
         id: user.id,
         username: user.username,
