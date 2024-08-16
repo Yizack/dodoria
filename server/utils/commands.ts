@@ -168,7 +168,7 @@ export const AVATAR = {
   name: "avatar",
   description: "Muestra el avatar de un usuario",
   integration_types: IntegrationTypes.ALL,
-  contexts: [Contexts.GUILD, Contexts.PRIVATE_CHANNEL],
+  contexts: Contexts.ALL,
   options: [
     {
       name: "usuario",
