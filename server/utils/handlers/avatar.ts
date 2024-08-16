@@ -15,9 +15,15 @@ export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
 
   let userInfo: ReturnType<typeof getUserInfo>;
 
-  if (resolved && userId) userInfo = getUserInfo(resolved.users[userId]!, resolved.members[userId]!);
-  else if (context === 0) userInfo = getUserInfo(member.user, member);
-  else userInfo = getUserInfo(user, null);
+  const isResolved = resolved && userId;
+  if (context === 0) {
+    if (isResolved) userInfo = getUserInfo(resolved.users[userId]!, resolved.members[userId]!);
+    else userInfo = getUserInfo(member.user, member);
+  }
+  else if (context === 1 || context === 2) {
+    if (isResolved) userInfo = getUserInfo(resolved.users[userId]!, null);
+    else userInfo = getUserInfo(user, null);
+  }
 
   let components: DiscordComponent[] | undefined;
 
