@@ -24,6 +24,9 @@ export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
     if (isResolved) userInfo = getUserInfo(resolved.users[userId]!, null);
     else userInfo = getUserInfo(user, null);
   }
+  else {
+    return reply("Esta función no está disponible en este contexto.");
+  }
 
   let components: DiscordComponent[] | undefined;
 
