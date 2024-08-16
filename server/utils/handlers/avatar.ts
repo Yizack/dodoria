@@ -15,7 +15,7 @@ export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
 
   let userInfo: ReturnType<typeof getUserInfo>;
 
-  if (resolved && userId) userInfo = getUserInfo(resolved.users[userId], resolved.members[userId]);
+  if (resolved && userId) userInfo = getUserInfo(resolved.users[userId]!, resolved.members[userId]!);
   else if (context === 0) userInfo = getUserInfo(member.user, member);
   else userInfo = getUserInfo(user, null);
 
