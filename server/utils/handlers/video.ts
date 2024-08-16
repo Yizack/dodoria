@@ -45,7 +45,7 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
     }
 
     const { id, video_url, short_url, status, format } = scrapping;
-    const caption = imbedUrlsFromString(`${scrapping?.caption ? scrapping?.caption?.replace(/(#\w+|#[\u0600-\u06FF]+)/g, "").replace(/([.•_]+)\n/g, "").replace(/\n+/g, "\n").trim() : ""}`);
+    const caption = imbedUrlsFromString(`${scrapping?.caption ? scrapping?.caption?.replace(/(#\S+|\S+#)/g, "").replace(/([.•_ ]+)\n/g, "").replace(/\n+/g, "\n").trim() : ""}`);
 
     if (status !== 200 && !esUrl(video_url)) {
       return deferUpdateError();
