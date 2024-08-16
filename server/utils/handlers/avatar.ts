@@ -19,6 +19,8 @@ export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
     guildId: avatarType === "servidor" && body.member.avatar ? body.guild_id : undefined
   };
 
+  console.info(user);
+
   const button = [{
     type: MessageComponentTypes.BUTTON,
     style: ButtonStyleTypes.LINK,
