@@ -1,5 +1,5 @@
 export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
-  const { context, user } = body;
+  const { context, user, member } = body;
   const { resolved } = body.data;
   const userId = getValue("usuario");
   const avatarType = getValue("tipo") || "servidor";
@@ -34,12 +34,12 @@ export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
         discriminator: resolved.users[userId]?.discriminator,
         guildId: avatarType === "servidor" && resolved.members[userId]?.avatar ? body.guild_id : undefined
       } : {
-        id: body.member.user.id,
-        username: body.member.user.username,
-        avatarGlobal: body.member.user.avatar,
-        avatar: avatarType === "servidor" && body.member.avatar ? body.member.avatar : body.member.user.avatar,
-        discriminator: body.member.user.discriminator,
-        guildId: avatarType === "servidor" && body.member.avatar ? body.guild_id : undefined
+        id: member.user.id,
+        username: member.user.username,
+        avatarGlobal: member.user.avatar,
+        avatar: avatarType === "servidor" && member.avatar ? member.avatar : member.user.avatar,
+        discriminator: member.user.discriminator,
+        guildId: avatarType === "servidor" && member.avatar ? body.guild_id : undefined
       };
       break;
     case 1:
@@ -75,7 +75,7 @@ export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
   return reply(null, {
     components,
     embeds: [{
-      title: user.username + (Number(user.discriminator) ? `#${user.discriminator}` : ""),
+      title: info.user.username + (Number(info.user.discriminator) ? `#${info.user.discriminator}` : ""),
       color: CONSTANTS.COLOR,
       image: {
         url: getAvatarURL({
