@@ -31,10 +31,12 @@ declare global {
         members: Record<string, Omit<DiscordMember, "user">>;
       } | null;
     };
+    user: DiscordUser;
     member: DiscordMember;
     guild_id: string;
     channel_id: string;
     token: string;
+    context: 0 | 1 | 2;
   }
 
   interface DiscordEmbed {
