@@ -29,7 +29,7 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
       });
     }
 
-    const encodedUrl = encodeURIComponent(url);
+    const encodedUrl = encodeURIComponent(url.startsWith("http://") || url.startsWith("https://") ? url : `https://${url}`);
     const scraperUrl = `https://dev.ahmedrangel.com/dc/${red_social.toLowerCase()}-video-scrapper`;
     const scraperQueries = { url: encodedUrl, filter: "video" };
     const scrapping = await $fetch<VideoScrapping>(withQuery(scraperUrl, scraperQueries), { retry: 3, retryDelay: 1000 }).catch(() => null);
