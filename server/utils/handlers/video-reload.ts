@@ -1,4 +1,4 @@
-export const handlerVideoReload: CommandHandler = (event, { body }) => {
+export const handlerVideoReload: ComponentHandler = (event, { body }) => {
   const { token, message } = body;
   const config = useRuntimeConfig(event);
 
