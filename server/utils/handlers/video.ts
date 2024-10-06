@@ -56,18 +56,18 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
       button.push(
         {
           type: MessageComponentTypes.BUTTON,
+          style: ButtonStyleTypes.LINK,
+          label: `Descargar ${is_gif ? "GIF" : "MP4"}`,
+          url: downloadUrl
+        },
+        {
+          type: MessageComponentTypes.BUTTON,
           style: ButtonStyleTypes.PRIMARY,
           custom_id: "btn_reload",
           emoji: {
             name: "reload",
             id: "1292318494943215616"
           }
-        },
-        {
-          type: MessageComponentTypes.BUTTON,
-          style: ButtonStyleTypes.LINK,
-          label: `Descargar ${is_gif ? "GIF" : "MP4"}`,
-          url: downloadUrl
         }
       );
 
