@@ -3,7 +3,7 @@ export const handlerVideoReload: ComponentHandler = (event, { body }) => {
   const config = useRuntimeConfig(event);
 
   const followUpRequest = async () => {
-    const oldVideoUrl = message.embeds[0].url as string;
+    const oldVideoUrl = message.embeds[0]?.url as string;
     const oldContent = message.content;
     const { protocol, host, pathname } = parseURL(oldVideoUrl);
     const { video_url, redirect_url } = getQueryUfo(oldVideoUrl);

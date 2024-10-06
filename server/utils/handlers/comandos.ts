@@ -8,8 +8,8 @@ export const handlerComandos: CommandHandler = () => {
     embeds: [{
       title: "Lista de comandos",
       description: "Conoce la lista de comandos disponibles.\n\n"
-      + `${list.join("")}`
-      + "Escribe el comando que desees en la caja de enviar mensajes de discord y selecciona la opción que se muestra junto al avatar del bot. Se irán añadiendo más comandos divertidos con el tiempo.",
+        + `${list.join("")}`
+        + "Escribe el comando que desees en la caja de enviar mensajes de discord y selecciona la opción que se muestra junto al avatar del bot. Se irán añadiendo más comandos divertidos con el tiempo.",
       color: CONSTANTS.COLOR,
       author: {
         name: CONSTANTS.BOT,
