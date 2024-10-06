@@ -7,7 +7,7 @@ const API = {
   BASE: "https://discord.com/api/v10"
 };
 
-const toDiscordEndpoint = (endpoint: string, body: Record<string, unknown>, method: "POST", authorization?: string) => {
+const toDiscordEndpoint = (endpoint: string, body: Record<string, unknown>, method: "POST" | "PATCH", authorization?: string) => {
   const endpointURL = `${API.BASE}${endpoint}`;
   if (!body.files) {
     return $fetch(endpointURL, {
@@ -68,6 +68,10 @@ export const deferReply = (options?: { flags: number }) => ({
   }
 });
 
+export const updateMessage = () => ({
+  type: InteractionResponseType.UPDATE_MESSAGE
+});
+
 export const deferUpdate = (
   content: unknown,
   options: {
@@ -86,4 +90,24 @@ export const deferUpdate = (
     components: options?.components,
     files: options?.files
   }, "POST");
+};
+
+export const editFollowUpMessage = (
+  content: unknown,
+  options: {
+    application_id?: string;
+    token?: string;
+    message_id?: string;
+    embeds?: DiscordEmbed[];
+    components?: DiscordComponent[];
+    files?: unknown;
+  }
+) => {
+  const endpoint = `/webhooks/${options.application_id}/${options.token}/messages/${options.message_id}`;
+  return toDiscordEndpoint(endpoint, {
+    content: content,
+    embeds: options?.embeds,
+    components: options?.components,
+    files: options?.files
+  }, "PATCH");
 };

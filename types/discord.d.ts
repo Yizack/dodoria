@@ -30,6 +30,7 @@ declare global {
         users: Record<string, DiscordUser>;
         members: Record<string, Omit<DiscordMember, "user">>;
       } | null;
+      custom_id?: string;
     };
     user: DiscordUser;
     member: DiscordMember;
@@ -37,6 +38,7 @@ declare global {
     channel_id: string;
     token: string;
     context: 0 | 1 | 2;
+    message: DiscordMessage;
   }
 
   interface DiscordEmbed {
@@ -68,12 +70,35 @@ declare global {
   interface DiscordButton {
     type: number;
     style: number;
-    label: string;
-    url: string;
+    label?: string;
+    url?: string;
+    custom_id?: string;
+    emoji?: {
+      id: string;
+      name: string;
+    };
   }
 
   interface DiscordComponent {
     type: number;
     components: DiscordButton[];
+  }
+
+  interface DiscordMessage {
+    application_id: string;
+    attachments: unknown[];
+    author: DiscordUser;
+    channel_id: string;
+    components: DiscordComponent[];
+    content: string;
+    edited_timestamp: string | null;
+    embeds: {
+      type?: string;
+      title?: string;
+      description?: string;
+      url?: string;
+    }[];
+    flags: number;
+    id: string;
   }
 }

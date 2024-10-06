@@ -9,6 +9,12 @@ export default defineEventHandler(async (event) => {
     return create(type);
   }
 
+  if (type === InteractionType.MESSAGE_COMPONENT) {
+    switch (data?.custom_id) {
+      case "btn_reload": return handlerVideoReload;
+    }
+  }
+
   const commandHandlers: { [key: string]: CommandHandler } = {
     [MEMIDE.name]: handlerMeMide, // Comando /memide
     [MECABE.name]: handlerMeCabe, // Comando /mecabe
