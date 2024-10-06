@@ -10,6 +10,7 @@ export default defineEventHandler(async (event) => {
   }
 
   if (type === InteractionType.MESSAGE_COMPONENT) {
+    console.info("Handling Message Component request");
     switch (data?.custom_id) {
       case "btn_reload": return handlerVideoReload;
     }
