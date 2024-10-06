@@ -9,6 +9,7 @@ export const handlerVideoReload: CommandHandler = (event, { body }) => {
     const { video_url, redirect_url } = getQueryUfo(oldVideoUrl);
     const newVideoUrl = withQuery(`${protocol}//${host}${pathname}`, { video_url, redirect_url, t: Date.now() });
     const newContent = oldContent.replace(oldVideoUrl, newVideoUrl);
+    console.info(newContent);
     return editFollowUpMessage(newContent, {
       token,
       application_id: config.discord.applicationId,
