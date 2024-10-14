@@ -57,7 +57,7 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
         {
           type: MessageComponentTypes.BUTTON,
           style: ButtonStyleTypes.LINK,
-          label: `Descargar ${is_gif ? "GIF" : "MP4"}`,
+          label: is_gif ? "GIF" : "MP4",
           url: downloadUrl
         },
         {
