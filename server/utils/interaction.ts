@@ -40,8 +40,10 @@ const pong = () => ({ type: InteractionResponseType.PONG });
 export const create = (type: number, func?: () => void) => {
   switch (type) {
     case InteractionType.PING:
+      console.info("Handling Ping request");
       return pong();
     case InteractionType.APPLICATION_COMMAND:
+    case InteractionType.MESSAGE_COMPONENT:
       if (func) return func();
   }
 };

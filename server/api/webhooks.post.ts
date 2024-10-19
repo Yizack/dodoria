@@ -5,15 +5,7 @@ export default defineEventHandler(async (event) => {
   const body = await readBody<WebhookBody>(event);
   const { type, data } = body;
   if (type === InteractionType.PING) {
-    console.info("Handling Ping request");
     return create(type);
-  }
-
-  if (type === InteractionType.MESSAGE_COMPONENT) {
-    console.info("Handling Message Component request");
-    switch (data?.custom_id) {
-      case "btn_reload": return handlerVideoReload(event, { body });
-    }
   }
 
   const commandHandlers: { [key: string]: CommandHandler } = {
@@ -31,14 +23,23 @@ export default defineEventHandler(async (event) => {
     [AVATAR.name]: handlerAvatar // Comando /avatar
   };
 
+  const componentHandlers: { [key: string]: ComponentHandler } = {
+    ["btn_reload"]: handlerVideoReload // Componente /video-reload
+  };
+
   return create(type, () => {
-    const { name, options } = data;
+    const { name, options, custom_id } = data;
     const commandHandler = commandHandlers[name];
 
     if (commandHandler) {
       return commandHandler(event, { body,
         getValue: name => getOptionsValue(name, options)
       });
+    }
+
+    const componentHandler = componentHandlers[custom_id || ""];
+    if (componentHandler) {
+      return componentHandler(event, { body });
     }
 
     setResponseStatus(event, 404);
