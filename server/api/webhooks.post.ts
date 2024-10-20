@@ -42,7 +42,6 @@ export default defineEventHandler(async (event) => {
       return componentHandler(event, { body });
     }
 
-    setResponseStatus(event, 404);
-    return { error: "Unknown Type" };
+    throw createError({ statusCode: 400, message: "Unknown interaction type" });
   });
 });
