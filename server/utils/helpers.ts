@@ -132,7 +132,7 @@ export const scrapeVideo = async (url: string, social?: string) => {
   return { id, video_url, short_url, status, format, caption, social };
 };
 
-export const uploadToCdn = async (cdnToken: string, opts: { source: string; prefix: string; file_name: string; contentType: string; }) => {
+export const uploadToCdn = async (cdnToken: string, opts: { source: string, prefix: string, file_name: string, contentType: string }) => {
   const { source, prefix, file_name, contentType } = opts;
   return await $fetch<{ url: string }>("https://dev.ahmedrangel.com/cdn", {
     method: "PUT",

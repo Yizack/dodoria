@@ -111,7 +111,7 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
       prefix: `videos/${red_social.toLowerCase()}`,
       file_name: `${id}.${format || "mp4"}`,
       contentType: String(contentType)
-    })
+    });
 
     if (!uploaded) return deferUpdateError();
 
