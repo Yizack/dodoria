@@ -4,8 +4,8 @@ export const handlerVideoReload: ComponentHandler = (event, { body }) => {
 
   const followUpRequest = async () => {
     const now = Date.now();
-    const oldVideoUrl = message.embeds[0]?.url as string;
     const oldContent = message.content;
+    const oldVideoUrl = message.embeds[0]?.url || oldContent.match(/\((https?:\/\/[^\s]+?)\)/)![1];
     const { protocol, host, pathname } = parseURL(oldVideoUrl);
     const { video_url, redirect_url } = getQueryUfo(oldVideoUrl);
     const newVideoUrl = withQuery(`${protocol}//${host}${pathname}`, { video_url, redirect_url, t: now });
