@@ -29,10 +29,7 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
       });
     }
 
-    const encodedUrl = encodeURIComponent(url.startsWith("http://") || url.startsWith("https://") ? url : `https://${url}`);
-    const scraperUrl = `https://dev.ahmedrangel.com/dc/${red_social.toLowerCase()}-video-scrapper`;
-    const scraperQueries = { url: encodedUrl, filter: "video" };
-    const scrapping = await $fetch<VideoScrapping>(withQuery(scraperUrl, scraperQueries), { retry: 3, retryDelay: 1000 }).catch(() => null);
+    const scraper = await scrapeVideo(url, red_social);
 
     const deferUpdateError = (message?: string) => deferUpdate("", {
       token,
@@ -40,12 +37,11 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
       embeds: errorEmbed(message || ":x: Error. Ha ocurrido un error obteniendo el video.")
     });
 
-    if (!scrapping) {
+    if (!scraper) {
       return deferUpdateError();
     }
 
-    const { id, video_url, short_url, status, format } = scrapping;
-    const caption = imbedUrlsFromString(`${scrapping?.caption ? scrapping?.caption?.replace(/(#\S+|\S+#)/g, "").replace(/([.•_\- ]+)\n/g, "").replace(/\n+/g, "\n").trim() : ""}`);
+    const { id, video_url, short_url, status, format, caption } = scraper;
 
     if (status !== 200 && !esUrl(video_url)) {
       return deferUpdateError();
@@ -110,24 +106,16 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
       return deferUpdateError();
     }
 
-    const uploadedUrl = await $fetch<{ url: string }>("https://dev.ahmedrangel.com/cdn", {
-      method: "PUT",
-      headers: { "x-cdn-auth": `${config.cdnToken}` },
-      body: {
-        source: video_url,
-        prefix: `videos/${red_social.toLowerCase()}`,
-        file_name: `${id}.${format || "mp4"}`,
-        httpMetadata: {
-          "Content-Type": String(contentType).includes("image/gif") ? contentType : "video/mp4",
-          "Content-Disposition": "inline",
-          "Cache-Control": "public, max-age=432000"
-        }
-      }
-    }).catch(() => null);
+    const uploaded = await uploadToCdn(config.cdnToken, {
+      source: video_url,
+      prefix: `videos/${red_social.toLowerCase()}`,
+      file_name: `${id}.${format || "mp4"}`,
+      contentType: String(contentType)
+    })
 
-    if (!uploadedUrl) return deferUpdateError();
+    if (!uploaded) return deferUpdateError();
 
-    return finalReply(uploadedUrl.url);
+    return finalReply(uploaded.url);
   };
   event.context.cloudflare.context.waitUntil(followUpRequest());
   return deferReply();
