@@ -5,23 +5,12 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
 
   const followUpRequest = async () => {
     const embeds: DiscordEmbed[] = [], button: DiscordButton[] = [], components: DiscordComponent[] = [];
-    let emoji: string;
-    let supported = false;
-    let red_social = "Instagram / Facebook / TikTok / X / YouTube / Twitch / Kick / Reddit";
     const url = getValue("link");
+    const social = Object.values(CONSTANTS.VIDEO_SOCIALS).find(({ domains }) => domains.some(domain => url.includes(domain)));
 
-    for (const key in CONSTANTS.VIDEO_SOCIALS) {
-      const sns = CONSTANTS.VIDEO_SOCIALS[key as keyof typeof CONSTANTS.VIDEO_SOCIALS];
-      if (sns.domains.some(domains => url.includes(domains))) {
-        red_social = sns.name;
-        emoji = getSocial(red_social);
-        supported = true;
-        break;
-      }
-    }
-
-    if (!esUrl(url) && !supported) {
-      const error = `⚠️ Error. El texto ingresado no es un link válido de **${red_social}**`;
+    if (!esUrl(url) || !social?.supported) {
+      const supportedSitesEmoji = Object.values(CONSTANTS.VIDEO_SOCIALS).filter(site => site.supported).map(site => getSocial(site.name)).join(" ");
+      const error = `⚠️ Error. Sitio o enlace no soportado.\nSitios soportados: ${supportedSitesEmoji}`;
       return deferUpdate("", {
         token,
         application_id: config.discord.applicationId,
@@ -29,7 +18,7 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
       });
     }
 
-    const scraper = await scrapeVideo(url, red_social);
+    const scraper = await scrapeVideo(url, social.name);
 
     const deferUpdateError = (message?: string) => deferUpdate("", {
       token,
@@ -73,7 +62,7 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
       });
 
       const fxUrl = is_gif ? withQuery(downloadUrl, { t: Date.now() }) : withQuery("https://dev.ahmedrangel.com/dc/fx", { video_url: downloadUrl, redirect_url: short_url, t: Date.now() });
-      const mensaje = `[${emoji}](${fxUrl}) **${red_social}**: [${short_url.replace("https://", "")}](<${short_url}>)\n${caption}`;
+      const mensaje = `[${social.emoji}](${fxUrl}) **${social.name}**: [${short_url.replace("https://", "")}](<${short_url}>)\n${caption}`;
       const fixedMsg = mensaje.length > 500 ? mensaje.substring(0, 500) + "..." : mensaje;
 
       return deferUpdate(fixedMsg, {
@@ -84,7 +73,7 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
       });
     };
 
-    const cdnUrl = `https://cdn.ahmedrangel.com/videos/${red_social.toLowerCase()}/${id}.${format || "mp4"}`;
+    const cdnUrl = `https://cdn.ahmedrangel.com/videos/${social.name.toLowerCase()}/${id}.${format || "mp4"}`;
     const checkCdn = await $fetch.raw(withQuery(cdnUrl, { t: Date.now() })).catch(() => null);
     if (checkCdn?.ok) {
       console.info("Existe en CDN");
@@ -108,7 +97,7 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
 
     const uploaded = await uploadToCdn(config.cdnToken, {
       source: video_url,
-      prefix: `videos/${red_social.toLowerCase()}`,
+      prefix: `videos/${social.name.toLowerCase()}`,
       file_name: `${id}.${format || "mp4"}`,
       contentType: String(contentType)
     });
