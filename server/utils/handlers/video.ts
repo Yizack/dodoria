@@ -30,7 +30,11 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
       return deferUpdateError();
     }
 
-    const { id, video_url, short_url, status, format, caption } = scraper;
+    const { id, video_url, short_url, status, format, caption, is_photo } = scraper;
+
+    if (is_photo) {
+      return deferUpdateError("⚠️ Error. Este enlace no es un video.");
+    }
 
     if (status !== 200 && !esUrl(video_url)) {
       return deferUpdateError();

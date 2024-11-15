@@ -127,9 +127,8 @@ export const scrapeVideo = async (url: string, social?: string) => {
 
   if (!req) return null;
 
-  const { id, video_url, short_url, status, format } = req;
-  const caption = imbedUrlsFromString(`${req?.caption ? req?.caption?.replace(/(#\S+|\S+#)/g, "").replace(/([.•_\- ]+)\n/g, "").replace(/\n+/g, "\n").trim() : ""}`);
-  return { id, video_url, short_url, status, format, caption, social };
+  req.caption = imbedUrlsFromString(`${req?.caption ? req?.caption?.replace(/(#\S+|\S+#)/g, "").replace(/([.•_\- ]+)\n/g, "").replace(/\n+/g, "\n").trim() : ""}`);
+  return { ...req, social };
 };
 
 export const uploadToCdn = async (cdnToken: string, opts: { source: string, prefix: string, file_name: string, contentType: string }) => {

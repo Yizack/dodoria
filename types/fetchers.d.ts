@@ -8,6 +8,7 @@ declare global {
     status: number;
     caption: string;
     format?: string;
+    is_photo?: boolean;
   }
 
   interface LOLRank {
