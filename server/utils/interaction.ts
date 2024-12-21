@@ -11,7 +11,7 @@ const toDiscordEndpoint = (endpoint: string, body: Record<string, unknown>, meth
   const endpointURL = `${API.BASE}${endpoint}`;
   if (!body.files) {
     return $fetch(endpointURL, {
-      body,
+      ...Object.keys(body).length ? { body } : {},
       method,
       headers: authorization ? {
         Authorization: authorization
