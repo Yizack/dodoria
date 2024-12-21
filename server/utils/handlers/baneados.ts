@@ -40,7 +40,7 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
     embeds.push({
       color: CONSTANTS.COLOR,
       fields: [{
-        name: "Bans, timeouts y unbans recientes",
+        name: "Bans, timeouts y unbans recientes en discord",
         value: bansAndTimeoutsValues.join("\n")
       }]
     });
