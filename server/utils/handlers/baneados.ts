@@ -43,7 +43,7 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
       const now = Math.floor(Date.now() / 1000);
       const timeout = date ? `<t:${date}:d>, <t:${date}:t>` : "N/A";
       const action = el.action === AuditLogEvent.MemberBanAdd ? "baneado" : el.action === AuditLogEvent.MemberBanRemove ? "desbaneado" : "timeout";
-      const timeoutEmoji = now > date! ? "🟨" : "🟩";
+      const timeoutEmoji = now > date! ? "🟩" : "🟨";
       const banUnbanEmoji = action === "baneado" ? "🟥" : "🟩";
       const messageValue = action === "timeout" ? `${timeoutEmoji} **${el.username}**・${action} hasta: ${timeout}` : `${banUnbanEmoji} **${el.username}**・${action}`;
       return messageValue;
