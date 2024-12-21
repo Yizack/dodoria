@@ -194,5 +194,5 @@ export const BANEADOS = {
   name: "baneados",
   description: "Muestra una lista de usuarios baneados, timeouteados o desbaneados más recientes",
   options: [],
-  cid: ""
+  cid: "1319818448787865655"
 };
