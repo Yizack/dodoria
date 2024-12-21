@@ -1,4 +1,4 @@
-import { AuditLogEvent } from "discord.js";
+import { AuditLogEvent } from "discord-api-types/v10";
 
 export const handlerBaneados: CommandHandler = (event, { body }) => {
   const { token, guild_id } = body;
