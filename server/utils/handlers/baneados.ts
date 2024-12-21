@@ -39,9 +39,8 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
     });
     embeds.push({
       color: CONSTANTS.COLOR,
-      title: "Bans, timeouts y unbans recientes",
       fields: [{
-        name: "",
+        name: "Bans, timeouts y unbans recientes",
         value: bansAndTimeoutsValues.join("\n")
       }]
     });
