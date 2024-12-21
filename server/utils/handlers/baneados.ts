@@ -29,18 +29,21 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
       }
       return useInfo;
     });
+
+    const bansAndTimeoutsValues = bansAndTimeouts.map((el) => {
+      const date = el.timeoutUntil ? Math.floor(new Date(el.timeoutUntil).getTime() / 1000) : null;
+      const timeout = date ? `<t:${date}:d>, <t:${date}:t>` : "N/A";
+      const action = el.action === AuditLogEvent.MemberBanAdd ? "baneado" : el.action === AuditLogEvent.MemberBanRemove ? "desbaneado" : "timeout";
+      const messageValue = action === "timeout" ? `🟨 **${el.username}** ${action} hasta: ${timeout}` : `${action === "baneado" ? "🟥" : "🟩"} **${el.username}** ${action}`;
+      return messageValue;
+    });
     embeds.push({
       color: CONSTANTS.COLOR,
       title: "Bans, timeouts y unbans recientes",
-      fields: bansAndTimeouts.map((el) => {
-        const timeout = el.timeoutUntil ? `<t:${Math.floor(new Date(el.timeoutUntil).getTime() / 1000)}:f>` : "N/A";
-        const action = el.action === AuditLogEvent.MemberBanAdd ? "Baneado" : el.action === AuditLogEvent.MemberBanRemove ? "Desbaneado" : "Timeout";
-        const messageValue = action === "Timeout" ? `🟨 **${action} hasta:** ${timeout}` : `${action === "Baneado" ? "🟥" : "🟩"} **${action}**`;
-        return {
-          name: `${el.username}`,
-          value: messageValue
-        };
-      })
+      fields: [{
+        name: "",
+        value: bansAndTimeoutsValues.join("\n")
+      }]
     });
     return deferUpdate("", {
       token,
