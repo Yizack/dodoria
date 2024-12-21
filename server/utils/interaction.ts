@@ -7,7 +7,7 @@ const API = {
   BASE: "https://discord.com/api/v10"
 };
 
-const toDiscordEndpoint = (endpoint: string, body: Record<string, unknown>, method: "POST" | "PATCH", authorization?: string) => {
+const toDiscordEndpoint = (endpoint: string, body: Record<string, unknown>, method: "GET" | "POST" | "PATCH", authorization?: string) => {
   const endpointURL = `${API.BASE}${endpoint}`;
   if (!body.files) {
     return $fetch(endpointURL, {
@@ -112,4 +112,15 @@ export const editFollowUpMessage = (
     components: options?.components,
     files: options?.files
   }, "PATCH");
+};
+
+export const guildAuditLog = async <T>(options: {
+  guild_id: string;
+  token: string;
+  limit?: number;
+}) => {
+  const endpoint = withQuery(`/guilds/${options.guild_id}/audit-logs`, {
+    limit: options?.limit || 50
+  });
+  return toDiscordEndpoint(endpoint, {}, "GET", `Bot ${options.token}`) as T;
 };

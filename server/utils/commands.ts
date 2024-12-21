@@ -189,3 +189,10 @@ export const AVATAR = {
   ],
   cid: "1273575196477100064"
 };
+
+export const BANEADOS = {
+  name: "baneados",
+  description: "Muestra una lista de usuarios baneados, timeouteados o desbaneados más recientes",
+  options: [],
+  cid: ""
+};

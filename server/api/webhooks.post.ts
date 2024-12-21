@@ -20,7 +20,8 @@ export default defineEventHandler(async (event) => {
     [LOLPROFILE.name]: handlerLolProfile, // Comando /lolprofile
     [LOLMMR.name]: handlerLolMMR, // Comando /lolmmr
     [ANGAR.name]: handlerAngar, // Comando /angar
-    [AVATAR.name]: handlerAvatar // Comando /avatar
+    [AVATAR.name]: handlerAvatar, // Comando /avatar
+    [BANEADOS.name]: handlerBaneados // Comando /baneados
   };
 
   const componentHandlers: { [key: string]: ComponentHandler } = {

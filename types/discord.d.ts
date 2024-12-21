@@ -101,4 +101,21 @@ declare global {
     flags: number;
     id: string;
   }
+
+  interface AuditLogEntries {
+    target_id: string;
+    changes?: {
+      key: string;
+      old_value?: string;
+      new_value?: string;
+    }[];
+    user_id: string;
+    id: string;
+    action_type: number;
+  }
+
+  interface AuditLog {
+    audit_log_entries: AuditLogEntries[];
+    users: DiscordUser[];
+  }
 }
