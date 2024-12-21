@@ -19,7 +19,7 @@ export const CONSTANTS = {
       supported: true
     },
     tiktok: {
-      domains: ["tiktok.com/@", "vm.tiktok.com/", "m.tiktok.com/", "tiktok.com/t/"],
+      domains: ["tiktok.com/@", "vm.tiktok.com/", "m.tiktok.com/", "tiktok.com/t/", "vt.tiktok.com/"],
       name: "TikTok",
       emoji: "<:tiktok:1121003232345473065>",
       supported: true
