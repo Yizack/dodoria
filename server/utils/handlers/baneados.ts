@@ -5,11 +5,19 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
   const config = useRuntimeConfig(event);
   const followUpRequest = async () => {
     const embeds: DiscordEmbed[] = [];
-    const { audit_log_entries, users } = await guildAuditLog<AuditLog>({
+    const auditLogResponse = await guildAuditLog<AuditLog>({
       guild_id,
       token: config.discord.token,
       limit: 100
-    });
+    }).catch(() => null);
+    if (!auditLogResponse) {
+      return deferUpdate("", {
+        token,
+        application_id: config.discord.applicationId,
+        embeds: errorEmbed("⚠️ Error. El bot probablemente no cuenta con los permisos para utilizar este comando.")
+      });
+    }
+    const { audit_log_entries, users } = auditLogResponse;
     const entries = audit_log_entries.filter(el => [AuditLogEvent.MemberBanAdd, AuditLogEvent.MemberBanRemove, AuditLogEvent.MemberUpdate].includes(el.action_type));
     const bansAndTimeouts = entries.filter(el => (el.action_type === AuditLogEvent.MemberUpdate && el.changes?.some(el => el.key === "communication_disabled_until")) || el.action_type !== AuditLogEvent.MemberUpdate).map((el) => {
       const useInfo = {
