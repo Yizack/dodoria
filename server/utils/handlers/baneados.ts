@@ -40,9 +40,12 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
 
     const bansAndTimeoutsValues = bansAndTimeouts.map((el) => {
       const date = el.timeoutUntil ? Math.floor(new Date(el.timeoutUntil).getTime() / 1000) : null;
+      const now = Math.floor(Date.now() / 1000);
       const timeout = date ? `<t:${date}:d>, <t:${date}:t>` : "N/A";
       const action = el.action === AuditLogEvent.MemberBanAdd ? "baneado" : el.action === AuditLogEvent.MemberBanRemove ? "desbaneado" : "timeout";
-      const messageValue = action === "timeout" ? `🟨 **${el.username}**・${action} hasta: ${timeout}` : `${action === "baneado" ? "🟥" : "🟩"} **${el.username}**・${action}`;
+      const timeoutEmoji = now > date! ? "🟨" : "🟩";
+      const banUnbanEmoji = action === "baneado" ? "🟥" : "🟩";
+      const messageValue = action === "timeout" ? `${timeoutEmoji} **${el.username}**・${action} hasta: ${timeout}` : `${banUnbanEmoji} **${el.username}**・${action}`;
       return messageValue;
     });
     embeds.push({
