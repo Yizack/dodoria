@@ -80,6 +80,7 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
     const cdnUrl = `https://cdn.ahmedrangel.com/videos/${social.name.toLowerCase()}/${id}.${format || "mp4"}`;
     const checkCdn = await $fetch.raw(withQuery(cdnUrl, { t: Date.now() })).catch(() => null);
     if (checkCdn?.ok) {
+      console.info(cdnUrl);
       console.info("Existe en CDN");
       return finalReply(cdnUrl);
     }
