@@ -27,6 +27,10 @@ export default defineNuxtConfig({
     "~/assets/css/dodoria.css"
   ],
 
+  experimental: {
+    typedPages: true
+  },
+
   features: {
     inlineStyles: false
   },

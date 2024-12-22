@@ -1,5 +1,16 @@
 <script setup lang="ts">
 definePageMeta({ layout: "site" });
+
+const { command } = useRoute("c-command").params;
+const currentCommand = COMMANDS[command.toUpperCase() as keyof typeof COMMANDS];
+
+if (!currentCommand) {
+  throw createError({
+    statusCode: 404,
+    message: "Command not found",
+    fatal: true
+  });
+}
 </script>
 
 <template>
@@ -10,9 +21,9 @@ definePageMeta({ layout: "site" });
         <h1>Dodoria</h1>
       </NuxtLink>
       <div class="mb-3">
-        <code class="bg-dark p-2 rounded-3">/{{ COMMANDS.VIDEO.name }}</code>
+        <code class="bg-dark p-2 rounded-3">/{{ currentCommand.name }}</code>
       </div>
-      <p>{{ COMMANDS.VIDEO.description }}</p>
+      <p>{{ currentCommand.description }}</p>
     </div>
   </div>
 </template>
