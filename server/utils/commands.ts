@@ -136,7 +136,7 @@ export const LOLMMR = {
   cid: "1225469964274630748"
 };
 
-export const LOLPROFILE = {
+export const LOLPERFIL = {
   name: "lolperfil",
   description: "Consulta información de un usuario de League of Legends",
   options: [

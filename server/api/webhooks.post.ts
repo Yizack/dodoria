@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
     [BUENOGENTE.name]: handlerBuenoGente, // Comando /buenogente
     [SHIP.name]: handlerShip, // Comando /ship
     [VIDEO.name]: handlerVideo, // Comando /video
-    [LOLPROFILE.name]: handlerLolProfile, // Comando /lolprofile
+    [LOLPERFIL.name]: handlerLolPerfil, // Comando /lolperfil
     [LOLMMR.name]: handlerLolMMR, // Comando /lolmmr
     [ANGAR.name]: handlerAngar, // Comando /angar
     [AVATAR.name]: handlerAvatar, // Comando /avatar

@@ -1,4 +1,4 @@
-export const handlerLolProfile: CommandHandler = (event, { body, getValue }) => {
+export const handlerLolPerfil: CommandHandler = (event, { body, getValue }) => {
   const { token } = body;
 
   const config = useRuntimeConfig(event);
