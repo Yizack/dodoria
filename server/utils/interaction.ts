@@ -117,10 +117,12 @@ export const editFollowUpMessage = (
 export const guildAuditLog = async <T>(options: {
   guild_id: string;
   token: string;
+  action_type?: number;
   limit?: number;
 }) => {
   const endpoint = withQuery(`/guilds/${options.guild_id}/audit-logs`, {
-    limit: options?.limit || 50
+    limit: options?.limit || 50,
+    ...options.action_type && { action_type: options.action_type }
   });
   return toDiscordEndpoint(endpoint, {}, "GET", `Bot ${options.token}`) as T;
 };

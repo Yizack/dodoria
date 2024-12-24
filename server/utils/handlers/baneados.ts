@@ -5,25 +5,41 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
   const config = useRuntimeConfig(event);
   const followUpRequest = async () => {
     const embeds: DiscordEmbed[] = [];
-    const auditLogResponse = await guildAuditLog<AuditLog>({
+    const banLogs = await guildAuditLog<AuditLog>({
       guild_id,
       token: config.discord.token,
-      limit: 100
+      action_type: AuditLogEvent.MemberBanAdd,
+      limit: 20
     }).catch(() => null);
-    if (!auditLogResponse) {
+    const unbanLogs = await guildAuditLog<AuditLog>({
+      guild_id,
+      token: config.discord.token,
+      action_type: AuditLogEvent.MemberBanAdd,
+      limit: 20
+    }).catch(() => null);
+    const updatedLogs = await guildAuditLog<AuditLog>({
+      guild_id,
+      token: config.discord.token,
+      action_type: AuditLogEvent.MemberBanAdd,
+      limit: 20
+    }).catch(() => null);
+
+    if (!banLogs && !unbanLogs && !updatedLogs) {
       return deferUpdate("", {
         token,
         application_id: config.discord.applicationId,
         embeds: errorEmbed("⚠️ Error. El bot probablemente no cuenta con los permisos para utilizar este comando.")
       });
     }
-    const { audit_log_entries, users } = auditLogResponse;
-    const entries = audit_log_entries.filter(el => [AuditLogEvent.MemberBanAdd, AuditLogEvent.MemberBanRemove, AuditLogEvent.MemberUpdate].includes(el.action_type));
-    const bansAndTimeouts = entries.filter(el => (el.action_type === AuditLogEvent.MemberUpdate && el.changes?.some(el => el.key === "communication_disabled_until")) || el.action_type !== AuditLogEvent.MemberUpdate).map((el) => {
+
+    const users = [...new Set([...banLogs!.users, ...unbanLogs!.users, ...updatedLogs!.users].map(user => ({ id: user.id, username: user.username })))];
+    const entries = [...banLogs!.audit_log_entries, ...unbanLogs!.audit_log_entries, ...updatedLogs!.audit_log_entries];
+    const filteredEntries = entries.filter(el => (el.action_type === AuditLogEvent.MemberUpdate && el.changes?.some(el => el.key === "communication_disabled_until")) || el.action_type !== AuditLogEvent.MemberUpdate).map((el) => {
       const useInfo = {
         id: el.target_id,
         username: users.find(user => user.id === el.target_id)!.username,
         action: el.action_type,
+        timestamp: Number((BigInt(el.id) >> BigInt("22")) + BigInt("1420070400000")),
         timeoutUntil: undefined
       };
       if (el.changes) {
@@ -36,9 +52,9 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
         }
       }
       return useInfo;
-    });
+    }).sort((a, b) => b.timestamp - a.timestamp).slice(0, 20);
 
-    const bansAndTimeoutsValues = bansAndTimeouts.map((el) => {
+    const bansAndTimeoutsValues = filteredEntries.map((el) => {
       const date = el.timeoutUntil ? Math.floor(new Date(el.timeoutUntil).getTime() / 1000) : null;
       const now = Math.floor(Date.now() / 1000);
       const timeout = date ? `<t:${date}:d>, <t:${date}:t>` : "N/A";
