@@ -14,13 +14,13 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
     const unbanLogs = await guildAuditLog<AuditLog>({
       guild_id,
       token: config.discord.token,
-      action_type: AuditLogEvent.MemberBanAdd,
+      action_type: AuditLogEvent.MemberBanRemove,
       limit: 20
     }).catch(() => null);
     const updatedLogs = await guildAuditLog<AuditLog>({
       guild_id,
       token: config.discord.token,
-      action_type: AuditLogEvent.MemberBanAdd,
+      action_type: AuditLogEvent.MemberUpdate,
       limit: 20
     }).catch(() => null);
 
