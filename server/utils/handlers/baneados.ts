@@ -47,7 +47,7 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
         if (timeout) {
           return {
             ...useInfo,
-            timeoutUntil: timeout.new_value || timeout.old_value
+            timeoutUntil: timeout?.new_value
           };
         }
       }
@@ -58,7 +58,8 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
       const date = el.timeoutUntil ? Math.floor(new Date(el.timeoutUntil).getTime() / 1000) : null;
       const now = Math.floor(Date.now() / 1000);
       const timeout = date ? `<t:${date}:d>, <t:${date}:t>` : "N/A";
-      const action = el.action === AuditLogEvent.MemberBanAdd ? "baneado" : el.action === AuditLogEvent.MemberBanRemove ? "desbaneado" : "timeout";
+      const removedTimeout = !date && el.action === AuditLogEvent.MemberUpdate ? " removido" : "";
+      const action = el.action === AuditLogEvent.MemberBanAdd ? "baneado" : el.action === AuditLogEvent.MemberBanRemove ? "desbaneado" : `timeout${removedTimeout}`;
       const timeoutEmoji = now > date! ? "🟩" : "🟨";
       const banUnbanEmoji = action === "baneado" ? "🟥" : "🟩";
       const messageValue = action === "timeout" ? `${timeoutEmoji} **${el.username}**・${action} hasta: ${timeout}` : `${banUnbanEmoji} **${el.username}**・${action}`;
