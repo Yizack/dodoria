@@ -8,6 +8,7 @@ const API = {
 };
 
 const toDiscordEndpoint = (endpoint: string, body: Record<string, unknown>, method: "GET" | "POST" | "PATCH", authorization?: string) => {
+  console.log(body);
   const endpointURL = `${API.BASE}${endpoint}`;
   if (!body.files) {
     return $fetch(endpointURL, {
