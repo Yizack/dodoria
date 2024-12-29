@@ -52,7 +52,7 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
         }
       }
       return useInfo;
-    }).sort((a, b) => b.timestamp - a.timestamp).slice(0, 20);
+    }).sort((a, b) => b.timestamp - a.timestamp).slice(0, 16);
 
     const bansAndTimeoutsValues = filteredEntries.map((el) => {
       const date = el.timeoutUntil ? Math.floor(new Date(el.timeoutUntil).getTime() / 1000) : null;
