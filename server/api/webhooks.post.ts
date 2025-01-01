@@ -21,7 +21,8 @@ export default defineEventHandler(async (event) => {
     [LOLMMR.name]: handlerLolMMR, // Comando /lolmmr
     [ANGAR.name]: handlerAngar, // Comando /angar
     [AVATAR.name]: handlerAvatar, // Comando /avatar
-    [BANEADOS.name]: handlerBaneados // Comando /baneados
+    [BANEADOS.name]: handlerBaneados, // Comando /baneados
+    [COPYS.name]: handlerCopys // Comando /copys
   };
 
   const componentHandlers: { [key: string]: ComponentHandler } = {
