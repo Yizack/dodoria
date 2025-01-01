@@ -1,3 +1,5 @@
+import { DONOCLIPS } from "~~/shared/utils/commands";
+
 export default defineEventHandler(async (event) => {
   const isValidWebhook = await isValidDiscordWebhook(event);
   if (!isValidWebhook) throw createError({ statusCode: 401, message: "Unauthorized: webhook is not valid" });
@@ -22,7 +24,8 @@ export default defineEventHandler(async (event) => {
     [ANGAR.name]: handlerAngar, // Comando /angar
     [AVATAR.name]: handlerAvatar, // Comando /avatar
     [BANEADOS.name]: handlerBaneados, // Comando /baneados
-    [COPYS.name]: handlerCopys // Comando /copys
+    [COPYS.name]: handlerCopys, // Comando /copys
+    [DONOCLIPS.name]: handlerDonoclips // Comando /donoclips
   };
 
   const componentHandlers: { [key: string]: ComponentHandler } = {

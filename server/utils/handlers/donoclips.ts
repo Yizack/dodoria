@@ -1,4 +1,4 @@
-export const handlerCopys: CommandHandler = (event, { body, getValue }) => {
+export const handlerDonoclips: CommandHandler = (event, { body, getValue }) => {
   const { token } = body;
   const config = useRuntimeConfig(event);
   const audioValue = getValue("opcion");
@@ -7,7 +7,7 @@ export const handlerCopys: CommandHandler = (event, { body, getValue }) => {
 
   const followUpRequest = async () => {
     // TODO: handle when not found
-    const blob = await hubBlob().get(`copys/${filename}`);
+    const blob = await hubBlob().get(`donoclips/${filename}`);
     const files = [{ name: filename, file: blob }];
     return deferUpdate({
       flags: 8192,

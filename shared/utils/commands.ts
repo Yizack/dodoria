@@ -206,14 +206,29 @@ export const BANEADOS: Command = {
 
 export const COPYS: Command = {
   name: "copys",
-  description: "Obtén un copy a partir de una lista de opciones",
+  description: "Obtén un copy a partir de un listado de opciones",
   options: [
     {
-      name: "nombre",
-      description: "Nombre del audio",
+      name: "opcion",
+      description: "Opción de la lista",
       type: 3,
       required: true,
       choices: COPYS_LIST
+    }
+  ],
+  cid: "1323905456338636901"
+};
+
+export const DONOCLIPS: Command = {
+  name: "donoclips",
+  description: "Obtén un donoclip a partir de un listado de opciones",
+  options: [
+    {
+      name: "opcion",
+      description: "Opción de la lista",
+      type: 3,
+      required: true,
+      choices: DONOCLIPS_LIST
     }
   ],
   cid: "1323905456338636901"
