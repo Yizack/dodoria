@@ -1,4 +1,5 @@
 import { CONSTANTS } from "./constants";
+import { COPYS_LIST } from "./copys";
 
 const IntegrationTypes = {
   GUILD_INSTALL: 0,
@@ -195,4 +196,19 @@ export const BANEADOS = {
   description: "Muestra una lista de los usuarios baneados, timeouteados y desbaneados más recientes",
   options: [],
   cid: "1319818448787865655"
+};
+
+export const COPYS = {
+  name: "copys",
+  description: "Obtén un copy a partir de una lista de opciones",
+  options: [
+    {
+      name: "nombre",
+      description: "Nombre del audio",
+      type: 3,
+      required: true,
+      choices: COPYS_LIST
+    }
+  ],
+  cid: "1319820051658693632"
 };
