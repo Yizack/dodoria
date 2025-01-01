@@ -1,17 +1,7 @@
+import { ApplicationIntegrationType, InteractionContextType, ApplicationCommandOptionType } from "discord-api-types/v10";
 import { LOL_SERVERS } from "./lol-servers";
 import { COPYS_LIST } from "./copys-list";
 import { DONOCLIPS_LIST } from "./donoclips-list";
-
-const enum IntegrationTypes {
-  GUILD_INSTALL = 0,
-  USER_INSTALL = 1
-}
-
-const enum Contexts {
-  GUILD = 0,
-  BOT_DM = 1,
-  PRIVATE_CHANNEL = 2
-}
 
 export const MEMIDE: Command = {
   name: "memide",
@@ -32,7 +22,7 @@ export const CHEER: Command = {
     {
       name: "mensaje",
       description: "El mensaje que quieres que lea el bot",
-      type: 3,
+      type: ApplicationCommandOptionType.String,
       required: true
     }
   ],
@@ -46,7 +36,7 @@ export const EDUCAR: Command = {
     {
       name: "usuario",
       description: "El usuario que deseas educar",
-      type: 6,
+      type: ApplicationCommandOptionType.User,
       required: true
     }
   ],
@@ -66,13 +56,13 @@ export const SHIP: Command = {
     {
       name: "persona1",
       description: "El primer usuario",
-      type: 6,
+      type: ApplicationCommandOptionType.User,
       required: true
     },
     {
       name: "persona2",
       description: "Con quien lo shipeas",
-      type: 6,
+      type: ApplicationCommandOptionType.User,
       required: true
     }
   ],
@@ -89,19 +79,19 @@ export const VIDEO: Command = {
   name: "video",
   description: "Obtener un video de Instagram, Facebook, TikTok, X, YouTube, Twitch, Kick o Reddit en formato MP4",
   integration_types: [
-    IntegrationTypes.GUILD_INSTALL,
-    IntegrationTypes.USER_INSTALL
+    ApplicationIntegrationType.GuildInstall,
+    ApplicationIntegrationType.UserInstall
   ],
   contexts: [
-    Contexts.BOT_DM,
-    Contexts.GUILD,
-    Contexts.PRIVATE_CHANNEL
+    InteractionContextType.BotDM,
+    InteractionContextType.Guild,
+    InteractionContextType.PrivateChannel
   ],
   options: [
     {
       name: "link",
       description: "Link de Instagram, Facebook, TikTok, X, YouTube, Twitch, Kick o Reddit",
-      type: 3,
+      type: ApplicationCommandOptionType.String,
       required: true
     }
   ],
@@ -115,20 +105,20 @@ export const LOLMMR: Command = {
     {
       name: "riot_id",
       description: "Riot ID. Ej: (Name#TAG)",
-      type: 3,
+      type: ApplicationCommandOptionType.String,
       required: true
     },
     {
       name: "servidor",
       description: "El servidor del invocador",
-      type: 3,
+      type: ApplicationCommandOptionType.String,
       required: true,
       choices: LOL_SERVERS
     },
     {
       name: "cola",
       description: "Tipo de cola clasificatoria",
-      type: 3,
+      type: ApplicationCommandOptionType.String,
       required: true,
       choices: [
         { name: "Solo/Duo", value: "SoloQ" },
@@ -146,13 +136,13 @@ export const LOLPERFIL: Command = {
     {
       name: "riot_id",
       description: "Riot ID. Ej: (Name#TAG)",
-      type: 3,
+      type: ApplicationCommandOptionType.String,
       required: true
     },
     {
       name: "servidor",
       description: "El servidor donde juega",
-      type: 3,
+      type: ApplicationCommandOptionType.String,
       required: true,
       choices: LOL_SERVERS
     }
@@ -170,25 +160,25 @@ export const AVATAR: Command = {
   name: "avatar",
   description: "Muestra el avatar de un usuario",
   integration_types: [
-    IntegrationTypes.GUILD_INSTALL,
-    IntegrationTypes.USER_INSTALL
+    ApplicationIntegrationType.GuildInstall,
+    ApplicationIntegrationType.UserInstall
   ],
   contexts: [
-    Contexts.BOT_DM,
-    Contexts.GUILD,
-    Contexts.PRIVATE_CHANNEL
+    InteractionContextType.BotDM,
+    InteractionContextType.Guild,
+    InteractionContextType.PrivateChannel
   ],
   options: [
     {
       name: "usuario",
       description: "El usuario del que quieres obtener el avatar",
-      type: 6,
+      type: ApplicationCommandOptionType.User,
       required: false
     },
     {
       name: "tipo",
       description: "Selecciona el tipo de avatar",
-      type: 3,
+      type: ApplicationCommandOptionType.String,
       required: false,
       choices: [
         { name: "Global", value: "global" },
@@ -212,7 +202,7 @@ export const COPYS: Command = {
     {
       name: "opcion",
       description: "Opción de la lista",
-      type: 3,
+      type: ApplicationCommandOptionType.String,
       required: true,
       choices: COPYS_LIST
     }
@@ -227,7 +217,7 @@ export const DONOCLIPS: Command = {
     {
       name: "opcion",
       description: "Opción de la lista",
-      type: 3,
+      type: ApplicationCommandOptionType.String,
       required: true,
       choices: DONOCLIPS_LIST
     }

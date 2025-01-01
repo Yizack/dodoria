@@ -1,3 +1,5 @@
+import { MessageFlags } from "discord-api-types/v10";
+
 export const handlerCopys: CommandHandler = (event, { body, getValue }) => {
   const { token } = body;
   const config = useRuntimeConfig(event);
@@ -10,7 +12,7 @@ export const handlerCopys: CommandHandler = (event, { body, getValue }) => {
     const blob = await hubBlob().get(`copys/${filename}`);
     const files = [{ name: filename, file: blob }];
     return deferUpdate({
-      flags: 8192,
+      flags: MessageFlags.IsVoiceMessage,
       token,
       application_id: config.discord.applicationId,
       files,
