@@ -1,5 +1,5 @@
 import { CONSTANTS } from "./constants";
-import { COPYS_LIST } from "./copys";
+import { COPYS_LIST } from "./copys-list";
 
 const IntegrationTypes = {
   GUILD_INSTALL: 0,

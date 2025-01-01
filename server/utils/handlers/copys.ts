@@ -1,7 +1,8 @@
 export const handlerCopys: CommandHandler = (event, { body, getValue }) => {
   const { token } = body;
   const config = useRuntimeConfig(event);
-  const audioId = getValue("nombre");
+  const audioValue = getValue("nombre");
+  const [audioId, audioDuration] = audioValue.split(":");
   const filename = `${audioId}.ogg`;
 
   const followUpRequest = async () => {
@@ -17,7 +18,7 @@ export const handlerCopys: CommandHandler = (event, { body, getValue }) => {
         {
           id: 0,
           filename: filename,
-          duration_secs: 10,
+          duration_secs: audioDuration,
           waveform: "acU6Va9UcSVZzsVw7IU/80s0Kh/pbrTcwmpR9da4mvQejIMykkgo9F2FfeCd235K/atHZtSAmxKeTUgKxAdNVO8PAoZq1cHNQXT/PHthL2sfPZGSdxNgLH0AuJwVeI7QZJ02ke40+HkUcBoDdqGDZeUvPqoIRbE23Kr+sexYYe4dVq+zyCe3ci/6zkMWbVBpCjq8D8ZZEFo/lmPJTkgjwqnqHuf6XT4mJyLNphQjvFH9aRqIZpPoQz1sGwAY2vssQ5mTy5J5muGo+n82b0xFROZwsJpumDsFi4Da/85uWS/YzjY5BdxGac8rgUqm9IKh7E6GHzOGOy0LQIz3O4ntTg=="
         }
       ]
