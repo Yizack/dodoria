@@ -8,7 +8,7 @@ export const handlerCopys: CommandHandler = (event, { body, getValue }) => {
     // TODO: handle when not found
     const blob = await hubBlob().get(`copys/${filename}`);
     const files = [{ name: filename, file: blob }];
-    return deferUpdate("", {
+    return deferUpdate(undefined, {
       flags: 8192,
       token,
       application_id: config.discord.applicationId,

@@ -7,18 +7,25 @@ const API = {
   BASE: "https://discord.com/api/v10"
 };
 
-const toDiscordEndpoint = (endpoint: string, body: Record<string, unknown>, method: "GET" | "POST" | "PATCH", authorization?: string) => {
+const toDiscordEndpoint = (
+  endpoint: string,
+  options: {
+    body?: Record<string, unknown>;
+    method: "GET" | "POST" | "PATCH";
+    headers?: Record<string, string>;
+  }
+) => {
   const endpointURL = `${API.BASE}${endpoint}`;
-  if (!body.files) {
+  const body = options.body;
+  if (body && !body.files) {
     return $fetch(endpointURL, {
       ...Object.keys(body).length ? { body } : {},
-      method,
-      headers: authorization ? {
-        Authorization: authorization
-      } : {}
+      method: options.method,
+      headers: options.headers
     });
   }
 
+  if (!body) return $fetch(endpointURL, { method: options.method, headers: options.headers });
   const { files } = body as { files: { file: Blob, name: string }[] };
   const formData = new FormData();
   for (let i = 0; i < files.length; i++) {
@@ -28,10 +35,8 @@ const toDiscordEndpoint = (endpoint: string, body: Record<string, unknown>, meth
   formData.append("payload_json", JSON.stringify(body));
   return $fetch(endpointURL, {
     body: formData,
-    method,
-    headers: authorization ? {
-      Authorization: authorization
-    } : {}
+    method: options.method,
+    headers: options.headers
   });
 };
 
@@ -75,7 +80,7 @@ export const updateMessage = () => ({
 });
 
 export const deferUpdate = (
-  content: unknown,
+  content: unknown | undefined,
   options: {
     flags?: number;
     application_id?: string;
@@ -84,18 +89,23 @@ export const deferUpdate = (
     components?: DiscordComponent[];
     files?: unknown;
     attachments?: unknown[];
+    headers?: Record<string, string>;
   }
 ) => {
   const followupEndpoint = `/webhooks/${options.application_id}/${options.token}`;
   return toDiscordEndpoint(followupEndpoint, {
-    flags: options?.flags,
-    type: InteractionResponseType.DEFERRED_UPDATE_MESSAGE,
-    content: content,
-    embeds: options?.embeds,
-    components: options?.components,
-    files: options?.files,
-    attachments: options?.attachments
-  }, "POST");
+    method: "POST",
+    body: {
+      flags: options?.flags,
+      type: InteractionResponseType.DEFERRED_UPDATE_MESSAGE,
+      content: content,
+      embeds: options?.embeds,
+      components: options?.components,
+      files: options?.files,
+      attachments: options?.attachments
+    },
+    headers: options?.headers
+  });
 };
 
 export const editFollowUpMessage = (
@@ -111,11 +121,14 @@ export const editFollowUpMessage = (
 ) => {
   const endpoint = `/webhooks/${options.application_id}/${options.token}/messages/${options.message_id}`;
   return toDiscordEndpoint(endpoint, {
-    content: content,
-    embeds: options?.embeds,
-    components: options?.components,
-    files: options?.files
-  }, "PATCH");
+    method: "PATCH",
+    body: {
+      content: content,
+      embeds: options?.embeds,
+      components: options?.components,
+      files: options?.files
+    }
+  });
 };
 
 export const guildAuditLog = async <T>(options: {
@@ -128,5 +141,8 @@ export const guildAuditLog = async <T>(options: {
     limit: options?.limit || 50,
     ...options.action_type && { action_type: options.action_type }
   });
-  return toDiscordEndpoint(endpoint, {}, "GET", `Bot ${options.token}`) as T;
+  return toDiscordEndpoint(endpoint, {
+    method: "GET",
+    headers: { Authorization: `Bot ${options.token}` }
+  }) as T;
 };
