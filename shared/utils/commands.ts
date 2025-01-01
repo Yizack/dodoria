@@ -1,5 +1,6 @@
-import { COPYS_LIST } from "./copys-list";
 import { LOL_SERVERS } from "./lol-servers";
+import { COPYS_LIST } from "./copys-list";
+import { DONOCLIPS_LIST } from "./donoclips-list";
 
 const enum IntegrationTypes {
   GUILD_INSTALL = 0,
