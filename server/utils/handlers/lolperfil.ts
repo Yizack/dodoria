@@ -9,7 +9,7 @@ export const handlerLolPerfil: CommandHandler = (event, { body, getValue }) => {
     const riotName = riotId[0];
     const riotTag = riotId[1];
     if (!riotTag || !riotName) {
-      return deferUpdate("", { token, application_id: config.discord.applicationId,
+      return deferUpdate({ token, application_id: config.discord.applicationId,
         embeds: [{
           color: CONSTANTS.COLOR,
           description: ":x: Ingrese correctamente el **Riot ID**. Ej: **Name#TAG**"
@@ -145,7 +145,8 @@ export const handlerLolPerfil: CommandHandler = (event, { body, getValue }) => {
     }
     console.info(embeds);
     // Return del refer
-    return deferUpdate(mensaje, {
+    return deferUpdate({
+      content: mensaje,
       token,
       application_id: config.discord.applicationId,
       embeds,

@@ -25,7 +25,7 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
     }).catch(() => null);
 
     if (!banLogs && !unbanLogs && !updatedLogs) {
-      return deferUpdate("", {
+      return deferUpdate({
         token,
         application_id: config.discord.applicationId,
         embeds: errorEmbed("⚠️ Error. El bot probablemente no cuenta con los permisos para utilizar este comando.")
@@ -72,7 +72,7 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
         value: bansAndTimeoutsValues.join("\n")
       }]
     });
-    return deferUpdate("", {
+    return deferUpdate({
       token,
       application_id: config.discord.applicationId,
       embeds

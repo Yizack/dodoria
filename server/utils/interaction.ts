@@ -80,8 +80,8 @@ export const updateMessage = () => ({
 });
 
 export const deferUpdate = (
-  content: unknown | undefined,
   options: {
+    content?: string;
     flags?: number;
     application_id?: string;
     token?: string;
@@ -98,7 +98,7 @@ export const deferUpdate = (
     body: {
       flags: options?.flags,
       type: InteractionResponseType.DEFERRED_UPDATE_MESSAGE,
-      content: content,
+      content: options?.content,
       embeds: options?.embeds,
       components: options?.components,
       files: options?.files,

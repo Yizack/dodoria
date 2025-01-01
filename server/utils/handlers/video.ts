@@ -11,7 +11,7 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
     if (!esUrl(url) || !social?.supported) {
       const supportedSitesEmoji = Object.values(CONSTANTS.VIDEO_SOCIALS).filter(site => site.supported).map(site => getSocial(site.name)).join(" ");
       const error = `⚠️ Error. Sitio o enlace no soportado.\nSitios soportados: ${supportedSitesEmoji}`;
-      return deferUpdate("", {
+      return deferUpdate({
         token,
         application_id: config.discord.applicationId,
         embeds: errorEmbed(error)
@@ -20,7 +20,7 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
 
     const scraper = await scrapeVideo(url, social.name);
 
-    const deferUpdateError = (message?: string) => deferUpdate("", {
+    const deferUpdateError = (message?: string) => deferUpdate({
       token,
       application_id: config.discord.applicationId,
       embeds: errorEmbed(message || ":x: Error. Ha ocurrido un error obteniendo el video.")
@@ -69,7 +69,8 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
       const mensaje = `[${social.emoji}](${fxUrl}) **${social.name}**: [${short_url.replace("https://", "")}](<${short_url}>)\n${caption}`;
       const fixedMsg = mensaje.length > 500 ? mensaje.substring(0, 500) + "..." : mensaje;
 
-      return deferUpdate(fixedMsg, {
+      return deferUpdate({
+        content: fixedMsg,
         token,
         application_id: config.discord.applicationId,
         embeds,

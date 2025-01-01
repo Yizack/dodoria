@@ -19,7 +19,7 @@ export const handlerCheer: CommandHandler = (event, { body, getValue }) => {
     const blob = await response.blob();
     const files = [{ name: `${hash(text)}.mp3`, file: blob }];
 
-    return deferUpdate("", {
+    return deferUpdate({
       embeds: [{
         description: `\`${mensaje}\``,
         color: CONSTANTS.COLOR,
