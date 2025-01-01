@@ -207,6 +207,15 @@ export const COPYS: Command = {
       choices: COPYS_LIST
     }
   ],
+  integration_types: [
+    ApplicationIntegrationType.GuildInstall,
+    ApplicationIntegrationType.UserInstall
+  ],
+  contexts: [
+    InteractionContextType.BotDM,
+    InteractionContextType.Guild,
+    InteractionContextType.PrivateChannel
+  ],
   cid: "1323905456338636901"
 };
 
@@ -221,6 +230,15 @@ export const DONOCLIPS: Command = {
       required: true,
       choices: DONOCLIPS_LIST
     }
+  ],
+  integration_types: [
+    ApplicationIntegrationType.GuildInstall,
+    ApplicationIntegrationType.UserInstall
+  ],
+  contexts: [
+    InteractionContextType.BotDM,
+    InteractionContextType.Guild,
+    InteractionContextType.PrivateChannel
   ],
   cid: "1323969015118430218"
 };
