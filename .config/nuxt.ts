@@ -58,7 +58,8 @@ export default defineNuxtConfig({
 
   modules: [
     "@nuxt/eslint",
-    "nuxt-webhook-validators"
+    "nuxt-webhook-validators",
+    "@nuxthub/core"
   ],
 
   runtimeConfig: {
@@ -72,6 +73,11 @@ export default defineNuxtConfig({
       applicationId: ""
     },
     cdnToken: ""
+  },
+
+  hub: {
+    blob: true,
+    cache: true
   },
 
   eslint: {
