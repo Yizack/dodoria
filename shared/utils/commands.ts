@@ -232,5 +232,5 @@ export const DONOCLIPS: Command = {
       choices: DONOCLIPS_LIST
     }
   ],
-  cid: "1323905456338636901"
+  cid: "1323969015118430218"
 };
