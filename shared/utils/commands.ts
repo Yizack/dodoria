@@ -1,34 +1,30 @@
-import { CONSTANTS } from "./constants";
 import { COPYS_LIST } from "./copys-list";
+import { LOL_SERVERS } from "./lol-servers";
 
-const IntegrationTypes = {
-  GUILD_INSTALL: 0,
-  USER_INSTALL: 1,
-  ALL: [0, 1]
-};
+const enum IntegrationTypes {
+  GUILD_INSTALL = 0,
+  USER_INSTALL = 1
+}
 
-const Contexts = {
-  GUILD: 0,
-  BOT_DM: 1,
-  PRIVATE_CHANNEL: 2,
-  ALL: [0, 1, 2]
-};
+const enum Contexts {
+  GUILD = 0,
+  BOT_DM = 1,
+  PRIVATE_CHANNEL = 2
+}
 
-export const MEMIDE = {
+export const MEMIDE: Command = {
   name: "memide",
   description: "Conoce cuántos centímetros te mide",
-  options: [],
   cid: "1053392162194194523"
 };
 
-export const MECABE = {
+export const MECABE: Command = {
   name: "mecabe",
   description: "Conoce cuántos centímetros te caben",
-  options: [],
   cid: "1053392162194194524"
 };
 
-export const CHEER = {
+export const CHEER: Command = {
   name: "cheer",
   description: "Has una prueba de tus mensajes antes de enviar bits en el canal de ANGAR",
   options: [
@@ -42,7 +38,7 @@ export const CHEER = {
   cid: "1053398798786904096"
 };
 
-export const EDUCAR = {
+export const EDUCAR: Command = {
   name: "educar",
   description: "Intenta educar a un usuario",
   options: [
@@ -56,14 +52,13 @@ export const EDUCAR = {
   cid: "1053578283347882024"
 };
 
-export const BUENOGENTE = {
+export const BUENOGENTE: Command = {
   name: "buenogente",
   description: "Angar se despide de la gente",
-  options: [],
   cid: "1053871637306540082"
 };
 
-export const SHIP = {
+export const SHIP: Command = {
   name: "ship",
   description: "Calcula el porcentaje de compatibilidad amorosa entre dos personas",
   options: [
@@ -83,18 +78,24 @@ export const SHIP = {
   cid: "1056821755487997952"
 };
 
-export const COMANDOS = {
+export const COMANDOS: Command = {
   name: "comandos",
   description: "Conoce la lista de comandos disponibles",
-  options: [],
   cid: "1053738012619571342"
 };
 
-export const VIDEO = {
+export const VIDEO: Command = {
   name: "video",
   description: "Obtener un video de Instagram, Facebook, TikTok, X, YouTube, Twitch, Kick o Reddit en formato MP4",
-  integration_types: IntegrationTypes.ALL,
-  contexts: Contexts.ALL,
+  integration_types: [
+    IntegrationTypes.GUILD_INSTALL,
+    IntegrationTypes.USER_INSTALL
+  ],
+  contexts: [
+    Contexts.BOT_DM,
+    Contexts.GUILD,
+    Contexts.PRIVATE_CHANNEL
+  ],
   options: [
     {
       name: "link",
@@ -106,7 +107,7 @@ export const VIDEO = {
   cid: "1225295750930501724"
 };
 
-export const LOLMMR = {
+export const LOLMMR: Command = {
   name: "lolmmr",
   description: "Calcula el ELO MMR aproximado de una cuenta basado en el emparejamiento de las partidas",
   options: [
@@ -121,7 +122,7 @@ export const LOLMMR = {
       description: "El servidor del invocador",
       type: 3,
       required: true,
-      choices: CONSTANTS.LOL_SERVERS
+      choices: LOL_SERVERS
     },
     {
       name: "cola",
@@ -137,7 +138,7 @@ export const LOLMMR = {
   cid: "1225469964274630748"
 };
 
-export const LOLPERFIL = {
+export const LOLPERFIL: Command = {
   name: "lolperfil",
   description: "Consulta información de un usuario de League of Legends",
   options: [
@@ -152,24 +153,30 @@ export const LOLPERFIL = {
       description: "El servidor donde juega",
       type: 3,
       required: true,
-      choices: CONSTANTS.LOL_SERVERS
+      choices: LOL_SERVERS
     }
   ],
   cid: "1225468160279580736"
 };
 
-export const ANGAR = {
+export const ANGAR: Command = {
   name: "angar",
   description: "Muestra una foto random de Angar",
-  options: [],
   cid: "1228534441996062740"
 };
 
-export const AVATAR = {
+export const AVATAR: Command = {
   name: "avatar",
   description: "Muestra el avatar de un usuario",
-  integration_types: IntegrationTypes.ALL,
-  contexts: Contexts.ALL,
+  integration_types: [
+    IntegrationTypes.GUILD_INSTALL,
+    IntegrationTypes.USER_INSTALL
+  ],
+  contexts: [
+    Contexts.BOT_DM,
+    Contexts.GUILD,
+    Contexts.PRIVATE_CHANNEL
+  ],
   options: [
     {
       name: "usuario",
@@ -191,14 +198,13 @@ export const AVATAR = {
   cid: "1273575196477100064"
 };
 
-export const BANEADOS = {
+export const BANEADOS: Command = {
   name: "baneados",
   description: "Muestra una lista de los usuarios baneados, timeouteados y desbaneados más recientes",
-  options: [],
   cid: "1319818448787865655"
 };
 
-export const COPYS = {
+export const COPYS: Command = {
   name: "copys",
   description: "Obtén un copy a partir de una lista de opciones",
   options: [

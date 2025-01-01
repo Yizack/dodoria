@@ -3,12 +3,12 @@
  */
 import { REST, Routes } from "discord.js";
 import * as dotenv from "dotenv";
-import * as commands from "../server/utils/commands";
+import * as COMMANDS from "../shared/utils/commands";
 
 dotenv.config();
 
 const rest = new REST({ version: "10" }).setToken(process.env.NUXT_DISCORD_TOKEN!);
-const commandsArray = Object.values(commands);
+const commandsArray = Object.values(COMMANDS);
 
 try {
   console.info("Started refreshing application (/) commands.");

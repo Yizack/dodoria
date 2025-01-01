@@ -6,10 +6,10 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
   const followUpRequest = async () => {
     const embeds: DiscordEmbed[] = [], button: DiscordButton[] = [], components: DiscordComponent[] = [];
     const url = getValue("link");
-    const social = Object.values(CONSTANTS.VIDEO_SOCIALS).find(({ domains }) => domains.some(domain => url.includes(domain)));
+    const social = Object.values(VIDEO_SOCIALS).find(({ domains }) => domains.some(domain => url.includes(domain)));
 
     if (!esUrl(url) || !social?.supported) {
-      const supportedSitesEmoji = Object.values(CONSTANTS.VIDEO_SOCIALS).filter(site => site.supported).map(site => getSocial(site.name)).join(" ");
+      const supportedSitesEmoji = Object.values(VIDEO_SOCIALS).filter(site => site.supported).map(site => getSocial(site.name)).join(" ");
       const error = `⚠️ Error. Sitio o enlace no soportado.\nSitios soportados: ${supportedSitesEmoji}`;
       return deferUpdate({
         token,
