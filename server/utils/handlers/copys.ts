@@ -5,9 +5,10 @@ export const handlerCopys: CommandHandler = (event, { body, getValue }) => {
 
   const followUpRequest = async () => {
     const blob = await useStorage().getItemRaw<Blob>(`root/public/copys/${audioId}.ogg`);
+    console.info(blob);
+    console.info(audioId);
     const files = [{ name: `${audioId}.ogg`, file: blob }];
-
-    return deferUpdate("", {
+    return deferUpdate("test", {
       token,
       application_id: config.discord.applicationId,
       files
