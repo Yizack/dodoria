@@ -77,20 +77,24 @@ export const updateMessage = () => ({
 export const deferUpdate = (
   content: unknown,
   options: {
+    flags?: number;
     application_id?: string;
     token?: string;
     embeds?: DiscordEmbed[];
     components?: DiscordComponent[];
     files?: unknown;
+    attachments?: unknown[];
   }
 ) => {
   const followupEndpoint = `/webhooks/${options.application_id}/${options.token}`;
   return toDiscordEndpoint(followupEndpoint, {
+    flags: options?.flags,
     type: InteractionResponseType.DEFERRED_UPDATE_MESSAGE,
     content: content,
     embeds: options?.embeds,
     components: options?.components,
-    files: options?.files
+    files: options?.files,
+    attachments: options?.attachments
   }, "POST");
 };
 
