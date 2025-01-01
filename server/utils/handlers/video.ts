@@ -1,3 +1,5 @@
+import { ButtonStyle, ComponentType } from "discord-api-types/v10";
+
 export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
   const { token } = body;
 
@@ -44,14 +46,14 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
       const is_gif = downloadUrl.includes(".gif");
       button.push(
         {
-          type: MessageComponentTypes.BUTTON,
-          style: ButtonStyleTypes.LINK,
+          type: ComponentType.Button,
+          style: ButtonStyle.Link,
           label: is_gif ? "GIF" : "MP4",
           url: downloadUrl
         },
         {
-          type: MessageComponentTypes.BUTTON,
-          style: ButtonStyleTypes.PRIMARY,
+          type: ComponentType.Button,
+          style: ButtonStyle.Primary,
           custom_id: "btn_reload",
           emoji: {
             name: "reload",
@@ -61,7 +63,7 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
       );
 
       components.push ({
-        type: MessageComponentTypes.ACTION_ROW,
+        type: ComponentType.ActionRow,
         components: button
       });
 

@@ -1,7 +1,4 @@
-/**
- * Discord interactions manager
- */
-import { InteractionResponseType, InteractionType } from "discord-interactions";
+import { InteractionResponseType, InteractionType } from "discord-api-types/v10";
 
 const API = {
   BASE: "https://discord.com/api/v10"
@@ -40,15 +37,15 @@ const toDiscordEndpoint = (
   });
 };
 
-const pong = () => ({ type: InteractionResponseType.PONG });
+const pong = () => ({ type: InteractionResponseType.Pong });
 
 export const create = (type: number, func?: () => void) => {
   switch (type) {
-    case InteractionType.PING:
+    case InteractionType.Ping:
       console.info("Handling Ping request");
       return pong();
-    case InteractionType.APPLICATION_COMMAND:
-    case InteractionType.MESSAGE_COMPONENT:
+    case InteractionType.ApplicationCommand:
+    case InteractionType.MessageComponent:
       if (func) return func();
   }
 };
@@ -60,7 +57,7 @@ export const reply = (
     components?: DiscordComponent[];
   }
 ) => ({
-  type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+  type: InteractionResponseType.ChannelMessageWithSource,
   data: {
     content: content,
     embeds: options?.embeds,
@@ -69,14 +66,14 @@ export const reply = (
 });
 
 export const deferReply = (options?: { flags: number }) => ({
-  type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+  type: InteractionResponseType.DeferredChannelMessageWithSource,
   data: {
     flags: options?.flags
   }
 });
 
 export const updateMessage = () => ({
-  type: InteractionResponseType.UPDATE_MESSAGE
+  type: InteractionResponseType.UpdateMessage
 });
 
 export const deferUpdate = (
@@ -97,7 +94,7 @@ export const deferUpdate = (
     method: "POST",
     body: {
       flags: options?.flags,
-      type: InteractionResponseType.DEFERRED_UPDATE_MESSAGE,
+      type: InteractionResponseType.DeferredMessageUpdate,
       content: options?.content,
       embeds: options?.embeds,
       components: options?.components,

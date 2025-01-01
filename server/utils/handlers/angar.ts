@@ -1,15 +1,17 @@
+import { ButtonStyle, ComponentType } from "discord-api-types/v10";
+
 export const handlerAngar: CommandHandler = (event, { body }) => {
   const { member } = body;
 
   const button = [{
-    type: MessageComponentTypes.BUTTON,
-    style: ButtonStyleTypes.LINK,
+    type: ComponentType.Button,
+    style: ButtonStyle.Link,
     label: "Ver galería",
     url: "https://dodoria.yizack.com/c/angar"
   }];
 
   const components = [{
-    type: MessageComponentTypes.ACTION_ROW,
+    type: ComponentType.ActionRow,
     components: button
   }];
 

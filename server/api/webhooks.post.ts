@@ -1,3 +1,4 @@
+import { InteractionType } from "discord-api-types/v10";
 import { DONOCLIPS } from "~~/shared/utils/commands";
 
 export default defineEventHandler(async (event) => {
@@ -6,7 +7,7 @@ export default defineEventHandler(async (event) => {
 
   const body = await readBody<WebhookBody>(event);
   const { type, data } = body;
-  if (type === InteractionType.PING) {
+  if (type === InteractionType.Ping) {
     return create(type);
   }
 

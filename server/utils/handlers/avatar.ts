@@ -1,3 +1,5 @@
+import { ButtonStyle, ComponentType } from "discord-api-types/v10";
+
 export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
   const { context, user, member } = body;
   const { resolved } = body.data;
@@ -32,8 +34,8 @@ export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
 
   if (context === 0) {
     const button = [{
-      type: MessageComponentTypes.BUTTON,
-      style: ButtonStyleTypes.LINK,
+      type: ComponentType.Button,
+      style: ButtonStyle.Link,
       label: "Global Avatar",
       url: getAvatarURL({
         userId: userInfo.id,
@@ -44,7 +46,7 @@ export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
     }];
 
     components = [{
-      type: MessageComponentTypes.ACTION_ROW,
+      type: ComponentType.ActionRow,
       components: button
     }];
   }

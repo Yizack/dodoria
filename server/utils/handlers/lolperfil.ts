@@ -1,3 +1,5 @@
+import { ButtonStyle, ComponentType } from "discord-api-types/v10";
+
 export const handlerLolPerfil: CommandHandler = (event, { body, getValue }) => {
   const { token } = body;
 
@@ -112,19 +114,19 @@ export const handlerLolPerfil: CommandHandler = (event, { body, getValue }) => {
       });
       button.push(
         {
-          type: MessageComponentTypes.BUTTON,
-          style: ButtonStyleTypes.LINK,
+          type: ComponentType.Button,
+          style: ButtonStyle.Link,
           label: "Ver en OP.GG",
           url: `https://op.gg/summoners/${profile.region}/${encodeURIComponent(profile.riotName)}-${encodeURIComponent(profile.riotTag)}`
         } /*
         {
-          type: MessageComponentTypes.BUTTON,
-          style: ButtonStyleTypes.LINK,
+          type: ComponentType.Button,
+          style: ButtonStyle.Link,
           label: "Ver en U.GG",
           url: `https://u.gg/lol/profile/${profile.route}/${encodeURIComponent(profile.summonerName)}/overview`
         } */);
       components.push({
-        type: MessageComponentTypes.ACTION_ROW,
+        type: ComponentType.ActionRow,
         components: button
       });
     }
