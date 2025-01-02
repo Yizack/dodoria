@@ -11,5 +11,10 @@ export const DONOCLIPS_LIST = [
   { name: "Baneame Botanicuck", value: "f45780e5-260f-4070-aa2a-d485696b2e65:9" },
   { name: "Alguien se suscribirá", value: "ddae6866-5577-4873-aadb-0c505ee372c6:10" },
   { name: "Acéptalo y ya cacha gorditas", value: "7fbea18d-785c-4590-a752-414e8d7c8d98:8" },
-  { name: "Lee el mensaje de discord", value: "20f6a336-fe73-43a4-a989-94069067e26a:9" }
+  { name: "Lee el mensaje de discord", value: "20f6a336-fe73-43a4-a989-94069067e26a:9" },
+  { name: "Cachudo 3 veces", value: "65f60042-1fa0-4e87-8fe6-f8ede7e2301e:10" },
+  { name: "Que haces no haces nada", value: "a5cfa2ac-2cab-4796-84ed-07b80831beaa:10" },
+  { name: "Oe WOLFSHEIM", value: "83ed3b71-1786-49ec-a2dd-166ca876e7d4:10" },
+  { name: "Te va a hackear vestida de sakura card captor", value: "4c0b8e13-1953-47b8-8f26-32cc3cb8056a:10" },
+  { name: "Burro y cachudo", value: "bf5dc797-003c-4419-b81a-dbb2b058fff3:7" }
 ].sort((a, b) => a.name.localeCompare(b.name));
