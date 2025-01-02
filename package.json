@@ -7,6 +7,7 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
+    "build:local": "unbuild local",
     "dev": "nuxt dev --port=5173 --host",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
