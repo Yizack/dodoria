@@ -38,8 +38,14 @@ Discord.client.on(Events.MessageCreate, async (message) => {
         username: author.username,
         channelId,
         guildId: message.guildId,
-        messageId: message.id
+        messageId: message.id,
+        createdAt: message.createdTimestamp
       });
+      for (const [i, tts] of ttsMessages.entries()) {
+        if (message.createdTimestamp - tts.createdAt > 300000) { // 5 minutes
+          ttsMessages.splice(i, 1);
+        }
+      }
       break;
   }
 });

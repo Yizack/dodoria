@@ -8,6 +8,7 @@ declare global {
     channelId: string;
     guildId: string | null;
     messageId: string;
+    createdAt: number;
   }
 
   interface OggConversion {

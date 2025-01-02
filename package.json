@@ -9,6 +9,7 @@
     "build": "nuxt build",
     "build:local": "unbuild local",
     "dev": "nuxt dev --port=5173 --host",
+    "dev:local": "tsx local/src/index",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
@@ -19,8 +20,8 @@
     "lint:stylelint": "stylelint \"**/*.{css,scss,sass}\" --config .config/stylelint.json",
     "dev:cf": "set NITRO_PRESET=cloudflare-pages&&npm run build && wrangler pages dev dist",
     "test:types": "vue-tsc --noEmit",
-    "start": "node local/dist/index.mjs",
-    "start:pm2": "pm2 start local/dist/index.mjs --name dodoria"
+    "start": "node local/build/index.mjs",
+    "start:pm2": "pm2 start local/build/index.mjs --name dodoria"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20241230.0",
