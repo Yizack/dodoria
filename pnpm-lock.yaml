@@ -20,6 +20,9 @@ importers:
       '@resvg/resvg-wasm':
         specifier: ^2.6.2
         version: 2.6.2
+      '@types/fast-levenshtein':
+        specifier: ^0.0.4
+        version: 0.0.4
       '@types/fluent-ffmpeg':
         specifier: ^2.1.27
         version: 2.1.27
@@ -41,6 +44,9 @@ importers:
       eslint:
         specifier: ^9.17.0
         version: 9.17.0(jiti@2.4.2)
+      fast-levenshtein:
+        specifier: ^3.0.0
+        version: 3.0.0
       fluent-ffmpeg:
         specifier: ^2.1.3
         version: 2.1.3
@@ -1496,6 +1502,9 @@ packages:
   '@types/estree@1.0.6':
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==}
 
+  '@types/fast-levenshtein@0.0.4':
+    resolution: {integrity: sha512-tkDveuitddQCxut1Db8eEFfMahTjOumTJGPHmT9E7KUH+DkVq9WTpVvlfenf3S+uCBeu8j5FP2xik/KfxOEjeA==}
+
   '@types/fluent-ffmpeg@2.1.27':
     resolution: {integrity: sha512-QiDWjihpUhriISNoBi2hJBRUUmoj/BMTYcfz+F+ZM9hHWBYABFAE6hjP/TbCZC0GWwlpa3FzvHH9RzFeRusZ7A==}
 
@@ -2579,6 +2588,9 @@ packages:
 
   fast-levenshtein@2.0.6:
     resolution: {integrity: sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==}
+
+  fast-levenshtein@3.0.0:
+    resolution: {integrity: sha512-hKKNajm46uNmTlhHSyZkmToAc56uZJwYq7yrciZjqOxnlfQwERDQJmHPUp7m1m9wx8vgOe8IaCKZ5Kv2k1DdCQ==}
 
   fast-npm-meta@0.2.2:
     resolution: {integrity: sha512-E+fdxeaOQGo/CMWc9f4uHFfgUPJRAu7N3uB8GBvB3SDPAIWJK4GKyYhkAGFq+GYrcbKNfQIz5VVQyJnDuPPCrg==}
@@ -6280,6 +6292,8 @@ snapshots:
 
   '@types/estree@1.0.6': {}
 
+  '@types/fast-levenshtein@0.0.4': {}
+
   '@types/fluent-ffmpeg@2.1.27':
     dependencies:
       '@types/node': 22.10.3
@@ -7616,6 +7630,10 @@ snapshots:
   fast-json-stable-stringify@2.1.0: {}
 
   fast-levenshtein@2.0.6: {}
+
+  fast-levenshtein@3.0.0:
+    dependencies:
+      fastest-levenshtein: 1.0.16
 
   fast-npm-meta@0.2.2: {}
 

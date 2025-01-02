@@ -10,7 +10,7 @@ declare global {
         command: string;
         viewer_username: string;
         streamer: number;
-        voice: "tts";
+        voice: string;
         message: string;
         audio_url: string;
         voice_obj: number;

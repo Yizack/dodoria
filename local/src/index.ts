@@ -7,6 +7,7 @@ import { Kick } from "./clients/kick";
 import { Discord } from "./clients/discord";
 import { KickBot } from "./clients/kickbot";
 import { mp3ToOgg } from "./utils/mp3-to-ogg";
+import { findMostSimilar } from "./utils/levenshtein";
 
 const kickChannel = await Kick.getChannel();
 const allowedChannels = [
@@ -14,18 +15,31 @@ const allowedChannels = [
   "610323743155421194", // general
   "800811897804292138" // copys
 ];
-const ttsMessages: TTSMessage[] = [];
+const availableVoices = [
+  "tilin", "angar", "chino", "lotrial", "dross", "temach",
+  "dalas", "yuki", "pichu", "jh", "juan", "canser", "ari",
+  "shita", "pablo", "xokas", "dbz", "doc", "camilo", "viendo",
+  "coscu", "messi", "orco", "shrek", "mura"
+];
+let ttsMessages: TTSMessage[] = [];
 
 Discord.client.on(Events.MessageCreate, async (message) => {
   const { content, channelId, author } = message;
   const split = content.split(" ");
   const command = split[0]!.toLowerCase();
   const text = split.slice(1).join(" ");
+  const textHasMessage = text.split(" ").length > 1;
 
   switch (command) {
     case "!ttsraw":
     case "!tts":
-      if (!allowedChannels.includes(channelId)) return;
+      if (!textHasMessage) return;
+      const voice = text.split(" ")[0]!.toLowerCase().replace("!", "");
+      if (!allowedChannels.includes(channelId) || !text.startsWith("!") || !availableVoices.includes(voice) || !textHasMessage) return;
+      if (text.length > 300) {
+        message.reply("El mensaje es muy largo, no puede contener más de 300 caracteres.");
+        return;
+      }
       const chat = await Kick.client.api.chat.sendMessage(kickChannel.chatroomId, text).catch((e) => {
         console.warn(e);
         return null;
@@ -57,14 +71,19 @@ KickBot.client.onmessage = async (message) => {
   const { data } = event;
   if (data.event_type !== "TTS_MESSAGE" || data.payload.viewer_username !== Kick.user.username) return;
   const text = `!${data.payload.command} ${data.payload.message}`;
-  const tts = ttsMessages.find(tts => tts.text === text);
+  const mostSimilarText = findMostSimilar(text, ttsMessages.map(tts => tts.text));
+  const tts = ttsMessages.find(tts => tts.text === mostSimilarText);
   if (!tts) return;
 
   const audioStream = await $fetch(data.payload.audio_url, {
     responseType: "stream"
   });
 
-  const ogg = await mp3ToOgg(audioStream);
+  const ogg = await mp3ToOgg(audioStream).catch((e) => {
+    console.warn(e);
+    return null;
+  });
+  if (!ogg) return;
   console.info(`${tts.username}:`, tts.text);
 
   const sendEndpoint = `https://discord.com/api/v10/channels/${tts.channelId}/messages`;
@@ -104,6 +123,5 @@ KickBot.client.onmessage = async (message) => {
       console.warn(response._data);
     }
   });
-
-  ttsMessages.splice(ttsMessages.indexOf(tts), 1);
+  ttsMessages = ttsMessages.filter(tts => tts.text !== text);
 };
