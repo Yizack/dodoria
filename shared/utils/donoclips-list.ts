@@ -10,5 +10,6 @@ export const DONOCLIPS_LIST = [
   { name: "Como habla webadas", value: "042f5f1d-8a57-4899-8a76-e66da54a3a04:6" },
   { name: "Baneame Botanicuck", value: "f45780e5-260f-4070-aa2a-d485696b2e65:9" },
   { name: "Alguien se suscribirá", value: "ddae6866-5577-4873-aadb-0c505ee372c6:10" },
-  { name: "Acéptalo y ya cacha gorditas", value: "7fbea18d-785c-4590-a752-414e8d7c8d98:8" }
+  { name: "Acéptalo y ya cacha gorditas", value: "7fbea18d-785c-4590-a752-414e8d7c8d98:8" },
+  { name: "Lee el mensaje de discord", value: "20f6a336-fe73-43a4-a989-94069067e26a:9" }
 ].sort((a, b) => a.name.localeCompare(b.name));
