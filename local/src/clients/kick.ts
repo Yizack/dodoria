@@ -2,7 +2,7 @@ import { Kient } from "kient";
 import OTP from "otp";
 import { useLocalConfig } from "../utils/config";
 
-const { kick2FA, kickPassword, kickEmail } = useLocalConfig();
+const { kick2FA, kickPassword, kickEmail, kickChatChannel } = useLocalConfig();
 
 const client = await Kient.create();
 const token = new OTP({ secret: kick2FA }).totp(Date.now());
@@ -20,9 +20,10 @@ if (!client.authenticated) throw new Error("Failed to authenticate with Kient");
 const user = await client.api.authentication.currentUser();
 console.info(`Logged in on Kick as ${user.username}!`);
 
-const getChannel = (name: string) => {
-  console.info(`Getting Kickbot channel for ${name}`);
-  switch (name.toLowerCase()) {
+const getChannel = (name?: string) => {
+  const channelName = name || kickChatChannel || "";
+  console.info(`Getting Kickbot channel for ${channelName}`);
+  switch (channelName.toLowerCase()) {
     case "angar":
       return {
         id: 32694,
@@ -34,7 +35,7 @@ const getChannel = (name: string) => {
         chatroomId: 14527954
       };
     default:
-      return client.api.channel.getChannel(name).then((channel) => {
+      return client.api.channel.getChannel(channelName).then((channel) => {
         return {
           id: channel.data.id,
           chatroomId: channel.data.chatroom.id

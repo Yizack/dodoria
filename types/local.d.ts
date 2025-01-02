@@ -12,13 +12,8 @@ declare global {
 
   interface OggConversion {
     blob: Blob;
-    codecData: {
-      format: string;
-      audio: string;
-      audio_details: string[];
-      video: string;
-      video_details: string[];
-      duration: string;
-    } | null;
+    metadata: {
+      duration: number | null;
+    };
   }
 }

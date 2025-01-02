@@ -5,12 +5,18 @@ import { hash } from "ohash";
 import { $fetch } from "ofetch";
 import { Kick } from "./clients/kick";
 import { Discord } from "./clients/discord";
-import { Kickbot } from "./clients/kickbot";
+import { KickBot } from "./clients/kickbot";
 import { mp3ToOgg } from "./utils/mp3-to-ogg";
 
-const kickChannel = await Kick.getChannel("yizack");
+const kickChannel = await Kick.getChannel();
 
 const ttsMessages: TTSMessage[] = [];
+
+const allowedChannels = [
+  "1048659746137317498", // tests
+  "610323743155421194", // general
+  "800811897804292138" // copys
+];
 
 Discord.client.on(Events.MessageCreate, async (message) => {
   const { content, channelId, author } = message;
@@ -21,13 +27,13 @@ Discord.client.on(Events.MessageCreate, async (message) => {
   switch (command) {
     case "!ttsraw":
     case "!tts":
-      if (channelId !== "610323743155421194" && channelId !== "1048659746137317498") return;
+      if (!allowedChannels.includes(channelId)) return;
       const chat = await Kick.client.api.chat.sendMessage(kickChannel.chatroomId, text).catch((e) => {
         console.warn(e);
         return null;
       });
-
       if (!chat) return;
+      message.channel.sendTyping();
       ttsMessages.push({
         raw: command === "!ttsraw",
         text,
@@ -40,9 +46,9 @@ Discord.client.on(Events.MessageCreate, async (message) => {
   }
 });
 
-Kickbot.subscribe(kickChannel.id);
+KickBot.subscribe(kickChannel.id);
 
-Kickbot.client.onmessage = async (message) => {
+KickBot.client.onmessage = async (message) => {
   const event: KickbotEvent = JSON.parse(message.data.toString());
   const { data } = event;
   if (data.event_type !== "TTS_MESSAGE" || data.payload.viewer_username !== Kick.user.username) return;
@@ -54,13 +60,13 @@ Kickbot.client.onmessage = async (message) => {
     responseType: "stream"
   });
 
-  const audioOgg = await mp3ToOgg(audioStream);
+  const ogg = await mp3ToOgg(audioStream);
   console.info(`${tts.username}:`, tts.text);
 
   const sendEndpoint = `https://discord.com/api/v10/channels/${tts.channelId}/messages`;
 
   const filename = `${hash(text)}.ogg`;
-  const files = [{ name: filename, file: audioOgg.blob }];
+  const files = [{ name: filename, file: ogg.blob }];
   const body = {
     flags: tts.raw ? undefined : MessageFlags.IsVoiceMessage,
     message_reference: {
@@ -72,7 +78,7 @@ Kickbot.client.onmessage = async (message) => {
       {
         id: 0,
         filename: filename,
-        duration_secs: 10,
+        duration_secs: ogg.metadata.duration || 10,
         waveform: "acU6Va9UcSVZzsVw7IU/80s0Kh/pbrTcwmpR9da4mvQejIMykkgo9F2FfeCd235K/atHZtSAmxKeTUgKxAdNVO8PAoZq1cHNQXT/PHthL2sfPZGSdxNgLH0AuJwVeI7QZJ02ke40+HkUcBoDdqGDZeUvPqoIRbE23Kr+sexYYe4dVq+zyCe3ci/6zkMWbVBpCjq8D8ZZEFo/lmPJTkgjwqnqHuf6XT4mJyLNphQjvFH9aRqIZpPoQz1sGwAY2vssQ5mTy5J5muGo+n82b0xFROZwsJpumDsFi4Da/85uWS/YzjY5BdxGac8rgUqm9IKh7E6GHzOGOy0LQIz3O4ntTg=="
       }
     ]

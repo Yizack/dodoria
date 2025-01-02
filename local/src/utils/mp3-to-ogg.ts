@@ -1,18 +1,11 @@
 import { Readable, Writable } from "node:stream";
 import type { ReadableStream } from "node:stream/web";
 import ffmpeg from "fluent-ffmpeg";
+import { parseBlob } from "music-metadata";
 
 export const mp3ToOgg = async (audioStream: globalThis.ReadableStream) => {
   const readable = Readable.fromWeb(audioStream as ReadableStream);
   const chunks: Buffer[] = [];
-  let codecData: {
-    format: string;
-    audio: string;
-    audio_details: string[];
-    video: string;
-    video_details: string[];
-    duration: string;
-  } | null = null;
   const writable = new Writable({
     write (chunk, encoding, callback) {
       chunks.push(chunk);
@@ -22,20 +15,19 @@ export const mp3ToOgg = async (audioStream: globalThis.ReadableStream) => {
 
   return new Promise<OggConversion>((resolve, reject) => {
     ffmpeg(readable)
-      .inputOptions(["-analyzeduration", "2147483647", "-probesize", "2147483647"])
       .toFormat("ogg")
-      .on("codecData", (data) => {
-        codecData = data;
-      })
       .on("error", (error) => {
         reject(error);
       })
-      .on("end", () => {
+      .on("end", async () => {
         const buffer = Buffer.concat(chunks);
         const blob = new Blob([buffer], { type: "audio/ogg" });
+        const metadata = await parseBlob(blob);
         resolve({
           blob,
-          codecData
+          metadata: {
+            duration: metadata.format.duration || null
+          }
         });
       }).pipe(writable, { end: true });
   });
