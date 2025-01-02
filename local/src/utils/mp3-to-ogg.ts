@@ -14,8 +14,7 @@ export const mp3ToOgg = async (audioStream: globalThis.ReadableStream) => {
   });
 
   return new Promise<OggConversion>((resolve, reject) => {
-    ffmpeg(readable)
-      .toFormat("ogg")
+    ffmpeg(readable).toFormat("ogg")
       .on("error", (error) => {
         reject(error);
       })

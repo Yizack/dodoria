@@ -9,14 +9,12 @@ import { KickBot } from "./clients/kickbot";
 import { mp3ToOgg } from "./utils/mp3-to-ogg";
 
 const kickChannel = await Kick.getChannel();
-
-const ttsMessages: TTSMessage[] = [];
-
 const allowedChannels = [
   "1048659746137317498", // tests
   "610323743155421194", // general
   "800811897804292138" // copys
 ];
+const ttsMessages: TTSMessage[] = [];
 
 Discord.client.on(Events.MessageCreate, async (message) => {
   const { content, channelId, author } = message;
