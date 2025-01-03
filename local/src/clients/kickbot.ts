@@ -12,6 +12,10 @@ const subscribe = (channelId: number) => {
   console.info("Subscribed to KickBot channel events");
 };
 
+client.onclose = () => {
+  console.info("Disconnected from KickBot server");
+};
+
 export const KickBot = {
   client,
   subscribe
