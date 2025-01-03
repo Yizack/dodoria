@@ -48,7 +48,7 @@ Discord.client.on(Events.MessageCreate, async (message) => {
       message.channel.sendTyping();
       ttsMessages.push({
         raw: command === "!ttsraw",
-        text,
+        text: text.toLowerCase(),
         username: author.username,
         channelId,
         guildId: message.guildId,
