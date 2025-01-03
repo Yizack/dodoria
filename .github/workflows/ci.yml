@@ -110,9 +110,6 @@ jobs:
             cd /apps/dodoria
             git fetch
             git pull
-            export NVM_DIR=/usr/local/nvm
-            source /usr/local/nvm/nvm.sh
             pnpm i
             pnpm build:local
-            export PM2_HOME=/usr/local/share/pm2
-            /usr/local/share/pnpm/pm2 restart dodoria --silent
+            pm2 restart dodoria --silent
