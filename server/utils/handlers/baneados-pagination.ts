@@ -34,8 +34,8 @@ export const handlerBaneadosPagination: ComponentHandler = (event, { body }) => 
       components: buttons
     }];
 
-    const pagedData = baneados.value.slice((newCurrent - 1) * 16, newCurrent * 16);
     const fixedPage = Math.max(1, Math.min(Number(available), newCurrent));
+    const pagedData = baneados.value.slice((fixedPage - 1) * 16, fixedPage * 16);
     const updatedEmbeds = buildBaneadosEmbed(pagedData, Number(available), fixedPage);
     return editFollowUpMessage("", {
       token,
