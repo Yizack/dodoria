@@ -2,7 +2,7 @@ import { ComponentType } from "discord-api-types/v10";
 
 export const handlerBaneadosPagination: ComponentHandler = (event, { body }) => {
   const config = useRuntimeConfig(event);
-  const { token, data: { custom_id }, message } = body;
+  const { token, data, message } = body;
   const followUpRequest = async () => {
     const pages = message.embeds[0]!.footer!.text!.match(/\d+/g);
     const [current, available] = pages as string[];
@@ -23,11 +23,11 @@ export const handlerBaneadosPagination: ComponentHandler = (event, { body }) => 
       });
     }
 
-    const newCurrent = custom_id === "btn_baneados_prev" ? Number(current!) - 1 : Number(current!) + 1;
-    console.info("current", current, "newCurrent", newCurrent, "available", available);
+    const newCurrent = data!.custom_id === "btn_baneados_prev" ? Number(current!) - 1 : Number(current!) + 1;
+    console.info("current", current, "newCurrent", newCurrent, "available", available, "custom_id", data!.custom_id);
     for (const b of buttons) {
-      if (custom_id === "btn_baneados_prev" && "btn_baneados_prev" === b.custom_id && (newCurrent <= 1)) b.disabled = true;
-      else if (custom_id === "btn_baneados_next" && "btn_baneados_next" === b.custom_id && (newCurrent >= Number(available))) b.disabled = true;
+      if (data!.custom_id === "btn_baneados_prev" && "btn_baneados_prev" === b.custom_id && (newCurrent <= 1)) b.disabled = true;
+      else if (data!.custom_id === "btn_baneados_next" && "btn_baneados_next" === b.custom_id && (newCurrent >= Number(available))) b.disabled = true;
       else b.disabled = false;
     }
     const components = [{
