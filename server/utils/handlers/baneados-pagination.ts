@@ -7,6 +7,7 @@ export const handlerBaneadosPagination: ComponentHandler = (event, { body }) => 
     const pages = message.embeds[0]!.footer!.text!.match(/\d+/g);
     const [current, available] = pages as string[];
     const baneados = await useStorage()?.getItem<BaneadoEntry[]>(`fn:baneados:${message.interaction!.id}.json`);
+    console.info(baneados);
     const buttons = message.components[0].components;
     if (!baneados) {
       for (const b of buttons) b.disabled = true;
