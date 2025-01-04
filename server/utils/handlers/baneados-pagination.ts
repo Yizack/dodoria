@@ -23,7 +23,7 @@ export const handlerBaneadosPagination: ComponentHandler = (event, { body }) => 
       });
     }
 
-    const newCurrent = custom_id === "btn_baneados_prev" ? Number(current!) - 1 : Number(current! + 1);
+    const newCurrent = custom_id === "btn_baneados_prev" ? Number(current!) - 1 : Number(current!) + 1;
     for (const b of buttons) {
       if ("btn_baneados_prev" === b.custom_id && (newCurrent <= 1)) b.disabled = true;
       else if ("btn_baneados_next" === b.custom_id && (newCurrent >= Number(available))) b.disabled = true;
@@ -34,7 +34,7 @@ export const handlerBaneadosPagination: ComponentHandler = (event, { body }) => 
       components: buttons
     }];
 
-    const updatedEmbeds = buildBaneadosEmbed(baneados.value, Number(available), newCurrent);
+    const updatedEmbeds = buildBaneadosEmbed(baneados.value, Number(available), newCurrent <= 0 ? 1 : newCurrent);
     return editFollowUpMessage("", {
       token,
       application_id: config.discord.applicationId,

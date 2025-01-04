@@ -59,7 +59,7 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
     const baneadosData = { id, data: pagedData };
     const pagedEntries = await cachedBaneados(baneadosData);
     const embeds = buildBaneadosEmbed(pagedEntries, pagesAvailable, currentPage);
-    const button = [
+    const button: DiscordButton[] = [
       {
         type: ComponentType.Button,
         style: ButtonStyle.Primary,
@@ -76,7 +76,8 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
         emoji: {
           name: "arrowLeft",
           id: "1324906542105100390"
-        }
+        },
+        disabled: true
       }
     ];
 
