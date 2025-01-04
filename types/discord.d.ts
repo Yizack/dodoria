@@ -40,6 +40,10 @@ declare global {
     token: string;
     context: 0 | 1 | 2;
     message: DiscordMessage;
+    interaction: {
+      id: string;
+    };
+    embeds: DiscordEmbed[];
   }
 
   interface DiscordEmbed {
@@ -78,6 +82,7 @@ declare global {
       id: string;
       name: string;
     };
+    disabled?: boolean;
   }
 
   interface DiscordComponent {

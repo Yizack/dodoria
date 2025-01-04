@@ -32,4 +32,12 @@ declare global {
     summoner1Id: number;
     summoner2Id: number;
   }
+
+  interface BaneadoEntry {
+    timeoutUntil: string | undefined;
+    id: string;
+    username: string;
+    action: number;
+    timestamp: number;
+  }
 }

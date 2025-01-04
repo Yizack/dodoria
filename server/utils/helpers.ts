@@ -73,14 +73,6 @@ export const getAvatarURL = (options: {
   return discordCDN + (avatarHash ? imageURI : defaultAvatarURI) + `.${format}?size=${size}`;
 };
 
-interface BaneadoEntry {
-  timeoutUntil: string | undefined;
-  id: string;
-  username: string;
-  action: number;
-  timestamp: number;
-}
-
 export const buildBaneadosEmbed = (entries: BaneadoEntry[], pagesAvailable: number, currentPage: number) => {
   const values = entries.map((el) => {
     const date = el.timeoutUntil ? Math.floor(new Date(el.timeoutUntil).getTime() / 1000) : null;
