@@ -107,9 +107,9 @@ export const buildBaneadosEmbed = (entries: BaneadoEntry[], pagesAvailable: numb
   return embeds;
 };
 
-export const cachedBaneados = defineCachedFunction(async (data: { data: BaneadoEntry[], id: string }) => data?.data, {
+export const cachedBaneados = defineCachedFunction(async (cache: { id: string, data: BaneadoEntry[] }) => cache?.data, {
   maxAge: 86400,
   group: "fn",
   name: "baneados",
-  getKey: data => data?.id
+  getKey: (cache: { id: string, data: BaneadoEntry[] }) => cache?.id
 });
