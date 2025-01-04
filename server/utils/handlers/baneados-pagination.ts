@@ -2,12 +2,11 @@ import { ComponentType } from "discord-api-types/v10";
 
 export const handlerBaneadosPagination: ComponentHandler = (event, { body }) => {
   const config = useRuntimeConfig(event);
-  const { token, data: { custom_id }, interaction, message } = body;
+  const { token, data: { custom_id }, message } = body;
   const followUpRequest = async () => {
-    console.info(body);
     const pages = message.embeds[0]!.footer!.text!.match(/\d+/g);
     const [current, available] = pages as string[];
-    const baneados = await useStorage()?.getItem<BaneadoEntry[]>(`fn:baneados:${interaction.id}.json`);
+    const baneados = await useStorage()?.getItem<BaneadoEntry[]>(`fn:baneados:${message.interaction!.id}.json`);
     const buttons = message.components[0].components;
     if (!baneados) {
       for (const b of buttons) b.disabled = true;

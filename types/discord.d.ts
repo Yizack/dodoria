@@ -40,9 +40,6 @@ declare global {
     token: string;
     context: 0 | 1 | 2;
     message: DiscordMessage;
-    interaction: {
-      id: string;
-    };
     embeds: DiscordEmbed[];
   }
 
@@ -102,6 +99,9 @@ declare global {
     embeds: DiscordEmbed[];
     flags: number;
     id: string;
+    interaction?: {
+      id: string;
+    };
   }
 
   interface AuditLogEntries {
