@@ -30,7 +30,9 @@ export default defineEventHandler(async (event) => {
   };
 
   const componentHandlers: { [key: string]: ComponentHandler } = {
-    ["btn_reload"]: handlerVideoReload // Componente /video-reload
+    ["btn_reload"]: handlerVideoReload, // Componente /video-reload
+    ["btn_baneados_prev"]: handlerBaneadosPagination, // Componente /baneados-pagination
+    ["btn_baneados_next"]: handlerBaneadosPagination
   };
 
   return create(type, () => {
