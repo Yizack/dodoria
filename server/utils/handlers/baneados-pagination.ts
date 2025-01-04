@@ -7,8 +7,7 @@ export const handlerBaneadosPagination: ComponentHandler = (event, { body }) => 
     const pages = message.embeds[0]!.footer!.text!.match(/\d+/g);
     const [current, available] = pages as string[];
     const cacheKey = `fn:baneados:${message.interaction!.id}.json`;
-    const baneados = await useStorage("cache").getItem<BaneadoEntry[]>(cacheKey);
-    console.info(baneados);
+    const baneados = await useStorage("cache").getItem<{ value: BaneadoEntry[] }>(cacheKey);
     const buttons = message.components[0].components;
     if (!baneados) {
       for (const b of buttons) b.disabled = true;
@@ -35,7 +34,7 @@ export const handlerBaneadosPagination: ComponentHandler = (event, { body }) => 
       components: buttons
     }];
 
-    const updatedEmbeds = buildBaneadosEmbed(baneados, Number(available), newCurrent);
+    const updatedEmbeds = buildBaneadosEmbed(baneados.value, Number(available), newCurrent);
     return editFollowUpMessage("", {
       token,
       application_id: config.discord.applicationId,
