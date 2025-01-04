@@ -67,7 +67,8 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
         emoji: {
           name: "arrowRight",
           id: "1324906526430986291"
-        }
+        },
+        ...currentPage === pagesAvailable && { disabled: true }
       },
       {
         type: ComponentType.Button,
