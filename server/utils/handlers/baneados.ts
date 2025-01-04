@@ -2,6 +2,7 @@ import { ButtonStyle, ComponentType, AuditLogEvent } from "discord-api-types/v10
 
 export const handlerBaneados: CommandHandler = (event, { body }) => {
   const { token, guild_id, message } = body;
+  console.info(body);
   const config = useRuntimeConfig(event);
   const followUpRequest = async () => {
     const banLogs = await guildAuditLog<AuditLog>({
