@@ -4,7 +4,7 @@ export const handlerBaneadosPagination: ComponentHandler = (event, { body }) => 
   const config = useRuntimeConfig(event);
   const { token, data: { custom_id }, interaction, embeds, message } = body;
   const followUpRequest = async () => {
-    console.info(embeds);
+    console.info(body);
     const pages = embeds[0].footer!.text!.match(/\d+/g);
     const [current, available] = pages as string[];
     const baneados = await useStorage()?.getItem<BaneadoEntry[]>(`fn:baneados:${interaction.id}.json`);
