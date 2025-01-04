@@ -59,32 +59,32 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
     const baneadosData = { id, data: pagedData };
     const pagedEntries = await cachedBaneados(baneadosData);
     const embeds = buildBaneadosEmbed(pagedEntries, pagesAvailable, currentPage);
-    const button: DiscordButton[] = [
-      {
-        type: ComponentType.Button,
-        style: ButtonStyle.Primary,
-        custom_id: "btn_baneados_next",
-        emoji: {
-          name: "arrowRight",
-          id: "1324906526430986291"
-        },
-        disabled: true
+
+    const buttons: DiscordButton[] = [];
+    buttons.push({
+      type: ComponentType.Button,
+      style: ButtonStyle.Primary,
+      custom_id: "btn_baneados_prev",
+      emoji: {
+        name: "arrowLeft",
+        id: "1324906542105100390"
       },
-      {
-        type: ComponentType.Button,
-        style: ButtonStyle.Primary,
-        custom_id: "btn_baneados_prev",
-        emoji: {
-          name: "arrowLeft",
-          id: "1324906542105100390"
-        },
-        ...currentPage === pagesAvailable && { disabled: true }
-      }
-    ];
+      ...currentPage === pagesAvailable && { disabled: true }
+    },
+    {
+      type: ComponentType.Button,
+      style: ButtonStyle.Primary,
+      custom_id: "btn_baneados_next",
+      emoji: {
+        name: "arrowRight",
+        id: "1324906526430986291"
+      },
+      disabled: true
+    });
 
     const components = [{
       type: ComponentType.ActionRow,
-      components: button
+      components: buttons
     }];
 
     return deferUpdate({
