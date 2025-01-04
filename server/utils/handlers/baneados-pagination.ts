@@ -5,9 +5,11 @@ export const handlerBaneadosPagination: ComponentHandler = (event, { body }) => 
   const { token, data: { custom_id }, interaction, embeds, message } = body;
   const followUpRequest = async () => {
     const pages = embeds[0].footer!.text!.match(/\d+/g);
+    console.info(pages);
     const [current, available] = pages as string[];
     const baneados = await useStorage()?.getItem<BaneadoEntry[]>(`fn:baneados:${interaction.id}.json`);
     const buttons = message.components[0].components;
+    console.info(buttons);
     if (!baneados) {
       for (const b of buttons) b.disabled = true;
       const components = [{
