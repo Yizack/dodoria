@@ -101,6 +101,7 @@ export const buildBaneadosEmbed = (entries: BaneadoEntry[], pagesAvailable: numb
 
 export const cachedBaneados = defineCachedFunction(async (cache: { id: string, data: BaneadoEntry[] }) => cache?.data, {
   maxAge: 86400,
+  swr: false,
   group: "fn",
   name: "baneados",
   getKey: (cache: { id: string, data: BaneadoEntry[] }) => cache?.id
