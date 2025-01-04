@@ -68,7 +68,7 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
           name: "arrowRight",
           id: "1324906526430986291"
         },
-        ...currentPage === pagesAvailable && { disabled: true }
+        disabled: true
       },
       {
         type: ComponentType.Button,
@@ -78,7 +78,7 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
           name: "arrowLeft",
           id: "1324906542105100390"
         },
-        disabled: true
+        ...currentPage === pagesAvailable && { disabled: true }
       }
     ];
 
