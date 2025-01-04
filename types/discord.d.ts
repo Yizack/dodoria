@@ -51,6 +51,7 @@ declare global {
     title?: string;
     description?: string;
     color?: number;
+    url?: string;
     image?: {
       url: guide;
     };
@@ -98,12 +99,7 @@ declare global {
     components: DiscordComponent[];
     content: string;
     edited_timestamp: string | null;
-    embeds: {
-      type?: string;
-      title?: string;
-      description?: string;
-      url?: string;
-    }[];
+    embeds: DiscordEmbed[];
     flags: number;
     id: string;
   }
