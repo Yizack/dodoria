@@ -1,3 +1,5 @@
+import { AuditLogEvent } from "discord-api-types/v10";
+
 export { hash } from "ohash";
 export { withQuery, parseURL, getQuery as getQueryUfo } from "ufo";
 export { z } from "zod";
@@ -70,3 +72,44 @@ export const getAvatarURL = (options: {
   const defaultAvatarURI = `/embed/avatars/${defaultIndex}`;
   return discordCDN + (avatarHash ? imageURI : defaultAvatarURI) + `.${format}?size=${size}`;
 };
+
+interface BaneadoEntry {
+  timeoutUntil: string | undefined;
+  id: string;
+  username: string;
+  action: number;
+  timestamp: number;
+}
+
+export const buildBaneadosEmbed = (entries: BaneadoEntry[], pagesAvailable: number, currentPage: number) => {
+  const values = entries.map((el) => {
+    const date = el.timeoutUntil ? Math.floor(new Date(el.timeoutUntil).getTime() / 1000) : null;
+    const now = Math.floor(Date.now() / 1000);
+    const timeout = date ? `<t:${date}:d>, <t:${date}:t>` : "N/A";
+    const removedTimeout = !date && el.action === AuditLogEvent.MemberUpdate ? " removido" : "";
+    const action = el.action === AuditLogEvent.MemberBanAdd ? "baneado" : el.action === AuditLogEvent.MemberBanRemove ? "desbaneado" : `timeout${removedTimeout}`;
+    const timeoutEmoji = now > date! || !date ? "🟩" : "🟨";
+    const banUnbanEmoji = action === "baneado" ? "🟥" : "🟩";
+    const messageValue = action === "timeout" ? `${timeoutEmoji} **${el.username}**・${action} hasta: ${timeout}` : `${banUnbanEmoji} **${el.username}**・${action}`;
+    return messageValue;
+  });
+  const embeds: DiscordEmbed[] = [];
+  embeds.push({
+    color: CONSTANTS.COLOR,
+    fields: [{
+      name: "Bans, timeouts y unbans recientes en discord",
+      value: values.join("\n")
+    }],
+    footer: {
+      text: `Página ${currentPage} de ${pagesAvailable}`
+    }
+  });
+  return embeds;
+};
+
+export const cachedBaneados = defineCachedFunction(async (data: { data: BaneadoEntry[], id: string }) => data?.data, {
+  maxAge: 86400,
+  group: "fn",
+  name: "baneados",
+  getKey: data => data?.id
+});

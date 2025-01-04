@@ -1,27 +1,26 @@
-import { AuditLogEvent } from "discord-api-types/v10";
+import { ButtonStyle, ComponentType, AuditLogEvent } from "discord-api-types/v10";
 
 export const handlerBaneados: CommandHandler = (event, { body }) => {
-  const { token, guild_id } = body;
+  const { token, guild_id, message } = body;
   const config = useRuntimeConfig(event);
   const followUpRequest = async () => {
-    const embeds: DiscordEmbed[] = [];
     const banLogs = await guildAuditLog<AuditLog>({
       guild_id,
       token: config.discord.token,
       action_type: AuditLogEvent.MemberBanAdd,
-      limit: 20
+      limit: 100
     }).catch(() => null);
     const unbanLogs = await guildAuditLog<AuditLog>({
       guild_id,
       token: config.discord.token,
       action_type: AuditLogEvent.MemberBanRemove,
-      limit: 20
+      limit: 100
     }).catch(() => null);
     const updatedLogs = await guildAuditLog<AuditLog>({
       guild_id,
       token: config.discord.token,
       action_type: AuditLogEvent.MemberUpdate,
-      limit: 20
+      limit: 100
     }).catch(() => null);
 
     if (!banLogs && !unbanLogs && !updatedLogs) {
@@ -52,30 +51,45 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
         }
       }
       return useInfo;
-    }).sort((a, b) => b.timestamp - a.timestamp).slice(0, 16);
+    });
 
-    const bansAndTimeoutsValues = filteredEntries.map((el) => {
-      const date = el.timeoutUntil ? Math.floor(new Date(el.timeoutUntil).getTime() / 1000) : null;
-      const now = Math.floor(Date.now() / 1000);
-      const timeout = date ? `<t:${date}:d>, <t:${date}:t>` : "N/A";
-      const removedTimeout = !date && el.action === AuditLogEvent.MemberUpdate ? " removido" : "";
-      const action = el.action === AuditLogEvent.MemberBanAdd ? "baneado" : el.action === AuditLogEvent.MemberBanRemove ? "desbaneado" : `timeout${removedTimeout}`;
-      const timeoutEmoji = now > date! || !date ? "🟩" : "🟨";
-      const banUnbanEmoji = action === "baneado" ? "🟥" : "🟩";
-      const messageValue = action === "timeout" ? `${timeoutEmoji} **${el.username}**・${action} hasta: ${timeout}` : `${banUnbanEmoji} **${el.username}**・${action}`;
-      return messageValue;
-    });
-    embeds.push({
-      color: CONSTANTS.COLOR,
-      fields: [{
-        name: "Bans, timeouts y unbans recientes en discord",
-        value: bansAndTimeoutsValues.join("\n")
-      }]
-    });
+    const pagesAvailable = Math.ceil(filteredEntries.length / 16);
+    const currentPage = 1;
+    const pagedData = filteredEntries.slice((currentPage - 1) * 16, currentPage * 16);
+    const baneadosData = { id: message.id, data: pagedData };
+    const pagedEntries = await cachedBaneados(baneadosData);
+    const embeds = buildBaneadosEmbed(pagedEntries, pagesAvailable, currentPage);
+    const button = [
+      {
+        type: ComponentType.Button,
+        style: ButtonStyle.Primary,
+        custom_id: "btn_baneados_prev",
+        emoji: {
+          name: "arrowLeft",
+          id: "1324906542105100390"
+        }
+      },
+      {
+        type: ComponentType.Button,
+        style: ButtonStyle.Primary,
+        custom_id: "btn_baneados_next",
+        emoji: {
+          name: "arrowRight",
+          id: "1324906526430986291"
+        }
+      }
+    ];
+
+    const components = [{
+      type: ComponentType.ActionRow,
+      components: button
+    }];
+
     return deferUpdate({
       token,
       application_id: config.discord.applicationId,
-      embeds
+      embeds,
+      components
     });
   };
   event.context.cloudflare.context.waitUntil(followUpRequest());
