@@ -19,6 +19,7 @@ declare global {
 
   interface WebhookBody {
     type: number;
+    id: string;
     data: {
       name: string;
       options: {

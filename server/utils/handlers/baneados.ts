@@ -1,8 +1,7 @@
 import { ButtonStyle, ComponentType, AuditLogEvent } from "discord-api-types/v10";
 
 export const handlerBaneados: CommandHandler = (event, { body }) => {
-  const { token, guild_id, message } = body;
-  console.info(body);
+  const { token, guild_id, id } = body;
   const config = useRuntimeConfig(event);
   const followUpRequest = async () => {
     const banLogs = await guildAuditLog<AuditLog>({
@@ -57,8 +56,7 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
     const pagesAvailable = Math.ceil(filteredEntries.length / 16);
     const currentPage = 1;
     const pagedData = filteredEntries.slice((currentPage - 1) * 16, currentPage * 16);
-    console.info(message.id);
-    const baneadosData = { id: message.id, data: pagedData };
+    const baneadosData = { id, data: pagedData };
     const pagedEntries = await cachedBaneados(baneadosData);
     const embeds = buildBaneadosEmbed(pagedEntries, pagesAvailable, currentPage);
     const button = [
