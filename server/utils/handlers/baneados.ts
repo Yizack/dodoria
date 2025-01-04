@@ -64,19 +64,19 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
     buttons.push({
       type: ComponentType.Button,
       style: ButtonStyle.Primary,
-      custom_id: "btn_baneados_next",
+      custom_id: "btn_baneados_prev",
       emoji: {
-        name: "arrowRight",
-        id: "1324906542105100390"
+        name: "arrowLeft",
+        id: "1324906526430986291"
       },
       disabled: true
     }, {
       type: ComponentType.Button,
       style: ButtonStyle.Primary,
-      custom_id: "btn_baneados_prev",
+      custom_id: "btn_baneados_next",
       emoji: {
-        name: "arrowLeft",
-        id: "1324906526430986291"
+        name: "arrowRight",
+        id: "1324906542105100390"
       },
       ...currentPage === pagesAvailable && { disabled: true }
     });
