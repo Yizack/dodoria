@@ -67,7 +67,7 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
       custom_id: "btn_baneados_prev",
       emoji: {
         name: "arrowLeft",
-        id: "1324906542105100390"
+        id: "1324906526430986291"
       },
       ...currentPage === pagesAvailable && { disabled: true }
     },
@@ -77,7 +77,7 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
       custom_id: "btn_baneados_next",
       emoji: {
         name: "arrowRight",
-        id: "1324906526430986291"
+        id: "1324906542105100390"
       },
       disabled: true
     });
