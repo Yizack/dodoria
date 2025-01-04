@@ -51,7 +51,7 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
         }
       }
       return useInfo;
-    });
+    }).sort((a, b) => b.timestamp - a.timestamp);
 
     const pagesAvailable = Math.ceil(filteredEntries.length / 16);
     const currentPage = 1;
