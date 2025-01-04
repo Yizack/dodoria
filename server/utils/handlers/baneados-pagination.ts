@@ -24,7 +24,8 @@ export const handlerBaneadosPagination: ComponentHandler = (event, { body }) => 
 
     const newCurrent = custom_id === "btn_baneados_prev" ? Number(current) - 1 : Number(current + 1);
     for (const b of buttons) {
-      if (custom_id === b.custom_id && (newCurrent < 1 || newCurrent > Number(available))) b.disabled = true;
+      if ("btn_baneados_prev" === b.custom_id && (newCurrent <= 1)) b.disabled = true;
+      if ("btn_baneados_next" === b.custom_id && (newCurrent >= Number(available))) b.disabled = true;
     }
     const components = [{
       type: ComponentType.ActionRow,
