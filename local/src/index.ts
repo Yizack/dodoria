@@ -8,7 +8,9 @@ import { Discord } from "./clients/discord";
 import { KickBot } from "./clients/kickbot";
 import { mp3ToOgg } from "./utils/mp3-to-ogg";
 import { findMostSimilar } from "./utils/levenshtein";
+import { startApiServer } from "./clients/router";
 
+startApiServer();
 const kickChannel = await Kick.getChannel();
 const allowedChannels = [
   "1048659746137317498", // tests

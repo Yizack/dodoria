@@ -1,4 +1,4 @@
-import { Kient } from "kient";
+import { Kient } from "@ahmedrangel/kient";
 import OTP from "otp";
 import { useLocalConfig } from "../utils/config";
 
@@ -22,7 +22,7 @@ console.info(`Logged in on Kick as ${user.username}!`);
 
 const getChannel = (name?: string) => {
   const channelName = name || kickChatChannel || "";
-  console.info(`Getting Kickbot channel for ${channelName}`);
+  console.info(`Getting Kick channel for ${channelName}`);
   switch (channelName.toLowerCase()) {
     case "angar":
       return {
@@ -44,8 +44,15 @@ const getChannel = (name?: string) => {
   }
 };
 
+const getBans = async (name: string) => {
+  const channelName = name || kickChatChannel || "";
+  console.info(`Getting Kick bans for ${channelName}`);
+  return client.api.channel.getBans(channelName).then(channel => channel.data);
+};
+
 export const Kick = {
   client,
   user,
-  getChannel
+  getChannel,
+  getBans
 };
