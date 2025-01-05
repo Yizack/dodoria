@@ -1,4 +1,4 @@
-import { Kient } from "@ahmedrangel/kient";
+import { Kient, Events } from "@ahmedrangel/kient";
 import OTP from "otp";
 import { useLocalConfig } from "../utils/config";
 
@@ -50,9 +50,16 @@ const getBans = async (name: string) => {
   return client.api.channel.getBans(channelName).then(channel => channel.data);
 };
 
+const subscribe = (roomId: number) => {
+  client.ws.chatroom.listen(roomId);
+  console.info("Subscribed to Kick channel events");
+};
+
 export const Kick = {
   client,
   user,
   getChannel,
-  getBans
+  getBans,
+  subscribe,
+  Events
 };

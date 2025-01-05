@@ -1,8 +1,10 @@
 /* eslint-disable no-case-declarations */
-import { Events } from "discord.js";
+import { Events, type TextChannel } from "discord.js";
 import { MessageFlags } from "discord-api-types/v10";
 import { hash } from "ohash";
 import { $fetch } from "ofetch";
+import { formatDuration, intervalToDuration } from "date-fns";
+import { es } from "date-fns/locale";
 import { Kick } from "./clients/kick";
 import { Discord } from "./clients/discord";
 import { KickBot } from "./clients/kickbot";
@@ -127,3 +129,21 @@ KickBot.client.onmessage = async (message) => {
   });
   ttsMessages = ttsMessages.filter(tts => tts.text !== text);
 };
+
+Kick.subscribe(kickChannel.chatroomId);
+Kick.client.on(Kick.Events.Chatroom.UserBanned, async (event) => {
+  const { data } = event;
+  try {
+    const channel = await Discord.client.channels.fetch("610323743155421194") as TextChannel;
+    const isBanned = !data.expires_at;
+    const timeoutUntil = data.expires_at;
+    const duration = timeoutUntil ? intervalToDuration({ start: new Date(Date.now()), end: timeoutUntil }) : null;
+    const formattedDuration = duration ? formatDuration(duration, { format: ["days", "hours", "minutes", "seconds"], locale: es }) : null;
+    const messageHelper = isBanned ? "baneado permanentemente" : `timeouteado por ${formattedDuration}`;
+    console.info(`${data.user.username} ha sido ${messageHelper} por ${data.banned_by.username}`);
+    channel.send(`<:kick:1267449535668555788> \`${data.user.username}\` ha sido ${messageHelper}. <:pepoPoint:712364175967518730>`);
+  }
+  catch (error) {
+    console.info("Error al enviar el mensaje a Discord:", error);
+  }
+});

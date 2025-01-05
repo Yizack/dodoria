@@ -41,6 +41,9 @@ importers:
       consola:
         specifier: ^3.3.3
         version: 3.3.3
+      date-fns:
+        specifier: ^4.1.0
+        version: 4.1.0
       discord-api-types:
         specifier: ^0.37.114
         version: 0.37.114
