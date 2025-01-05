@@ -109,7 +109,7 @@ jobs:
           commands: |
             cd /apps/dodoria
             git fetch
-            git pull
+            git pull --rebase
             export NVM_DIR=/usr/local/nvm
             source /usr/local/nvm/nvm.sh
             pnpm i
