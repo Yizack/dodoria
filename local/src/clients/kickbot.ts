@@ -1,6 +1,7 @@
 import { WebSocket } from "ws";
 
-const client = new WebSocket("wss://kickbot.live/ws");
+const socketURL = "wss://kickbot.live/ws";
+let client = new WebSocket(socketURL);
 
 client.onopen = () => {
   console.info("Connected to KickBot server");
@@ -14,6 +15,8 @@ const subscribe = (channelId: number) => {
 
 client.onclose = () => {
   console.info("Disconnected from KickBot server");
+  console.info("Trying to reconnect to KickBot server...");
+  client = new WebSocket(socketURL);
 };
 
 export const KickBot = {
