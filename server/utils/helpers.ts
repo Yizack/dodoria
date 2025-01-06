@@ -89,7 +89,7 @@ export const buildBaneadosEmbed = (entries: BaneadoEntry[], pagesAvailable: numb
   embeds.push({
     color: CONSTANTS.COLOR,
     fields: [{
-      name: "Bans, timeouts y unbans recientes en discord",
+      name: "Historial de bans, timeouts y unbans recientes en discord",
       value: values.join("\n")
     }],
     footer: {
