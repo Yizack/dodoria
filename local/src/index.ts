@@ -147,7 +147,7 @@ KickBot.client.onmessage = async (message) => {
       }
     }).catch(() => null);
   }
-  ttsMessages = ttsMessages.filter(tts => tts.text !== text);
+  ttsMessages = ttsMessages.filter(tts => tts.text !== mostSimilarText);
 };
 
 Kick.subscribe(kickChannel.chatroomId);
