@@ -94,21 +94,15 @@ KickBot.client.onmessage = async (message) => {
 
   const filename = `${hash(text)}.ogg`;
   const files = [{ name: filename, file: ogg.blob }];
-  const body = {
+  const body: DiscordVoiceBody = {
     flags: tts.raw ? undefined : MessageFlags.IsVoiceMessage,
-    message_reference: {
-      message_id: tts.messageId,
-      channel_id: tts.channelId,
-      guild_id: tts.guildId
-    },
-    attachments: [
-      {
-        id: 0,
-        filename: filename,
-        duration_secs: ogg.metadata.duration || 10,
-        waveform: "acU6Va9UcSVZzsVw7IU/80s0Kh/pbrTcwmpR9da4mvQejIMykkgo9F2FfeCd235K/atHZtSAmxKeTUgKxAdNVO8PAoZq1cHNQXT/PHthL2sfPZGSdxNgLH0AuJwVeI7QZJ02ke40+HkUcBoDdqGDZeUvPqoIRbE23Kr+sexYYe4dVq+zyCe3ci/6zkMWbVBpCjq8D8ZZEFo/lmPJTkgjwqnqHuf6XT4mJyLNphQjvFH9aRqIZpPoQz1sGwAY2vssQ5mTy5J5muGo+n82b0xFROZwsJpumDsFi4Da/85uWS/YzjY5BdxGac8rgUqm9IKh7E6GHzOGOy0LQIz3O4ntTg=="
-      }
-    ]
+    message_reference: { message_id: tts.messageId, channel_id: tts.channelId, guild_id: tts.guildId },
+    attachments: [{
+      id: 0,
+      filename: filename,
+      duration_secs: ogg.metadata.duration || 10,
+      waveform: "acU6Va9UcSVZzsVw7IU/80s0Kh/pbrTcwmpR9da4mvQejIMykkgo9F2FfeCd235K/atHZtSAmxKeTUgKxAdNVO8PAoZq1cHNQXT/PHthL2sfPZGSdxNgLH0AuJwVeI7QZJ02ke40+HkUcBoDdqGDZeUvPqoIRbE23Kr+sexYYe4dVq+zyCe3ci/6zkMWbVBpCjq8D8ZZEFo/lmPJTkgjwqnqHuf6XT4mJyLNphQjvFH9aRqIZpPoQz1sGwAY2vssQ5mTy5J5muGo+n82b0xFROZwsJpumDsFi4Da/85uWS/YzjY5BdxGac8rgUqm9IKh7E6GHzOGOy0LQIz3O4ntTg=="
+    }]
   };
 
   const formData = new FormData();
@@ -117,16 +111,35 @@ KickBot.client.onmessage = async (message) => {
   }
   formData.append("payload_json", JSON.stringify(body));
 
-  await $fetch(sendEndpoint, {
+  let isReferenced = true;
+  const response = await $fetch(sendEndpoint, {
     method: "POST",
     body: formData,
     headers: {
       Authorization: `Bot ${Discord.token}`
     },
     onResponseError: ({ response }) => {
+      isReferenced = Boolean(!response._data.errors.message_reference);
       console.warn(response._data);
     }
-  });
+  }).catch(() => null);
+
+  if (!response && !isReferenced) {
+    console.info("Sending message without reference");
+    delete body.message_reference;
+    formData.delete("payload_json");
+    formData.append("payload_json", JSON.stringify(body));
+    await $fetch(sendEndpoint, {
+      method: "POST",
+      body: formData,
+      headers: {
+        Authorization: `Bot ${Discord.token}`
+      },
+      onResponseError: async ({ response }) => {
+        console.warn(response._data);
+      }
+    }).catch(() => null);
+  }
   ttsMessages = ttsMessages.filter(tts => tts.text !== text);
 };
 

@@ -120,4 +120,19 @@ declare global {
     audit_log_entries: AuditLogEntries[];
     users: DiscordUser[];
   }
+
+  interface DiscordVoiceBody {
+    flags?: MessageFlags;
+    message_reference?: {
+      message_id: string;
+      channel_id: string;
+      guild_id: string | null;
+    };
+    attachments: {
+      id: number;
+      filename: string;
+      duration_secs: number;
+      waveform: string;
+    }[];
+  }
 }
