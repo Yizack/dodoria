@@ -14,11 +14,12 @@ import { startApiServer } from "./clients/router";
 
 startApiServer();
 const kickChannel = await Kick.getChannel();
-const allowedChannels = [
-  "1048659746137317498", // tests
-  "610323743155421194", // general
-  "800811897804292138" // copys
-];
+const discordChannels = {
+  tests: "1048659746137317498",
+  general: "610323743155421194",
+  copys: "800811897804292138"
+};
+const allowedDiscordChannels = Object.values(discordChannels);
 const availableVoices = [
   "tilin", "angar", "chino", "lotrial", "dross", "temach",
   "dalas", "yuki", "pichu", "jh", "juan", "canser", "ari",
@@ -39,7 +40,7 @@ Discord.client.on(Events.MessageCreate, async (message) => {
     case "!tts":
       if (!textHasMessage) return;
       const voice = text.split(" ")[0]!.toLowerCase().replace("!", "");
-      if (!allowedChannels.includes(channelId) || !text.startsWith("!") || !availableVoices.includes(voice) || !textHasMessage) return;
+      if (!allowedDiscordChannels.includes(channelId) || !text.startsWith("!") || !availableVoices.includes(voice) || !textHasMessage) return;
       if (text.length > 300) {
         message.reply("El mensaje es muy largo, no puede contener más de 300 caracteres.");
         return;
@@ -147,7 +148,7 @@ Kick.subscribe(kickChannel.chatroomId);
 Kick.client.on(Kick.Events.Chatroom.UserBanned, async (event) => {
   const { data } = event;
   try {
-    const channel = await Discord.client.channels.fetch("610323743155421194") as TextChannel;
+    const channel = await Discord.client.channels.fetch(discordChannels.general) as TextChannel;
     const isBanned = !data.expires_at;
     const timeoutUntil = data.expires_at;
     const duration = timeoutUntil ? intervalToDuration({ start: new Date(Date.now()), end: timeoutUntil }) : null;
