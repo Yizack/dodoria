@@ -55,10 +55,16 @@ const subscribe = (roomId: number) => {
   console.info("Subscribed to Kick channel events");
 };
 
+const getLivestream = () => {
+  if (!kickChatChannel) return null;
+  return client.api.channel.getLivestream(kickChatChannel).catch(() => null);
+};
+
 export const Kick = {
   client,
   user,
   getChannel,
+  getLivestream,
   getBans,
   subscribe,
   Events
