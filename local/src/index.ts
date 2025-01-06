@@ -139,9 +139,9 @@ Kick.client.on(Kick.Events.Chatroom.UserBanned, async (event) => {
     const timeoutUntil = data.expires_at;
     const duration = timeoutUntil ? intervalToDuration({ start: new Date(Date.now()), end: timeoutUntil }) : null;
     const formattedDuration = duration ? formatDuration(duration, { format: ["days", "hours", "minutes", "seconds"], locale: es }) : null;
-    const messageHelper = isBanned ? "baneado permanentemente" : `timeouteado por ${formattedDuration}`;
-    console.info(`${data.user.username} ha sido ${messageHelper} por ${data.banned_by.username}`);
-    channel.send(`## <:kick:1267449535668555788> \`${data.user.username}\` ha sido ${messageHelper}. <:pepoPoint:712364175967518730>`);
+    const messageHelper = isBanned ? "ha sido baneado permanentemente" : `ha recibido un timeout de ${formattedDuration}`;
+    console.info(`${data.user.username} ${messageHelper} por ${data.banned_by.username}`);
+    channel.send(`## <:kick:1267449535668555788> \`${data.user.username}\` ${messageHelper}. <:pepoPoint:712364175967518730>`);
   }
   catch (error) {
     console.info("Error al enviar el mensaje a Discord:", error);
