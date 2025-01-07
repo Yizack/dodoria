@@ -39,7 +39,7 @@ Discord.client.on(Events.MessageCreate, async (message) => {
     case "!ttsraw":
     case "!tts":
       const livestream = await Kick.getLivestream();
-      if (livestream) {
+      if (livestream && livestream.data) {
         message.reply("No puedes enviar tts mientras ANGAR está en directo.");
         return;
       }
