@@ -66,11 +66,7 @@ Discord.client.on(Events.MessageCreate, async (message) => {
         messageId: message.id,
         createdAt: message.createdTimestamp
       });
-      for (const [i, tts] of ttsMessages.entries()) {
-        if (message.createdTimestamp - tts.createdAt > 300000) { // 5 minutes
-          ttsMessages.splice(i, 1);
-        }
-      }
+      ttsMessages = ttsMessages.filter(tts => message.createdTimestamp - tts.createdAt < 300000); // remove 5 minutes old
       break;
   }
 });
