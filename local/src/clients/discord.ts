@@ -1,4 +1,5 @@
 import { Client, Events, GatewayIntentBits } from "discord.js";
+import { $fetch } from "ofetch";
 import { useLocalConfig } from "../utils/config";
 
 const { discordToken } = useLocalConfig();
