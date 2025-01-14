@@ -83,30 +83,48 @@ KickBot.client.onmessage = async (message) => {
   const tts = ttsMessages.find(tts => tts.text === mostSimilarText);
   if (!tts) return;
 
-  const audioStream = await $fetch(data.payload.audio_url, {
-    responseType: "stream"
-  });
+  const audio: { name: string, duration?: number, file: Blob | null } = {
+    name: `${hash(text)}.${tts.raw ? "mp3" : "ogg"}`,
+    duration: 10,
+    file: null
+  };
 
-  const ogg = await mp3ToOgg(audioStream).catch((e) => {
+  const audioBlob = await $fetch(data.payload.audio_url, {
+    responseType: "blob"
+  }).catch((e) => {
     console.warn(e);
     return null;
   });
-  if (!ogg) return;
-  console.info(`${tts.username}:`, tts.text);
 
-  const filename = `${hash(text)}.ogg`;
-  const files = [{ name: filename, file: ogg.blob }];
-  const body: DiscordVoiceBody = {
+  if (!audioBlob) return;
+
+  if (!tts.raw) {
+    const ogg = await mp3ToOgg(audioBlob.stream()).catch((e) => {
+      console.warn(e);
+      return null;
+    });
+    if (!ogg) return;
+    audio.file = ogg.blob;
+    if (ogg.metadata.duration) {
+      audio.duration = ogg.metadata.duration;
+    }
+  }
+  else {
+    audio.file = audioBlob;
+  }
+
+  const files = [{ name: audio.name, file: audio.file }];
+  console.info(`${tts.username}:`, tts.text);
+  await Discord.replyVoiceMessage(files, {
     flags: tts.raw ? undefined : MessageFlags.IsVoiceMessage,
     message_reference: { message_id: tts.messageId, channel_id: tts.channelId, guild_id: tts.guildId },
     attachments: [{
       id: 0,
-      filename: filename,
-      duration_secs: ogg.metadata.duration || 10,
-      waveform: Discord.defaultWaveform
+      filename: audio.name,
+      duration_secs: tts.raw ? undefined : audio.duration,
+      waveform: tts.raw ? undefined : Discord.defaultWaveform
     }]
-  };
-  await Discord.replyVoiceMessage(files, body);
+  });
   ttsMessages = ttsMessages.filter(tts => tts.text !== mostSimilarText);
 };
 

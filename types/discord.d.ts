@@ -131,8 +131,8 @@ declare global {
     attachments: {
       id: number;
       filename: string;
-      duration_secs: number;
-      waveform: string;
+      duration_secs?: number;
+      waveform?: string;
     }[];
   }
 }
