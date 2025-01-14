@@ -116,15 +116,15 @@ KickBot.client.onmessage = async (message) => {
   const files = [{ name: audio.name, file: audio.file }];
   console.info(`${tts.username}:`, tts.text);
   await Discord.replyVoiceMessage(files, {
-    flags: tts.raw ? undefined : MessageFlags.IsVoiceMessage,
+    flags: MessageFlags.IsVoiceMessage,
     message_reference: { message_id: tts.messageId, channel_id: tts.channelId, guild_id: tts.guildId },
     attachments: [{
       id: 0,
       filename: audio.name,
-      duration_secs: tts.raw ? undefined : audio.duration,
-      waveform: tts.raw ? undefined : Discord.defaultWaveform
+      duration_secs: audio.duration,
+      waveform: Discord.defaultWaveform
     }]
-  });
+  }, tts.raw);
   ttsMessages = ttsMessages.filter(tts => tts.text !== mostSimilarText);
 };
 

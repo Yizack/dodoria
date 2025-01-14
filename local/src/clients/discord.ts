@@ -17,13 +17,21 @@ client.on(Events.ClientReady, async () => {
 
 client.login(discordToken);
 
-const replyVoiceMessage = async (files: { name: string, file: Blob }[], body: DiscordVoiceBody) => {
+const replyVoiceMessage = async (files: { name: string, file: Blob }[], body: DiscordVoiceBody, raw: boolean = false) => {
   const channelId = body.message_reference!.channel_id;
   const sendEndpoint = `https://discord.com/api/v10/channels/${channelId}/messages`;
   const formData = new FormData();
   for (let i = 0; i < files.length; i++) {
     formData.append(`files[${i}]`, files[i]!.file, files[i]!.name);
   }
+
+  if (raw) {
+    delete body.flags;
+    if (!body.attachments[0]) throw new Error("Attachment not found");
+    delete body.attachments[0].waveform;
+    delete body.attachments[0].duration_secs;
+  }
+
   formData.append("payload_json", JSON.stringify(body));
 
   let isReferenced = true;
