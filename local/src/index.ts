@@ -24,7 +24,8 @@ const availableVoices = [
   "tilin", "angar", "chino", "lotrial", "dross", "temach",
   "dalas", "yuki", "pichu", "jh", "juan", "canser", "ari",
   "shita", "pablo", "xokas", "dbz", "doc", "camilo", "viendo",
-  "coscu", "messi", "orco", "shrek", "mura", "arthas"
+  "coscu", "messi", "orco", "shrek", "mura", "arthas", "emily",
+  "bananero"
 ];
 let ttsMessages: TTSMessage[] = [];
 
