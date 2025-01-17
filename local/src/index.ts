@@ -73,7 +73,7 @@ Discord.client.on(Events.MessageCreate, async (message) => {
 });
 
 KickBot.subscribe(kickChannel.id);
-
+KickBot.client.onclose = () => KickBot.reconnect(kickChannel.id);
 KickBot.client.onmessage = async (message) => {
   const event: KickbotEvent = JSON.parse(message.data.toString());
   const { data } = event;
