@@ -39,7 +39,7 @@ const toDiscordEndpoint = (
 
 const pong = () => ({ type: InteractionResponseType.Pong });
 
-export const create = (type: number, func?: () => void) => {
+export const create = (type: number, func?: VoidFunction) => {
   switch (type) {
     case InteractionType.Ping:
       console.info("Handling Ping request");
