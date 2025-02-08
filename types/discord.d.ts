@@ -70,33 +70,22 @@ declare global {
     };
   }
 
-  interface DiscordComponentOptions {
+  interface DiscordButton {
     type: number;
-    custom_id?: string;
-    disabled?: boolean;
-  }
-
-  interface DiscordButton extends DiscordComponentOptions {
     style: number;
     label?: string;
     url?: string;
+    custom_id?: string;
     emoji?: {
       id: string;
       name: string;
     };
-  }
-
-  interface DiscordStringSelect extends DiscordComponentOptions {
-    placeholder?: string;
-    options?: {
-      label: string;
-      value: string;
-    }[];
+    disabled?: boolean;
   }
 
   interface DiscordComponent {
     type: number;
-    components: (DiscordButton | DiscordStringSelect)[];
+    components: DiscordButton[];
   }
 
   interface DiscordMessage {
