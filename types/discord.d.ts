@@ -32,6 +32,7 @@ declare global {
         members: Record<string, Omit<DiscordMember, "user">>;
       } | null;
       custom_id?: string;
+      values?: string[];
     };
     user: DiscordUser;
     member: DiscordMember;
