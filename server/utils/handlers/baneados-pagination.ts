@@ -3,17 +3,24 @@ import { ComponentType } from "discord-api-types/v10";
 export const handlerBaneadosPagination: ComponentHandler = (event, { body }) => {
   const config = useRuntimeConfig(event);
   const { token, data, message } = body;
+  console.info(data);
   const followUpRequest = async () => {
     const pages = message.embeds[0]!.footer!.text!.match(/\d+/g);
     const [current, available] = pages as string[];
     const cacheKey = `fn:baneados:${message.interaction!.id}.json`;
     const baneados = await useStorage("cache").getItem<{ value: BaneadoEntry[] }>(cacheKey);
-    const buttons = message.components[0]!.components;
+    const buttons = message.components[0]!.components as DiscordButton[];
+    const stringSelect = message.components[1]!.components as DiscordStringSelect[];
+
     if (!baneados) {
       for (const b of buttons) b.disabled = true;
+      for (const s of stringSelect) s.disabled = true;
       const components = [{
         type: ComponentType.ActionRow,
         components: buttons
+      }, {
+        type: ComponentType.ActionRow,
+        components: stringSelect
       }];
       return editFollowUpMessage("", {
         token,
@@ -29,9 +36,19 @@ export const handlerBaneadosPagination: ComponentHandler = (event, { body }) => 
       else if (data!.custom_id === "btn_baneados_next" && "btn_baneados_next" === b.custom_id && (newCurrent >= Number(available))) b.disabled = true;
       else b.disabled = false;
     }
+
+    stringSelect[0].placeholder = `Página ${newCurrent}`;
+    stringSelect[0].options = Array.from({ length: Number(available) }, (_, i) => ({
+      label: `Página ${i + 1}`,
+      value: `${i + 1}`
+    }));
+
     const components = [{
       type: ComponentType.ActionRow,
       components: buttons
+    }, {
+      type: ComponentType.ActionRow,
+      components: stringSelect
     }];
 
     const fixedPage = Math.max(1, Math.min(Number(available), newCurrent));

@@ -86,7 +86,7 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
       custom_id: "select_baneados_page",
       placeholder: "Selecciona una página",
       options: Array.from({ length: pagesAvailable }, (_, i) => ({
-        label: `${i + 1}`,
+        label: `Página ${i + 1}`,
         value: `${i + 1}`
       }))
     };
