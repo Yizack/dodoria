@@ -81,9 +81,22 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
       ...currentPage === pagesAvailable && { disabled: true }
     });
 
+    const stringSelect: DiscordStringSelect = {
+      type: ComponentType.StringSelect,
+      custom_id: "select_baneados_page",
+      placeholder: "Selecciona una página",
+      options: Array.from({ length: pagesAvailable }, (_, i) => ({
+        label: `${i + 1}`,
+        value: `${i + 1}`
+      }))
+    };
+
     const components = [{
       type: ComponentType.ActionRow,
       components: buttons
+    }, {
+      type: ComponentType.ActionRow,
+      components: [stringSelect]
     }];
 
     return deferUpdate({
