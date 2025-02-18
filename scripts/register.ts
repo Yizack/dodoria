@@ -2,10 +2,9 @@
  * Register slash commands with a local run
  */
 import { REST, Routes } from "discord.js";
-import * as dotenv from "dotenv";
 import * as COMMANDS from "../shared/utils/commands";
 
-dotenv.config();
+process.loadEnvFile();
 
 const rest = new REST({ version: "10" }).setToken(process.env.NUXT_DISCORD_TOKEN!);
 const commandsArray = Object.values(COMMANDS);
