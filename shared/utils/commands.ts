@@ -6,13 +6,13 @@ import { DONOCLIPS_LIST } from "./donoclips-list";
 export const MEMIDE: Command = {
   name: "memide",
   description: "Conoce cuántos centímetros te mide",
-  cid: "1053392162194194523"
+  cid: "1341276787971330182"
 };
 
 export const MECABE: Command = {
   name: "mecabe",
   description: "Conoce cuántos centímetros te caben",
-  cid: "1053392162194194524"
+  cid: "1341276787971330181"
 };
 
 export const CHEER: Command = {
@@ -26,7 +26,7 @@ export const CHEER: Command = {
       required: true
     }
   ],
-  cid: "1053398798786904096"
+  cid: "1341276787719802937"
 };
 
 export const EDUCAR: Command = {
@@ -40,13 +40,13 @@ export const EDUCAR: Command = {
       required: true
     }
   ],
-  cid: "1053578283347882024"
+  cid: "1341276787719802942"
 };
 
 export const BUENOGENTE: Command = {
   name: "buenogente",
   description: "Angar se despide de la gente",
-  cid: "1053871637306540082"
+  cid: "1341276787719802936"
 };
 
 export const SHIP: Command = {
@@ -66,13 +66,13 @@ export const SHIP: Command = {
       required: true
     }
   ],
-  cid: "1056821755487997952"
+  cid: "1341276787971330183"
 };
 
 export const COMANDOS: Command = {
   name: "comandos",
   description: "Conoce la lista de comandos disponibles",
-  cid: "1053738012619571342"
+  cid: "1341276787719802938"
 };
 
 export const VIDEO: Command = {
@@ -95,7 +95,7 @@ export const VIDEO: Command = {
       required: true
     }
   ],
-  cid: "1225295750930501724"
+  cid: "1341276787971330184"
 };
 
 export const LOLMMR: Command = {
@@ -126,7 +126,7 @@ export const LOLMMR: Command = {
       ]
     }
   ],
-  cid: "1225469964274630748"
+  cid: "1341276787971330179"
 };
 
 export const LOLPERFIL: Command = {
@@ -147,13 +147,13 @@ export const LOLPERFIL: Command = {
       choices: LOL_SERVERS
     }
   ],
-  cid: "1225468160279580736"
+  cid: "1341276787971330180"
 };
 
 export const ANGAR: Command = {
   name: "angar",
   description: "Muestra una foto random de Angar",
-  cid: "1228534441996062740"
+  cid: "1341276787719802933"
 };
 
 export const AVATAR: Command = {
@@ -186,7 +186,7 @@ export const AVATAR: Command = {
       ]
     }
   ],
-  cid: "1273575196477100064"
+  cid: "1341276787719802934"
 };
 
 export const BANEADOS: Command = {
@@ -216,7 +216,7 @@ export const COPYS: Command = {
     InteractionContextType.Guild,
     InteractionContextType.PrivateChannel
   ],
-  cid: "1323905456338636901"
+  cid: "1341276787719802940"
 };
 
 export const DONOCLIPS: Command = {
@@ -240,5 +240,5 @@ export const DONOCLIPS: Command = {
     InteractionContextType.Guild,
     InteractionContextType.PrivateChannel
   ],
-  cid: "1323969015118430218"
+  cid: "1341276787719802941"
 };
