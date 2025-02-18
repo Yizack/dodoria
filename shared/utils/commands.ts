@@ -192,7 +192,7 @@ export const AVATAR: Command = {
 export const BANEADOS: Command = {
   name: "baneados",
   description: "Muestra una lista de los usuarios baneados, timeouteados y desbaneados más recientes",
-  cid: "1319818448787865655"
+  cid: "1341276787719802935"
 };
 
 export const COPYS: Command = {
