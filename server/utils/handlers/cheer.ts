@@ -15,8 +15,9 @@ export const handlerCheer: CommandHandler = (event, { body, getValue }) => {
   if (mensaje.length > 500) return reply(`<@${member.user.id}> El mensaje no puede tener más de 500 caracteres.`);
   const followUpRequest = async () => {
     const text = encodeURIComponent(mensaje);
-    const response = await fetch(`https://api.streamelements.com/kappa/v2/speech?voice=${CONSTANTS.VOZ}&text=${text}`);
-    const blob = await response.blob();
+    const blob = await $fetch<Blob>(`https://api.streamelements.com/kappa/v2/speech?voice=${CONSTANTS.VOZ}&text=${text}`, {
+      responseType: "blob"
+    });
     const files = [{ name: `${hash(text)}.mp3`, file: blob }];
 
     return deferUpdate({

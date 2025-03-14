@@ -19,8 +19,9 @@ export const handlerLolMMR: CommandHandler = (event, { body, getValue }) => {
     }
     const embeds: DiscordEmbed[] = [];
     const mensaje = "";
-    const profileF = await fetch(`https://dev.ahmedrangel.com/lol/mmr/${region}/${riotName}/${riotTag}/${queue}`);
-    const profile = await profileF.json();
+    // TODO: Type profile response
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const profile = await $fetch<any>(`https://dev.ahmedrangel.com/lol/mmr/${region}/${riotName}/${riotTag}/${queue}`);
     if (profile.status_code !== 404) {
       const queueName = profile.ranked.queueName === "Flex" ? "Flexible" : "Solo/Duo";
       const tierEmoji = getLeagueEmblem(profile?.ranked?.tier);

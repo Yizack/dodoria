@@ -23,9 +23,9 @@ export const handlerLolPerfil: CommandHandler = (event, { body, getValue }) => {
     const button = [];
     const mensaje = "";
     let remake, footer, titleName;
-
-    const profileF = await fetch(`https://dev.ahmedrangel.com/lol/profile/${region}/${riotName}/${riotTag}`);
-    const profile = await profileF.json();
+    // TODO: Type profile response
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const profile = await $fetch<any>(`https://dev.ahmedrangel.com/lol/profile/${region}/${riotName}/${riotTag}`);
     if (profile.status_code !== 404) {
       if (profile.titleName !== "") {
         titleName = `*${profile.titleName}*`;
