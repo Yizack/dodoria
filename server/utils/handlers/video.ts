@@ -93,9 +93,9 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
       return null;
     });
     const blob = videoChecker?._data;
-    console.info(blob);
     const contentType = videoChecker?.headers.get("content-type");
-    console.info("Tamaño: " + blob?.size, "Content-Type: " + contentType);
+    const contentLength = videoChecker?.headers.get("content-length");
+    console.info("Tamaño: " + blob?.size || contentLength, "Content-Type: " + contentType);
 
     const maxSize = 100000000;
 
