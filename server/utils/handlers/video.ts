@@ -88,11 +88,7 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
       return finalReply(cdnUrl);
     }
 
-    const videoChecker = await $fetch.raw<Blob>(video_url, {
-      headers: {
-        Host: new URL(video_url).host
-      }
-    }).catch((e) => {
+    const videoChecker = await $fetch.raw<Blob>(video_url).catch((e) => {
       console.info(e);
       return null;
     });
