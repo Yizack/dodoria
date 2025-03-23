@@ -88,14 +88,17 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
       return finalReply(cdnUrl);
     }
 
-    const videoChecker = await $fetch.raw<Blob>(video_url).catch((e) => {
+    const videoChecker = await $fetch.raw<Blob>(video_url, {
+      headers: {
+        Host: new URL(video_url).host
+      }
+    }).catch((e) => {
       console.info(e);
       return null;
     });
     const blob = videoChecker?._data;
     const contentType = videoChecker?.headers.get("content-type");
-    const contentLength = videoChecker?.headers.get("content-length");
-    console.info("Tamaño: " + blob?.size || contentLength, "Content-Type: " + contentType);
+    console.info("Tamaño: " + blob?.size, "Content-Type: " + contentType);
 
     const maxSize = 100000000;
 
