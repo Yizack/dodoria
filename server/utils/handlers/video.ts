@@ -88,13 +88,12 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
       return finalReply(cdnUrl);
     }
 
-    const videoChecker = await $fetch.raw<Blob>(video_url, {
-      headers: { "User-Agent": "DodoriaBot/1.0" }
-    }).catch((e) => {
+    const videoChecker = await $fetch.raw<Blob>(video_url).catch((e) => {
       console.info(e);
       return null;
     });
     const blob = videoChecker?._data;
+    console.info(blob);
     const contentType = videoChecker?.headers.get("content-type");
     console.info("Tamaño: " + blob?.size, "Content-Type: " + contentType);
 
