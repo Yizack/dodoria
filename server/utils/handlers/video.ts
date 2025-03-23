@@ -88,7 +88,9 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
       return finalReply(cdnUrl);
     }
 
-    const videoChecker = await $fetch.raw<Blob>(video_url).catch((e) => {
+    const videoChecker = await $fetch.raw<Blob>(video_url, {
+      responseType: "blob"
+    }).catch((e) => {
       console.info(e);
       return null;
     });
