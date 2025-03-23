@@ -36,7 +36,7 @@ export const VIDEO_SOCIALS = {
     supported: true
   },
   kick: {
-    domains: ["kick.com/"],
+    domains: ["kick.com/", "kickbot.com/clip/"],
     name: "Kick",
     emoji: "<:kick:1267449535668555788>",
     supported: true
