@@ -1,4 +1,4 @@
-import { Kient, Events } from "kient";
+import { Events, Kient } from "kient";
 import OTP from "otp";
 import { useLocalConfig } from "../utils/config";
 

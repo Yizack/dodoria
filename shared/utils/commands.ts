@@ -1,4 +1,4 @@
-import { ApplicationIntegrationType, InteractionContextType, ApplicationCommandOptionType } from "discord-api-types/v10";
+import { ApplicationCommandOptionType, ApplicationIntegrationType, InteractionContextType } from "discord-api-types/v10";
 import { LOL_SERVERS } from "./lol-servers";
 import { COPYS_LIST } from "./copys-list";
 import { DONOCLIPS_LIST } from "./donoclips-list";
