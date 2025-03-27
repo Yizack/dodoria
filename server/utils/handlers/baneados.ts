@@ -27,12 +27,19 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
       return deferUpdate({
         token,
         application_id: config.discord.applicationId,
-        embeds: errorEmbed("⚠️ Error. El bot probablemente no cuenta con los permisos para utilizar este comando.")
+        embeds: errorEmbed("⚠️ Error. El bot no cuenta con los permisos para utilizar este comando.")
       });
     }
 
     const users = [...new Set([...banLogs!.users, ...unbanLogs!.users, ...updatedLogs!.users].map(user => ({ id: user.id, username: user.username })))];
     const entries = [...banLogs!.audit_log_entries, ...unbanLogs!.audit_log_entries, ...updatedLogs!.audit_log_entries];
+    if (!entries.length) {
+      return deferUpdate({
+        token,
+        application_id: config.discord.applicationId,
+        embeds: errorEmbed("⚠️ No hay logs para mostrar.")
+      });
+    }
     const filteredEntries = entries.filter(el => (el.action_type === AuditLogEvent.MemberUpdate && el.changes?.some(el => el.key === "communication_disabled_until")) || el.action_type !== AuditLogEvent.MemberUpdate).map((el) => {
       const useInfo = {
         id: el.target_id,
