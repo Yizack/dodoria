@@ -11,7 +11,7 @@ export const scrapeVideo = async (url: string, social?: string) => {
 
   if (!req) return null;
 
-  req.caption = imbedUrlsFromString(`${req?.caption ? req?.caption?.replace(/(#\S+|\S+#)/g, "").replace(/([.•_\- ]+)\n/g, "").replace(/\n+/g, "\n").trim() : ""}`);
+  req.caption = imbedUrlsFromString(`${req?.caption ? req?.caption?.replace(/(#\S+|\S+#)/g, "").replace(/([.•_\-~ ]+)\n/g, "").replace(/\n+/g, "\n").trim() : ""}`);
   return { ...req, social };
 };
 
