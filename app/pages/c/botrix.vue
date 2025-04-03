@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({ layout: "site" });
-const { data: data } = useFetch("/api/botrix");
+const { data: leaderboard } = await useFetch("/api/botrix");
 const formatDate = (date: string) => new Date(date).toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" });
 </script>
 
@@ -28,13 +28,13 @@ const formatDate = (date: string) => new Date(date).toLocaleDateString("es-MX", 
           </tr>
         </thead>
         <tbody>
-          <template v-for="(u, i) of data" :key="i">
+          <template v-for="(user, i) of leaderboard" :key="i">
             <tr>
               <th scope="row">{{ i + 1 }}</th>
-              <td><NuxtLink :to="`https://kick.com/${u.name}`" external target="_blank">{{ u.name }}</NuxtLink></td>
-              <td>{{ u.points }}</td>
-              <td>{{ u.watchtime }}</td>
-              <td>{{ u.followage?.date ? formatDate(u.followage.date) : '' }}</td>
+              <td><NuxtLink :to="`https://kick.com/${user.name}`" external target="_blank">{{ user.name }}</NuxtLink></td>
+              <td>{{ user.points }}</td>
+              <td>{{ user.watchtime }}</td>
+              <td>{{ user.followage?.date ? formatDate(user.followage.date) : '' }}</td>
             </tr>
           </template>
         </tbody>
