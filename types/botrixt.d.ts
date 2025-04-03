@@ -1,14 +1,16 @@
 export {};
 
 declare global {
-  interface BotrixLeaderboard {
-    followage: {
-      date: string;
-    };
+  interface BotrixUser {
     level: number;
-    name: string;
-    points: number;
     watchtime: number;
     xp: number;
+    points: number;
+    name: string;
+    followage: {
+      date: string;
+      timezone_type: number;
+      timezone: string;
+    };
   }
 }
