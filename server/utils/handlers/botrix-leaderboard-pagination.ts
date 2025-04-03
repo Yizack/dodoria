@@ -7,7 +7,7 @@ export const handlerBotrixLeaderboardPagination: ComponentHandler = (event, { bo
   const followUpRequest = async () => {
     const pages = message.embeds[0]!.footer!.text!.match(/\d+/g);
     if (!pages) return;
-    const [currentPage, pageCount] = pages.map(Number);
+    const [currentPage, pageCount] = pages.map(Number) as [number, number];
     const cacheKey = `fn:botrix-leaderboard:${message.interaction!.id}.json`;
     const leaderboard = await useStorage("cache").getItem<{ value: BotrixUserWithRank[] }>(cacheKey);
     const buttons = message.components[0]!.components as DiscordButton[];
