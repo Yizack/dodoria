@@ -1,6 +1,6 @@
 import { ButtonStyle, ComponentType } from "discord-api-types/v10";
 
-export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
+export default defineCommandHandler(AVATAR.name, (event, { body, getValue }) => {
   const { context, user, member } = body;
   const { resolved } = body.data;
   const userId = getValue("usuario");
@@ -67,4 +67,4 @@ export const handlerAvatar: CommandHandler = (event, { body, getValue }) => {
       }
     }]
   });
-};
+});

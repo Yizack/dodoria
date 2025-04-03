@@ -1,5 +1,4 @@
 import { InteractionType } from "discord-api-types/v10";
-import { DONOCLIPS } from "~~/shared/utils/commands";
 
 export default defineEventHandler(async (event) => {
   const isValidWebhook = await isValidDiscordWebhook(event);
@@ -11,24 +10,24 @@ export default defineEventHandler(async (event) => {
     return create(type);
   }
 
-  const commandHandlers: { [key: string]: CommandHandler } = {
-    [MEMIDE.name]: handlerMeMide, // Comando /memide
-    [MECABE.name]: handlerMeCabe, // Comando /mecabe
-    [CHEER.name]: handlerCheer, // Comando /cheer
-    [EDUCAR.name]: handlerEducar, // Comando /educar
-    [COMANDOS.name]: handlerComandos, // Comando /comandos
-    [BUENOGENTE.name]: handlerBuenoGente, // Comando /buenogente
-    [SHIP.name]: handlerShip, // Comando /ship
-    [VIDEO.name]: handlerVideo, // Comando /video
-    [LOLPERFIL.name]: handlerLolPerfil, // Comando /lolperfil
-    [LOLMMR.name]: handlerLolMMR, // Comando /lolmmr
-    [ANGAR.name]: handlerAngar, // Comando /angar
-    [AVATAR.name]: handlerAvatar, // Comando /avatar
-    [BANEADOS.name]: handlerBaneados, // Comando /baneados
-    [COPYS.name]: handlerCopys, // Comando /copys
-    [DONOCLIPS.name]: handlerDonoclips, // Comando /donoclips
-    [BOTRIX.name]: handlerBotRix // Comando /botrix
-  };
+  const commands: { name: string, handler: CommandHandler }[] = [
+    handlersMemide, // Comando /memide
+    handlersMecabe, // Comando /mecabe
+    handlersCheer, // Comando /cheer
+    handlersEducar, // Comando /educar
+    handlersComandos, // Comando /comandos
+    handlersBuenogente, // Comando /buenogente
+    handlersShip, // Comando /ship
+    handlersVideo, // Comando /video
+    handlersLolperfil, // Comando /lolperfil
+    handlersLolmmr, // Comando /lolmmr
+    handlersAngar, // Comando /angar
+    handlersAvatar, // Comando /avatar
+    handlersBaneados, // Comando /baneados
+    handlersCopys, // Comando /copys
+    handlersDonoclips, // Comando /donoclips
+    handlersBotrix // Comando /botrix
+  ];
 
   const componentHandlers: { [key: string]: ComponentHandler } = {
     ["btn_reload"]: handlerVideoReload, // Componente /video-reload
@@ -42,10 +41,10 @@ export default defineEventHandler(async (event) => {
 
   return create(type, () => {
     const { name, options, custom_id } = data;
-    const commandHandler = commandHandlers[name];
+    const command = commands.find(h => h.name === name);
 
-    if (commandHandler) {
-      return commandHandler(event, { body,
+    if (command) {
+      return command.handler(event, { body,
         getValue: name => getOptionsValue(name, options?.[0]?.options || options)
       });
     }

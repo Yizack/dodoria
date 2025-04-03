@@ -1,6 +1,6 @@
 import { MessageFlags } from "discord-api-types/v10";
 
-export const handlerDonoclips: CommandHandler = (event, { body, getValue }) => {
+export default defineCommandHandler(DONOCLIPS.name, (event, { body, getValue }) => {
   const { token } = body;
   const config = useRuntimeConfig(event);
   const audioValue = getValue("opcion");
@@ -29,4 +29,4 @@ export const handlerDonoclips: CommandHandler = (event, { body, getValue }) => {
 
   event.waitUntil(followUpRequest());
   return deferReply();
-};
+});

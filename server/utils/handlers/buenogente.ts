@@ -1,4 +1,4 @@
-export const handlerBuenoGente: CommandHandler = () => {
+export default defineCommandHandler(BUENOGENTE.name, () => {
   return reply(null, {
     embeds: [{
       title: "🖐 ANGAR se ha despedido con un \"BUENO GENTE\"",
@@ -13,4 +13,4 @@ export const handlerBuenoGente: CommandHandler = () => {
       }
     }]
   });
-};
+});

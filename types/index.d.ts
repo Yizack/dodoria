@@ -9,7 +9,7 @@ declare global {
   }
 
   interface CommandHandler {
-    (event: H3Event, helpers: CommandHelpers): unknown;
+    (event: H3Event, helpers: CommandHelpers): Promise<unknown> | unknown;
   }
 
   interface ComponentHandler {

@@ -1,6 +1,6 @@
 import { ButtonStyle, ComponentType } from "discord-api-types/v10";
 
-export const handlerBotRix: CommandHandler = async (event, { body, getValue }) => {
+export default defineCommandHandler(BOTRIX.name, (event, { body, getValue }) => {
   const { token, data, id } = body;
   const subCommand = data.options?.[0]?.name;
   const config = useRuntimeConfig(event);
@@ -145,4 +145,4 @@ export const handlerBotRix: CommandHandler = async (event, { body, getValue }) =
 
   event.waitUntil(followUpRequest());
   return deferReply();
-};
+});

@@ -1,4 +1,4 @@
-export const handlerShip: CommandHandler = (event, { body, getValue }) => {
+export default defineCommandHandler(SHIP.name, (event, { body, getValue }) => {
   const { resolved } = body.data;
 
   const u1 = getValue("persona1");
@@ -50,4 +50,4 @@ export const handlerShip: CommandHandler = (event, { body, getValue }) => {
       }
     }]
   });
-};
+});

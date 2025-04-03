@@ -1,6 +1,6 @@
 import { ButtonStyle, ComponentType } from "discord-api-types/v10";
 
-export const handlerLolPerfil: CommandHandler = (event, { body, getValue }) => {
+export default defineCommandHandler(LOLPERFIL.name, (event, { body, getValue }) => {
   const { token } = body;
 
   const config = useRuntimeConfig(event);
@@ -158,4 +158,4 @@ export const handlerLolPerfil: CommandHandler = (event, { body, getValue }) => {
 
   event.waitUntil(followUpRequest());
   return deferReply();
-};
+});

@@ -1,6 +1,6 @@
 import { AuditLogEvent, ButtonStyle, ComponentType } from "discord-api-types/v10";
 
-export const handlerBaneados: CommandHandler = (event, { body }) => {
+export default defineCommandHandler(BANEADOS.name, (event, { body }) => {
   const { token, guild_id, id } = body;
   const config = useRuntimeConfig(event);
   const followUpRequest = async () => {
@@ -115,4 +115,4 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
   };
   event.waitUntil(followUpRequest());
   return deferReply();
-};
+});

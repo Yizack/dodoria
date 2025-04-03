@@ -1,6 +1,6 @@
 import { ButtonStyle, ComponentType } from "discord-api-types/v10";
 
-export const handlerAngar: CommandHandler = (event, { body }) => {
+export default defineCommandHandler(ANGAR.name, (event, { body }) => {
   const { member } = body;
 
   const button = [{
@@ -30,4 +30,4 @@ export const handlerAngar: CommandHandler = (event, { body }) => {
       }
     }]
   });
-};
+});

@@ -1,3 +1,5 @@
+import { camelCase } from "scule";
+
 export default defineNuxtConfig({
   future: { compatibilityVersion: 4 },
 
@@ -37,7 +39,16 @@ export default defineNuxtConfig({
 
   nitro: {
     imports: {
-      dirs: ["server/utils/handlers"]
+      dirs: ["server/utils/handlers"],
+      addons: [{
+        extendImports (imports) {
+          for (const i of imports) {
+            if (i.from.includes("server/utils/handlers/") && i.name === "default") {
+              i.as = camelCase(`handlers-${i.as}`);
+            }
+          }
+        }
+      }]
     },
     cloudflare: {
       pages: {

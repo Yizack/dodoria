@@ -1,4 +1,5 @@
 import { AuditLogEvent } from "discord-api-types/v10";
+import type { H3Event } from "h3";
 
 export { hash } from "ohash";
 export { withQuery, parseURL, getQuery as getQueryUfo } from "ufo";
@@ -108,3 +109,10 @@ export const createCachedData = <T>(name: string, cache: { id: string, data: T }
     getKey: () => cache?.id
   })();
 };
+
+export const defineCommandHandler = (name: string, handler: CommandHandler) => ({
+  name,
+  handler: (event: H3Event, helpers: CommandHelpers) => {
+    handler(event, helpers);
+  }
+});

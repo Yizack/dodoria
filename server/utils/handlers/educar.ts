@@ -1,4 +1,4 @@
-export const handlerEducar: CommandHandler = async (event, { body, getValue }) => {
+export default defineCommandHandler(EDUCAR.name, async (event, { body, getValue }) => {
   const { member, guild_id } = body;
 
   const usuario = getValue("usuario");
@@ -22,4 +22,4 @@ export const handlerEducar: CommandHandler = async (event, { body, getValue }) =
     });
   }
   return reply(message, { embeds: embeds });
-};
+});

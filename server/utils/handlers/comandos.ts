@@ -1,4 +1,4 @@
-export const handlerComandos: CommandHandler = () => {
+export default defineCommandHandler(COMANDOS.name, () => {
   const list: string[] = [];
   Object.values(COMMANDS).forEach((command) => {
     list.push(`-  </${command.name}:${command.cid}> *${command.description}*\n`);
@@ -23,4 +23,4 @@ export const handlerComandos: CommandHandler = () => {
       }
     }]
   });
-};
+});

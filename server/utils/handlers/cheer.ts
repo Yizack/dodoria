@@ -1,4 +1,4 @@
-export const handlerCheer: CommandHandler = (event, { body, getValue }) => {
+export default defineCommandHandler(CHEER.name, (event, { body, getValue }) => {
   const { member, token } = body;
 
   const config = useRuntimeConfig(event);
@@ -44,4 +44,4 @@ export const handlerCheer: CommandHandler = (event, { body, getValue }) => {
 
   event.waitUntil(followUpRequest());
   return deferReply();
-};
+});

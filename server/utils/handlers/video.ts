@@ -1,6 +1,6 @@
 import { ButtonStyle, ComponentType } from "discord-api-types/v10";
 
-export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
+export default defineCommandHandler(VIDEO.name, (event, { body, getValue }) => {
   const { token } = body;
 
   const config = useRuntimeConfig(event);
@@ -121,4 +121,4 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
   };
   event.waitUntil(followUpRequest());
   return deferReply();
-};
+});
