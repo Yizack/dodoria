@@ -5,8 +5,8 @@ export default defineCommandHandler(COMANDOS.name, () => {
 
   for (const command of Object.values(COMMANDS)) {
     if (command.options?.every(({ type }) => type === ApplicationCommandOptionType.Subcommand)) {
-      for (const [name] of Object.entries(command.options ?? [])) {
-        list.push(`-  </${command.name} ${name}:${command.cid}> *${command.description}*\n`);
+      for (const option of Object.values(command.options ?? [])) {
+        list.push(`-  </${command.name} ${option.name}:${command.cid}> *${command.description}*\n`);
       }
       continue;
     }
