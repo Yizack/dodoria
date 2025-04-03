@@ -5,17 +5,15 @@ export const handlerBotrix: CommandHandler = async (event, { body }) => {
   const embeds: DiscordEmbed[] = [];
 
   if (!subCommand || !BOTRIX.options?.map(o => o.name).includes(subCommand)) {
-    return deferUpdate({
-      token,
-      application_id: config.discord.applicationId,
-      embeds: errorEmbed("⚠️ Error. El subcomando no es válido.")
+    return reply(null, {
+      embeds: errorEmbed("⚠️ Error. Comando no válido.")
     });
   }
 
   const followUpRequest = async () => {
     if (subCommand === "leaderboard") {
       const leaderboard = await $fetch("/api/botrix").catch(() => []);
-
+      console.log(leaderboard);
       if (!leaderboard.length) {
         return deferUpdate({
           token,
