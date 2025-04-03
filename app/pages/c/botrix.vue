@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({ layout: "site" });
-const { data: leaderboard } = useFetch("/api/botrix");
+const { data: leaderboard } = await useFetch("/api/botrix");
 const formatDate = (date: string) => new Date(date).toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" });
 </script>
 
