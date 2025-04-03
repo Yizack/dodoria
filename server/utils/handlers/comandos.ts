@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType } from "discord-api-types/v10";
+import { ApplicationCommandOptionType, MessageFlags } from "discord-api-types/v10";
 
 export default defineCommandHandler(COMANDOS.name, () => {
   const list: string[] = [];
@@ -15,6 +15,7 @@ export default defineCommandHandler(COMANDOS.name, () => {
   }
 
   return reply(null, {
+    flags: MessageFlags.Ephemeral,
     embeds: [{
       title: "Lista de comandos",
       description: "Conoce la lista de comandos disponibles.\n\n"

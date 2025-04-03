@@ -1,4 +1,4 @@
-import { InteractionResponseType, InteractionType } from "discord-api-types/v10";
+import { InteractionResponseType, InteractionType, type MessageFlags } from "discord-api-types/v10";
 
 const API = {
   BASE: "https://discord.com/api/v10"
@@ -53,12 +53,14 @@ export const create = (type: number, func?: VoidFunction) => {
 export const reply = (
   content: string | null,
   options?: {
+    flags?: MessageFlags;
     embeds?: DiscordEmbed[];
     components?: DiscordComponent[];
   }
 ) => ({
   type: InteractionResponseType.ChannelMessageWithSource,
   data: {
+    flags: options?.flags,
     content: content,
     embeds: options?.embeds,
     components: options?.components
