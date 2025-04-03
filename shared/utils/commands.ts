@@ -243,7 +243,7 @@ export const DONOCLIPS: Command = {
   cid: "1341276787719802941"
 };
 
-export const BOTRIX = {
+export const BOTRIX: Command = {
   name: "botrix",
   description: "Comandos de Botrix",
   options: [
