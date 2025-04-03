@@ -33,7 +33,7 @@ const formatDate = (date: string) => new Date(date).toLocaleDateString("es-MX", 
               <tr>
                 <th scope="row">{{ i + 1 }}</th>
                 <td><NuxtLink :to="`https://kick.com/${user.name}`" external target="_blank">{{ user.name }}</NuxtLink></td>
-                <td>{{ user.points }}</td>
+                <td>{{ user.points.toLocaleString() }}</td>
                 <td>{{ user.watchtime }}</td>
                 <td>{{ user.followage?.date ? formatDate(user.followage.date) : '' }}</td>
               </tr>
