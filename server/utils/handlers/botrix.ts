@@ -38,6 +38,7 @@ export const handlerBotRix: CommandHandler = async (event, { body, getValue }) =
         description: `### <:kick:1267449535668555788> **${user.name}** tiene **${user.points.toLocaleString()}** puntos en BotRix.`,
         timestamp: new Date().toISOString(),
         footer: {
+          text: CONSTANTS.BOT,
           icon_url: `${SITE.url}/${CONSTANTS.AVATAR}`
         }
       }];
