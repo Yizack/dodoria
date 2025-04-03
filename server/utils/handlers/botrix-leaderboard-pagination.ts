@@ -61,7 +61,7 @@ export const handlerBotRixLeaderboardPagination: ComponentHandler = (event, { bo
       color: CONSTANTS.COLOR,
       author: {
         name: "BotRix",
-        icon_url: `${SITE.url}/images/botrix.webp`
+        icon_url: `${SITE.url}/images/botrix.jpg`
       },
       fields: [{
         name: "Leaderboard de BotRix en el canal de Kick de ANGAR",
