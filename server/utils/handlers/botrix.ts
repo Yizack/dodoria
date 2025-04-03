@@ -1,3 +1,5 @@
+import { ButtonStyle, ComponentType } from "discord.js";
+
 export const handlerBotrix: CommandHandler = async (event, { body }) => {
   const { token, data } = body;
   const subCommand = data.options?.[0]?.name;
@@ -54,10 +56,47 @@ export const handlerBotrix: CommandHandler = async (event, { body }) => {
         }
       });
 
+      const buttons: DiscordButton[] = [];
+      buttons.push({
+        type: ComponentType.Button,
+        style: ButtonStyle.Primary,
+        custom_id: "btn_botrix_leaderboard_prev",
+        emoji: {
+          name: "arrowLeft",
+          id: "1324906526430986291"
+        },
+        disabled: true
+      }, {
+        type: ComponentType.Button,
+        style: ButtonStyle.Primary,
+        custom_id: "btn_botrix_leaderboard_next",
+        emoji: {
+          name: "arrowRight",
+          id: "1324906542105100390"
+        },
+        ...currentPage === pageCount && { disabled: true }
+      });
+
+      const stringSelect: DiscordStringSelect = {
+        type: ComponentType.StringSelect,
+        custom_id: "select_baneados_page",
+        placeholder: "Selecciona una página",
+        options: Array.from({ length: pageCount }, (_, i) => ({
+          label: `Página ${i + 1}`,
+          value: `${i + 1}`
+        }))
+      };
+
+      const components = [
+        { type: ComponentType.ActionRow, components: buttons },
+        { type: ComponentType.ActionRow, components: [stringSelect] }
+      ];
+
       return deferUpdate({
         token,
         application_id: config.discord.applicationId,
-        embeds
+        embeds,
+        components
       });
     }
   };
