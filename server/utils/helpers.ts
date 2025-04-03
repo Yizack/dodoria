@@ -108,11 +108,3 @@ export const createCachedData = <T>(name: string, cache: { id: string, data: T }
     getKey: () => cache?.id
   })();
 };
-
-export const cachedBaneados = defineCachedFunction(async (cache: { id: string, data: BaneadoEntry[] }) => cache?.data, {
-  maxAge: 86400,
-  swr: false,
-  group: "fn",
-  name: "baneados",
-  getKey: (cache: { id: string, data: BaneadoEntry[] }) => cache?.id
-});

@@ -63,7 +63,7 @@ export const handlerBaneados: CommandHandler = (event, { body }) => {
     const pagesAvailable = Math.ceil(filteredEntries.length / 16);
     const currentPage = 1;
     const baneadosData = { id, data: filteredEntries };
-    const pagedData = await cachedBaneados(baneadosData);
+    const pagedData = await createCachedData("baneados", baneadosData);
     const pagedEntries = pagedData.slice((currentPage - 1) * 16, currentPage * 16);
     const embeds = buildBaneadosEmbed(pagedEntries, pagesAvailable, currentPage);
 
