@@ -66,10 +66,10 @@ declare global {
       value: string;
       inline?: boolean;
     }[];
+    timestamp?: string;
     footer?: {
       text?: string;
       icon_url?: string;
-      timestamp?: string;
     };
   }
 

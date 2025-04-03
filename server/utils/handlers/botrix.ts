@@ -30,7 +30,7 @@ export const handlerBotrix: CommandHandler = async (event, { body }) => {
       const items = leaderboard.slice(start, end);
 
       const values: string[] = items.map((user, i) => {
-        const emoji = i < 3 ? ["🥇", "🥈", "🥉"][i] : "🎖️";
+        const emoji = currentPage === 1 && i < 3 ? ["🥇", "🥈", "🥉"][i] : "🎖️";
         return `${emoji} **${user.name}**・${user.points.toLocaleString()} puntos`;
       });
 
@@ -48,9 +48,9 @@ export const handlerBotrix: CommandHandler = async (event, { body }) => {
           name: "Leaderboard de Botrix en el canal de Kick de ANGAR",
           value: values.join("\n")
         }],
+        timestamp: new Date().toISOString(),
         footer: {
-          text: `Página ${currentPage} de ${pageCount}`,
-          timestamp: new Date().toISOString()
+          text: `Página ${currentPage} de ${pageCount}`
         }
       });
 
