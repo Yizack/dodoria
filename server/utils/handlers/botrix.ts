@@ -13,7 +13,7 @@ export const handlerBotrix: CommandHandler = async (event, { body }) => {
   const followUpRequest = async () => {
     if (subCommand === "leaderboard") {
       const leaderboard = await $fetch("/api/botrix").catch(() => []);
-      console.log(leaderboard);
+
       if (!leaderboard.length) {
         return deferUpdate({
           token,
@@ -22,7 +22,13 @@ export const handlerBotrix: CommandHandler = async (event, { body }) => {
         });
       }
 
-      const values: string[] = leaderboard.map((user, i) => {
+      const pageSize = 5;
+      const currentPage = 1;
+      const start = (currentPage - 1) * pageSize;
+      const end = start + pageSize;
+      const items = leaderboard.slice(start, end);
+
+      const values: string[] = items.map((user, i) => {
         const emoji = i < 3 ? ["🥇", "🥈", "🥉"][i] : "🎖️";
         return `${emoji} **${user.name}**・${user.points} puntos`;
       });
