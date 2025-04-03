@@ -35,3 +35,7 @@ code, a {
   box-shadow: 0 10px 10px #00000026!important;
   transform: scale(1.05)
 }
+
+.table-dark {
+  --bs-table-bg: #292b2f;
+}
