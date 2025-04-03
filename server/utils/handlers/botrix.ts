@@ -88,7 +88,7 @@ export const handlerBotrix: CommandHandler = async (event, { body }) => {
 
       const stringSelect: DiscordStringSelect = {
         type: ComponentType.StringSelect,
-        custom_id: "select_botrix_leaderboards_page",
+        custom_id: "select_botrix_leaderboard_page",
         placeholder: "Selecciona una página",
         options: Array.from({ length: pageCount }, (_, i) => ({
           label: `Página ${i + 1}`,

@@ -41,13 +41,10 @@ export const handlerBotrixLeaderboardPagination: ComponentHandler = (event, { bo
       value: `${i + 1}`
     }));
 
-    const components = [{
-      type: ComponentType.ActionRow,
-      components: buttons
-    }, {
-      type: ComponentType.ActionRow,
-      components: stringSelect
-    }];
+    const components = [
+      { type: ComponentType.ActionRow, components: buttons },
+      { type: ComponentType.ActionRow, components: stringSelect }
+    ];
 
     const { values: pageData, pageSize, timestamp } = cachedData.value;
     const fixedPage = Math.max(1, Math.min(pageCount, newCurrent));
