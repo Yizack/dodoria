@@ -33,7 +33,7 @@ export const handlerBotrix: CommandHandler = async (event, { body }) => {
       const items = leaderboardWithRank.slice(start, end);
 
       const values: string[] = items.map((user) => {
-        const emoji = currentPage === 1 && user.rank <= 3 ? ["🥇", "🥈", "🥉"][user.rank] : "🎖️";
+        const emoji = currentPage === 1 && user.rank <= 3 ? ["🥇", "🥈", "🥉"][user.rank - 1] : "🎖️";
         return `${user.rank}. ${emoji} **${user.name}**・${user.points.toLocaleString()} puntos`;
       });
 
