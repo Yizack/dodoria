@@ -1,8 +1,18 @@
+import { ApplicationCommandOptionType } from "discord-api-types/v10";
+
 export default defineCommandHandler(COMANDOS.name, () => {
   const list: string[] = [];
-  Object.values(COMMANDS).forEach((command) => {
+
+  for (const command of Object.values(COMMANDS)) {
+    if (command.options?.every(({ type }) => type === ApplicationCommandOptionType.Subcommand)) {
+      for (const [name] of Object.entries(command.options ?? [])) {
+        list.push(`-  </${command.name} ${name}:${command.cid}> *${command.description}*\n`);
+      }
+      continue;
+    }
+
     list.push(`-  </${command.name}:${command.cid}> *${command.description}*\n`);
-  });
+  }
 
   return reply(null, {
     embeds: [{

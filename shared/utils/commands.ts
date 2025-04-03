@@ -265,5 +265,6 @@ export const BOTRIX: Command = {
         }
       ]
     }
-  ]
+  ],
+  cid: "1357314549434552372"
 };
