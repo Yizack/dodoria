@@ -13,4 +13,8 @@ declare global {
       timezone: string;
     };
   }
+
+  interface BotrixUserWithRank extends BotrixUser {
+    rank: number;
+  }
 }

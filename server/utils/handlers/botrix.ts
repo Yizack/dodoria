@@ -1,7 +1,7 @@
 import { ButtonStyle, ComponentType } from "discord-api-types/v10";
 
 export const handlerBotrix: CommandHandler = async (event, { body }) => {
-  const { token, data } = body;
+  const { token, data, id } = body;
   const subCommand = data.options?.[0]?.name;
   const config = useRuntimeConfig(event);
   const embeds: DiscordEmbed[] = [];
@@ -30,7 +30,11 @@ export const handlerBotrix: CommandHandler = async (event, { body }) => {
       const start = (currentPage - 1) * pageSize;
       const end = start + pageSize;
       const leaderboardWithRank = leaderboard.map((user, i) => ({ ...user, rank: i + 1 }));
-      const items = leaderboardWithRank.slice(start, end);
+      const pageData = await createCachedData("botrix-leaderboard", {
+        id,
+        data: leaderboardWithRank
+      });
+      const items = pageData.slice(start, end);
 
       const values: string[] = items.map((user) => {
         const emoji = currentPage === 1 && user.rank <= 3 ? ["🥇", "🥈", "🥉"][user.rank - 1] : "🎖️";
