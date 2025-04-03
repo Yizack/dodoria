@@ -1,5 +1,5 @@
 export default defineCachedEventHandler(async () => {
-  const botrix = new Botrix({ bypassCache: true });
+  const botrix = new BotRix({ bypassCache: true });
   const leaderboard = await botrix.getLeaderboard();
   const bots = ["kickbot", "botrix"];
 

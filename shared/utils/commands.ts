@@ -245,16 +245,16 @@ export const DONOCLIPS: Command = {
 
 export const BOTRIX: Command = {
   name: "botrix",
-  description: "Comandos de Botrix",
+  description: "Comandos de BotRix",
   options: [
     {
       name: "leaderboard",
-      description: "Muestra el leaderboard de puntos de Botrix",
+      description: "Muestra el leaderboard de puntos de BotRix",
       type: ApplicationCommandOptionType.Subcommand
     },
     {
       name: "puntos",
-      description: "Muestra la cantidad de puntos de Botrix que tienes",
+      description: "Muestra la cantidad de puntos de BotRix que tienes",
       type: ApplicationCommandOptionType.Subcommand,
       options: [
         {

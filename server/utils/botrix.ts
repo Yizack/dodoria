@@ -1,6 +1,6 @@
 import type { NitroFetchOptions } from "nitropack";
 
-export class Botrix {
+export class BotRix {
   private static BASE_URL = "https://botrix.live//api";
   private static STREAMER = "angar";
   private static PLATFORM = "kick";
@@ -9,18 +9,18 @@ export class Botrix {
 
   protected async _fetch<T>(path: string, options?: NitroFetchOptions<"json">) {
     return $fetch<T>(path, {
-      baseURL: Botrix.BASE_URL,
+      baseURL: BotRix.BASE_URL,
       ...options,
       query: {
-        user: Botrix.STREAMER,
-        platform: Botrix.PLATFORM,
+        user: BotRix.STREAMER,
+        platform: BotRix.PLATFORM,
         ...options?.query
       }
     });
   }
 
-  public async getLeaderboard (options?: { search?: string }): Promise<BotrixUser[]> {
-    return this._fetch<BotrixUser[]>("/public/leaderboard", {
+  public async getLeaderboard (options?: { search?: string }): Promise<BotRixUser[]> {
+    return this._fetch<BotRixUser[]>("/public/leaderboard", {
       query: {
         user: "angar",
         platform: "kick",

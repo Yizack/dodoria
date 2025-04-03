@@ -27,7 +27,7 @@ export default defineEventHandler(async (event) => {
     [BANEADOS.name]: handlerBaneados, // Comando /baneados
     [COPYS.name]: handlerCopys, // Comando /copys
     [DONOCLIPS.name]: handlerDonoclips, // Comando /donoclips
-    [BOTRIX.name]: handlerBotrix // Comando /botrix
+    [BOTRIX.name]: handlerBotRix // Comando /botrix
   };
 
   const componentHandlers: { [key: string]: ComponentHandler } = {
@@ -35,9 +35,9 @@ export default defineEventHandler(async (event) => {
     ["btn_baneados_prev"]: handlerBaneadosPagination, // Componente /baneados-pagination
     ["btn_baneados_next"]: handlerBaneadosPagination,
     ["select_baneados_page"]: handlerBaneadosPagination,
-    ["btn_botrix_leaderboard_prev"]: handlerBotrixLeaderboardPagination,
-    ["btn_botrix_leaderboard_next"]: handlerBotrixLeaderboardPagination,
-    ["select_botrix_leaderboard_page"]: handlerBotrixLeaderboardPagination
+    ["btn_botrix_leaderboard_prev"]: handlerBotRixLeaderboardPagination,
+    ["btn_botrix_leaderboard_next"]: handlerBotRixLeaderboardPagination,
+    ["select_botrix_leaderboard_page"]: handlerBotRixLeaderboardPagination
   };
 
   return create(type, () => {

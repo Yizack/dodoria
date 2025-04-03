@@ -1,6 +1,6 @@
 import { ButtonStyle, ComponentType } from "discord-api-types/v10";
 
-export const handlerBotrix: CommandHandler = async (event, { body }) => {
+export const handlerBotRix: CommandHandler = async (event, { body }) => {
   const { token, data, id } = body;
   const subCommand = data.options?.[0]?.name;
   const config = useRuntimeConfig(event);
@@ -20,7 +20,7 @@ export const handlerBotrix: CommandHandler = async (event, { body }) => {
         return deferUpdate({
           token,
           application_id: config.discord.applicationId,
-          embeds: errorEmbed("⚠️ Error. No se pudo obtener el leaderboard de Botrix.")
+          embeds: errorEmbed("⚠️ Error. No se pudo obtener el leaderboard de BotRix.")
         });
       }
 
@@ -30,7 +30,7 @@ export const handlerBotrix: CommandHandler = async (event, { body }) => {
       const start = (currentPage - 1) * pageSize;
       const end = start + pageSize;
       const leaderboardWithRank = leaderboard.map((user, i) => ({ ...user, rank: i + 1 }));
-      const pageData = await createCachedData<BotrixCachedLeaderboard>("botrix-leaderboard", {
+      const pageData = await createCachedData<BotRixCachedLeaderboard>("botrix-leaderboard", {
         id,
         data: {
           values: leaderboardWithRank,

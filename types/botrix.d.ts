@@ -1,7 +1,7 @@
 export {};
 
 declare global {
-  interface BotrixUser {
+  interface BotRixUser {
     level: number;
     watchtime: number;
     xp: number;
@@ -14,12 +14,12 @@ declare global {
     };
   }
 
-  interface BotrixUserWithRank extends BotrixUser {
+  interface BotRixUserWithRank extends BotRixUser {
     rank: number;
   }
 
-  interface BotrixCachedLeaderboard {
-    values: BotrixUserWithRank[];
+  interface BotRixCachedLeaderboard {
+    values: BotRixUserWithRank[];
     pageSize: number;
     timestamp: string;
   }

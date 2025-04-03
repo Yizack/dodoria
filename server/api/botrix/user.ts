@@ -3,7 +3,7 @@ export default defineCachedEventHandler(async (event) => {
     name: z.string()
   }).parse);
 
-  const botrix = new Botrix({ bypassCache: true });
+  const botrix = new BotRix({ bypassCache: true });
   const user = await botrix.getUser(query.name);
 
   if (!user) {

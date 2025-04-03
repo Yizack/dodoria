@@ -1,6 +1,6 @@
 import { ComponentType } from "discord-api-types/v10";
 
-export const handlerBotrixLeaderboardPagination: ComponentHandler = (event, { body }) => {
+export const handlerBotRixLeaderboardPagination: ComponentHandler = (event, { body }) => {
   const config = useRuntimeConfig(event);
   const { token, data, message } = body;
 
@@ -9,7 +9,7 @@ export const handlerBotrixLeaderboardPagination: ComponentHandler = (event, { bo
     if (!pages) return;
     const [currentPage, pageCount] = pages.map(Number) as [number, number];
     const cacheKey = `fn:botrix-leaderboard:${message.interaction!.id}.json`;
-    const cachedData = await useStorage("cache").getItem<{ value: BotrixCachedLeaderboard }>(cacheKey);
+    const cachedData = await useStorage("cache").getItem<{ value: BotRixCachedLeaderboard }>(cacheKey);
     const buttons = message.components[0]!.components as DiscordButton[];
     const stringSelect = message.components[1]!.components as DiscordStringSelect[];
 
