@@ -17,28 +17,30 @@ const formatDate = (date: string) => new Date(date).toLocaleDateString("es-MX", 
         </div>
         <p>Leaderboard de Botrix en el canal de Kick de angar</p>
       </div>
-      <table class="table table-dark table-hover">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Usuario</th>
-            <th scope="col">Puntos</th>
-            <th scope="col">Watchtime</th>
-            <th scope="col">Seguidor desde</th>
-          </tr>
-        </thead>
-        <tbody>
-          <template v-for="(user, i) of leaderboard" :key="i">
+      <div class="overflow-x-auto rounded-3 mb-4">
+        <table class="table table-dark table-hover m-0">
+          <thead>
             <tr>
-              <th scope="row">{{ i + 1 }}</th>
-              <td><NuxtLink :to="`https://kick.com/${user.name}`" external target="_blank">{{ user.name }}</NuxtLink></td>
-              <td>{{ user.points }}</td>
-              <td>{{ user.watchtime }}</td>
-              <td>{{ user.followage?.date ? formatDate(user.followage.date) : '' }}</td>
+              <th scope="col">#</th>
+              <th scope="col">Usuario</th>
+              <th scope="col">Puntos</th>
+              <th scope="col">Watchtime</th>
+              <th scope="col">Seguidor desde</th>
             </tr>
-          </template>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <template v-for="(user, i) of leaderboard" :key="i">
+              <tr>
+                <th scope="row">{{ i + 1 }}</th>
+                <td><NuxtLink :to="`https://kick.com/${user.name}`" external target="_blank">{{ user.name }}</NuxtLink></td>
+                <td>{{ user.points }}</td>
+                <td>{{ user.watchtime }}</td>
+                <td>{{ user.followage?.date ? formatDate(user.followage.date) : '' }}</td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
     </div>
   </main>
 </template>
