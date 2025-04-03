@@ -106,7 +106,7 @@ export const deferUpdate = (
 };
 
 export const editFollowUpMessage = (
-  content: unknown,
+  content: string | null,
   options: {
     application_id?: string;
     token?: string;

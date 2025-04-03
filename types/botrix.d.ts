@@ -1,7 +1,7 @@
 export {};
 
 declare global {
-  interface BotrixUser {
+  interface BotRixUser {
     level: number;
     watchtime: number;
     xp: number;
@@ -12,5 +12,15 @@ declare global {
       timezone_type: number;
       timezone: string;
     };
+  }
+
+  interface BotRixUserWithRank extends BotRixUser {
+    rank: number;
+  }
+
+  interface BotRixCachedLeaderboard {
+    values: BotRixUserWithRank[];
+    pageSize: number;
+    timestamp: string;
   }
 }

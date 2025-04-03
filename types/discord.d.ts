@@ -17,16 +17,19 @@ declare global {
     nick: string | null;
   }
 
+  interface DiscordBodyOptions {
+    type: number;
+    name: string;
+    value: string;
+    options: DiscordBodyOptions[] | null;
+  }
+
   interface WebhookBody {
     type: number;
     id: string;
     data: {
       name: string;
-      options: {
-        type: number;
-        name: string;
-        value: string;
-      }[] | null;
+      options: DiscordBodyOptions[] | null;
       resolved: {
         users: Record<string, DiscordUser>;
         members: Record<string, Omit<DiscordMember, "user">>;
@@ -55,6 +58,7 @@ declare global {
     };
     author?: {
       name: string;
+      url?: string;
       icon_url: string;
     };
     thumbnail?: {
@@ -65,6 +69,7 @@ declare global {
       value: string;
       inline?: boolean;
     }[];
+    timestamp?: string;
     footer?: {
       text?: string;
       icon_url?: string;

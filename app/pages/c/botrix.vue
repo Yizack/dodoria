@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({ layout: "site" });
-const { data: leaderboard } = await useFetch("/api/botrix");
+const { data: leaderboard } = await useFetch("/api/botrix/leaderboard");
 const formatDate = (date: string) => new Date(date).toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" });
 </script>
 
@@ -15,7 +15,7 @@ const formatDate = (date: string) => new Date(date).toLocaleDateString("es-MX", 
         <div class="mb-3">
           <code class="bg-dark p-2 rounded-3">/botrix</code>
         </div>
-        <p>Leaderboard de Botrix en el canal de Kick de angar</p>
+        <p>Leaderboard de BotRix en el canal de Kick de angar</p>
       </div>
       <div class="overflow-x-auto rounded-3 mb-4">
         <table class="table table-dark table-hover m-0">

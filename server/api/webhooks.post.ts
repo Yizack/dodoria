@@ -26,14 +26,18 @@ export default defineEventHandler(async (event) => {
     [AVATAR.name]: handlerAvatar, // Comando /avatar
     [BANEADOS.name]: handlerBaneados, // Comando /baneados
     [COPYS.name]: handlerCopys, // Comando /copys
-    [DONOCLIPS.name]: handlerDonoclips // Comando /donoclips
+    [DONOCLIPS.name]: handlerDonoclips, // Comando /donoclips
+    [BOTRIX.name]: handlerBotRix // Comando /botrix
   };
 
   const componentHandlers: { [key: string]: ComponentHandler } = {
     ["btn_reload"]: handlerVideoReload, // Componente /video-reload
     ["btn_baneados_prev"]: handlerBaneadosPagination, // Componente /baneados-pagination
     ["btn_baneados_next"]: handlerBaneadosPagination,
-    ["select_baneados_page"]: handlerBaneadosPagination
+    ["select_baneados_page"]: handlerBaneadosPagination,
+    ["btn_botrix_leaderboard_prev"]: handlerBotRixLeaderboardPagination,
+    ["btn_botrix_leaderboard_next"]: handlerBotRixLeaderboardPagination,
+    ["select_botrix_leaderboard_page"]: handlerBotRixLeaderboardPagination
   };
 
   return create(type, () => {
@@ -42,7 +46,7 @@ export default defineEventHandler(async (event) => {
 
     if (commandHandler) {
       return commandHandler(event, { body,
-        getValue: name => getOptionsValue(name, options)
+        getValue: name => getOptionsValue(name, options?.[0]?.options || options)
       });
     }
 
