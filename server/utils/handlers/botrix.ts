@@ -43,10 +43,20 @@ export default defineCommandHandler(BOTRIX.name, (event, { body, getValue }) => 
         }
       }];
 
+      const buttons: DiscordButton[] = [{
+        type: ComponentType.Button,
+        style: ButtonStyle.Link,
+        label: "Ver leaderboard",
+        url: "https://dodoria.yizack.com/c/botrix"
+      }];
+
+      const components = [{ type: ComponentType.ActionRow, components: buttons }];
+
       return deferUpdate({
         token,
         application_id: config.discord.applicationId,
-        embeds
+        embeds,
+        components
       });
     }
     else if (subCommand === "leaderboard") {
@@ -98,26 +108,34 @@ export default defineCommandHandler(BOTRIX.name, (event, { body, getValue }) => 
         }
       });
 
-      const buttons: DiscordButton[] = [];
-      buttons.push({
-        type: ComponentType.Button,
-        style: ButtonStyle.Primary,
-        custom_id: "btn_botrix_leaderboard_prev",
-        emoji: {
-          name: "arrowLeft",
-          id: "1324906526430986291"
+      const buttons: DiscordButton[] = [
+        {
+          type: ComponentType.Button,
+          style: ButtonStyle.Primary,
+          custom_id: "btn_botrix_leaderboard_prev",
+          emoji: {
+            name: "arrowLeft",
+            id: "1324906526430986291"
+          },
+          disabled: true
         },
-        disabled: true
-      }, {
-        type: ComponentType.Button,
-        style: ButtonStyle.Primary,
-        custom_id: "btn_botrix_leaderboard_next",
-        emoji: {
-          name: "arrowRight",
-          id: "1324906542105100390"
+        {
+          type: ComponentType.Button,
+          style: ButtonStyle.Primary,
+          custom_id: "btn_botrix_leaderboard_next",
+          emoji: {
+            name: "arrowRight",
+            id: "1324906542105100390"
+          },
+          ...currentPage === pageCount && { disabled: true }
         },
-        ...currentPage === pageCount && { disabled: true }
-      });
+        {
+          type: ComponentType.Button,
+          style: ButtonStyle.Link,
+          label: "Ver leaderboard",
+          url: "https://dodoria.yizack.com/c/botrix"
+        }
+      ];
 
       const stringSelect: DiscordStringSelect = {
         type: ComponentType.StringSelect,
