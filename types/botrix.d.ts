@@ -20,7 +20,7 @@ declare global {
 
   interface BotrixCachedLeaderboard {
     values: BotrixUserWithRank[];
-    pageCount: number;
+    pageSize: number;
     timestamp: string;
   }
 }

@@ -34,7 +34,7 @@ export const handlerBotrix: CommandHandler = async (event, { body }) => {
         id,
         data: {
           values: leaderboardWithRank,
-          pageCount,
+          pageSize,
           timestamp: new Date().toISOString()
         }
       });

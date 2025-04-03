@@ -49,15 +49,14 @@ export const handlerBotrixLeaderboardPagination: ComponentHandler = (event, { bo
       components: stringSelect
     }];
 
-    const pageSize = 10;
+    const { values: pageData, pageSize, timestamp } = cachedData.value;
     const fixedPage = Math.max(1, Math.min(pageCount, newCurrent));
     const start = (fixedPage - 1) * pageSize;
     const end = fixedPage * pageSize;
-    const { value: pageData } = cachedData;
-    const items = pageData.values.slice(start, end);
+    const items = pageData.slice(start, end);
 
     const values: string[] = items.map((user) => {
-      const emoji = currentPage === 1 && user.rank <= 3 ? ["🥇", "🥈", "🥉"][user.rank - 1] : "🎖️";
+      const emoji = fixedPage === 1 && user.rank <= 3 ? ["🥇", "🥈", "🥉"][user.rank - 1] : "🎖️";
       return `${user.rank}. ${emoji} **${user.name}**・${user.points.toLocaleString()} puntos`;
     });
 
@@ -75,9 +74,9 @@ export const handlerBotrixLeaderboardPagination: ComponentHandler = (event, { bo
         name: "Leaderboard de Botrix en el canal de Kick de ANGAR",
         value: values.join("\n")
       }],
-      timestamp: new Date().toISOString(),
+      timestamp,
       footer: {
-        text: `Página ${currentPage} de ${pageCount}`
+        text: `Página ${fixedPage} de ${pageCount}`
       }
     }];
 
