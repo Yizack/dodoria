@@ -112,7 +112,5 @@ export const createCachedData = <T>(name: string, cache: { id: string, data: T }
 
 export const defineCommandHandler = (name: string, handler: CommandHandler) => ({
   name,
-  handler: (event: H3Event, helpers: CommandHelpers) => {
-    handler(event, helpers);
-  }
+  handler: (event: H3Event, helpers: CommandHelpers) => handler(event, helpers)
 });
