@@ -23,10 +23,12 @@ export const handlerBotrix: CommandHandler = async (event, { body }) => {
       fields: [{
         name: "Leaderboard de Botrix en el canal de Kick de ANGAR",
         value: values.join("\n")
-      }],
+      }]
+      /*
       footer: {
-        // text: `Página ${currentPage} de ${pagesAvailable}`
+        text: `Página ${currentPage} de ${pagesAvailable}`
       }
+      */
     });
 
     return deferUpdate({
