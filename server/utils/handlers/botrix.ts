@@ -1,4 +1,4 @@
-import { ButtonStyle, ComponentType } from "discord.js";
+import { ButtonStyle, ComponentType } from "discord-api-types/v10";
 
 export const handlerBotrix: CommandHandler = async (event, { body }) => {
   const { token, data } = body;
