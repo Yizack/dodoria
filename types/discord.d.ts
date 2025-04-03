@@ -69,6 +69,7 @@ declare global {
     footer?: {
       text?: string;
       icon_url?: string;
+      timestamp?: string;
     };
   }
 

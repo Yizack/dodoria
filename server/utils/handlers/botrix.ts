@@ -49,7 +49,8 @@ export const handlerBotrix: CommandHandler = async (event, { body }) => {
           value: values.join("\n")
         }],
         footer: {
-          text: `Página ${currentPage} de ${pageCount}`
+          text: `Página ${currentPage} de ${pageCount}`,
+          timestamp: new Date().toISOString()
         }
       });
 
