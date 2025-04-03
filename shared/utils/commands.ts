@@ -261,7 +261,7 @@ export const BOTRIX: Command = {
           name: "usuario",
           description: "El usuario de KICK a consultar",
           type: ApplicationCommandOptionType.String,
-          required: false
+          required: true
         }
       ]
     }
