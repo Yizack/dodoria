@@ -22,7 +22,8 @@ export const handlerBotrix: CommandHandler = async (event, { body }) => {
         });
       }
 
-      const pageSize = 5;
+      const pageSize = 10;
+      const pageCount = Math.ceil(leaderboard.length / pageSize);
       const currentPage = 1;
       const start = (currentPage - 1) * pageSize;
       const end = start + pageSize;
@@ -46,12 +47,10 @@ export const handlerBotrix: CommandHandler = async (event, { body }) => {
         fields: [{
           name: "Leaderboard de Botrix en el canal de Kick de ANGAR",
           value: values.join("\n")
-        }]
-        /*
+        }],
         footer: {
-          text: `Página ${currentPage} de ${pagesAvailable}`
+          text: `Página ${currentPage} de ${pageCount}`
         }
-        */
       });
 
       return deferUpdate({
