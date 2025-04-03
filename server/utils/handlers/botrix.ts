@@ -12,7 +12,9 @@ export const handlerBotrix: CommandHandler = async (event, { body }) => {
 
   const followUpRequest = async () => {
     if (subCommand === "leaderboard") {
-      const leaderboard = await $fetch("/api/botrix").catch(() => []);
+      const leaderboard = await $fetch("/api/botrix", {
+        query: { t: Date.now() }
+      }).catch(() => []);
 
       if (!leaderboard.length) {
         return deferUpdate({
