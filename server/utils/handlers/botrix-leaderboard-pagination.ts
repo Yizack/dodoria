@@ -69,7 +69,8 @@ export const handlerBotRixLeaderboardPagination: ComponentHandler = (event, { bo
       }],
       timestamp,
       footer: {
-        text: `Página ${fixedPage} de ${pageCount}`
+        text: `Página ${fixedPage} de ${pageCount}`,
+        icon_url: `${SITE.url}/${CONSTANTS.AVATAR}`
       }
     }];
 

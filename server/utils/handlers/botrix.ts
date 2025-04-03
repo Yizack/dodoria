@@ -1,10 +1,9 @@
 import { ButtonStyle, ComponentType } from "discord-api-types/v10";
 
-export const handlerBotRix: CommandHandler = async (event, { body }) => {
+export const handlerBotRix: CommandHandler = async (event, { body, getValue }) => {
   const { token, data, id } = body;
   const subCommand = data.options?.[0]?.name;
   const config = useRuntimeConfig(event);
-  const embeds: DiscordEmbed[] = [];
 
   if (!subCommand || !BOTRIX.options?.map(o => o.name).includes(subCommand)) {
     return reply(null, {
@@ -13,7 +12,43 @@ export const handlerBotRix: CommandHandler = async (event, { body }) => {
   }
 
   const followUpRequest = async () => {
-    if (subCommand === "leaderboard") {
+    const embeds: DiscordEmbed[] = [];
+
+    if (subCommand === "puntos") {
+      const username = getValue("usuario");
+
+      const user = await $fetch("/api/botrix/user", {
+        query: { username }
+      }).catch(() => null);
+
+      if (!user) {
+        return deferUpdate({
+          token,
+          application_id: config.discord.applicationId,
+          embeds: errorEmbed("⚠️ Error. No se pudo encontrar el usuario en BotRix.")
+        });
+      }
+
+      const embeds: DiscordEmbed[] = [{
+        color: CONSTANTS.COLOR,
+        author: {
+          name: "BotRix",
+          icon_url: "https://dunb17ur4ymx4.cloudfront.net/webstore/logos/aa9c649812ffbd3af3349bd86be145dc15994316.png"
+        },
+        description: `El usuario <:kick:1267449535668555788> **${user.name}** tiene **${user.points.toLocaleString()}** puntos en BotRix.`,
+        timestamp: new Date().toISOString(),
+        footer: {
+          icon_url: `${SITE.url}/${CONSTANTS.AVATAR}`
+        }
+      }];
+
+      return deferUpdate({
+        token,
+        application_id: config.discord.applicationId,
+        embeds
+      });
+    }
+    else if (subCommand === "leaderboard") {
       const leaderboard = await $fetch("/api/botrix/leaderboard").catch(() => []);
 
       if (!leaderboard.length) {
@@ -57,7 +92,8 @@ export const handlerBotRix: CommandHandler = async (event, { body }) => {
         }],
         timestamp: new Date().toISOString(),
         footer: {
-          text: `Página ${currentPage} de ${pageCount}`
+          text: `Página ${currentPage} de ${pageCount}`,
+          icon_url: `${SITE.url}/${CONSTANTS.AVATAR}`
         }
       });
 

@@ -254,12 +254,12 @@ export const BOTRIX: Command = {
     },
     {
       name: "puntos",
-      description: "Muestra la cantidad de puntos de BotRix que tienes",
+      description: "Muestra la cantidad de puntos de un usuario de KICK",
       type: ApplicationCommandOptionType.Subcommand,
       options: [
         {
           name: "usuario",
-          description: "El usuario del que quieres saber los puntos",
+          description: "El usuario de KICK a consultar",
           type: ApplicationCommandOptionType.String,
           required: false
         }

@@ -1,13 +1,13 @@
 export default defineCachedEventHandler(async (event) => {
   const query = await getValidatedQuery(event, z.object({
-    name: z.string()
+    username: z.string()
   }).parse);
 
   const botrix = new BotRix({ bypassCache: true });
-  const user = await botrix.getUser(query.name);
+  const user = await botrix.getUser(query.username);
 
   if (!user) {
-    return createError({ statusCode: 404, message: "User not found in leaderboard" });
+    throw createError({ statusCode: 404, message: "User not found in leaderboard" });
   }
 
   return user;
