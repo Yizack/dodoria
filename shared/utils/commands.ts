@@ -242,3 +242,28 @@ export const DONOCLIPS: Command = {
   ],
   cid: "1341276787719802941"
 };
+
+export const BOTRIX = {
+  name: "botrix",
+  description: "Comandos de Botrix",
+  options: [
+    {
+      name: "leaderboard",
+      description: "Muestra el leaderboard de puntos de Botrix",
+      type: ApplicationCommandOptionType.Subcommand
+    },
+    {
+      name: "puntos",
+      description: "Muestra la cantidad de puntos de Botrix que tienes",
+      type: ApplicationCommandOptionType.Subcommand,
+      options: [
+        {
+          name: "usuario",
+          description: "El usuario del que quieres saber los puntos",
+          type: ApplicationCommandOptionType.String,
+          required: false
+        }
+      ]
+    }
+  ]
+};
