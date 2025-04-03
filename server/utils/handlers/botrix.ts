@@ -28,6 +28,12 @@ export const handlerBotrix: CommandHandler = async (event, { body }) => {
         // text: `Página ${currentPage} de ${pagesAvailable}`
       }
     });
+
+    return deferUpdate({
+      token,
+      application_id: config.discord.applicationId,
+      embeds
+    });
   };
 
   event.context.cloudflare.context.waitUntil(followUpRequest());
