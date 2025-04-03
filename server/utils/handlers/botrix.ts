@@ -33,7 +33,7 @@ export default defineCommandHandler(BOTRIX.name, (event, { body, getValue }) => 
         color: CONSTANTS.COLOR,
         author: {
           name: "BotRix",
-          icon_url: "https://dunb17ur4ymx4.cloudfront.net/webstore/logos/aa9c649812ffbd3af3349bd86be145dc15994316.png"
+          icon_url: `${SITE.url}/images/botrix.webp`
         },
         description: `### <:kick:1267449535668555788> **${user.name}** tiene **${user.points.toLocaleString()}** puntos en BotRix.`,
         timestamp: new Date().toISOString(),
@@ -85,7 +85,7 @@ export default defineCommandHandler(BOTRIX.name, (event, { body, getValue }) => 
         color: CONSTANTS.COLOR,
         author: {
           name: "BotRix",
-          icon_url: "https://dunb17ur4ymx4.cloudfront.net/webstore/logos/aa9c649812ffbd3af3349bd86be145dc15994316.png"
+          icon_url: `${SITE.url}/images/botrix.webp`
         },
         fields: [{
           name: "Leaderboard de BotRix en el canal de Kick de ANGAR",
