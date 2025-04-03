@@ -44,6 +44,6 @@ export const handlerVideoReload: ComponentHandler = (event, { body }) => {
     });
   };
 
-  event.context.cloudflare.context.waitUntil(followUpRequest());
+  event.waitUntil(followUpRequest());
   return updateMessage();
 };

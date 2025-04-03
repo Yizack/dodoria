@@ -62,6 +62,6 @@ export const handlerBaneadosPagination: ComponentHandler = (event, { body }) => 
       components
     });
   };
-  event.context.cloudflare.context.waitUntil(followUpRequest());
+  event.waitUntil(followUpRequest());
   return updateMessage();
 };

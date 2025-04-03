@@ -119,6 +119,6 @@ export const handlerVideo: CommandHandler = (event, { body, getValue }) => {
 
     return finalReply(uploaded.url);
   };
-  event.context.cloudflare.context.waitUntil(followUpRequest());
+  event.waitUntil(followUpRequest());
   return deferReply();
 };

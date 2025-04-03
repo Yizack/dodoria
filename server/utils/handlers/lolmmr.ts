@@ -82,6 +82,6 @@ export const handlerLolMMR: CommandHandler = (event, { body, getValue }) => {
     });
   };
 
-  event.context.cloudflare.context.waitUntil(followUpRequest());
+  event.waitUntil(followUpRequest());
   return deferReply();
 };

@@ -82,6 +82,6 @@ export const handlerBotRixLeaderboardPagination: ComponentHandler = (event, { bo
       components
     });
   };
-  event.context.cloudflare.context.waitUntil(followUpRequest());
+  event.waitUntil(followUpRequest());
   return updateMessage();
 };
