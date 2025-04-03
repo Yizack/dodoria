@@ -1,6 +1,6 @@
 export const handlerBotrix: CommandHandler = async (event, { body }) => {
   const { token, data } = body;
-  const subCommand = data.options?.[0].name;
+  const subCommand = data.options?.[0]?.name;
   const config = useRuntimeConfig(event);
   const embeds: DiscordEmbed[] = [];
 
