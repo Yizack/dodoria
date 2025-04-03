@@ -60,15 +60,11 @@ export const handlerBotrixLeaderboardPagination: ComponentHandler = (event, { bo
     const embeds: DiscordEmbed[] = [{
       color: CONSTANTS.COLOR,
       author: {
-        name: CONSTANTS.BOT,
-        url: SITE.url,
-        icon_url: `${SITE.url}/${CONSTANTS.AVATAR}`
-      },
-      thumbnail: {
-        url: "https://dunb17ur4ymx4.cloudfront.net/webstore/logos/aa9c649812ffbd3af3349bd86be145dc15994316.png"
+        name: "BotRix",
+        icon_url: "https://dunb17ur4ymx4.cloudfront.net/webstore/logos/aa9c649812ffbd3af3349bd86be145dc15994316.png"
       },
       fields: [{
-        name: "Leaderboard de Botrix en el canal de Kick de ANGAR",
+        name: "Leaderboard de BotRix en el canal de Kick de ANGAR",
         value: values.join("\n")
       }],
       timestamp,
