@@ -9,11 +9,11 @@ export const handlerBotrixLeaderboardPagination: ComponentHandler = (event, { bo
     if (!pages) return;
     const [currentPage, pageCount] = pages.map(Number) as [number, number];
     const cacheKey = `fn:botrix-leaderboard:${message.interaction!.id}.json`;
-    const leaderboard = await useStorage("cache").getItem<{ value: BotrixUserWithRank[] }>(cacheKey);
+    const cachedData = await useStorage("cache").getItem<{ value: BotrixCachedLeaderboard }>(cacheKey);
     const buttons = message.components[0]!.components as DiscordButton[];
     const stringSelect = message.components[1]!.components as DiscordStringSelect[];
 
-    if (!leaderboard) {
+    if (!cachedData) {
       for (const b of buttons) b.disabled = true;
       for (const s of stringSelect) s.disabled = true;
       const components = [
@@ -53,9 +53,10 @@ export const handlerBotrixLeaderboardPagination: ComponentHandler = (event, { bo
     const fixedPage = Math.max(1, Math.min(pageCount, newCurrent));
     const start = (fixedPage - 1) * pageSize;
     const end = fixedPage * pageSize;
-    const pageData = leaderboard.value.slice(start, end);
+    const { value: pageData } = cachedData;
+    const items = pageData.values.slice(start, end);
 
-    const values: string[] = pageData.map((user) => {
+    const values: string[] = items.map((user) => {
       const emoji = currentPage === 1 && user.rank <= 3 ? ["🥇", "🥈", "🥉"][user.rank - 1] : "🎖️";
       return `${user.rank}. ${emoji} **${user.name}**・${user.points.toLocaleString()} puntos`;
     });

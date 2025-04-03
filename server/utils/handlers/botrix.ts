@@ -30,11 +30,15 @@ export const handlerBotrix: CommandHandler = async (event, { body }) => {
       const start = (currentPage - 1) * pageSize;
       const end = start + pageSize;
       const leaderboardWithRank = leaderboard.map((user, i) => ({ ...user, rank: i + 1 }));
-      const pageData = await createCachedData("botrix-leaderboard", {
+      const pageData = await createCachedData<BotrixCachedLeaderboard>("botrix-leaderboard", {
         id,
-        data: leaderboardWithRank
+        data: {
+          values: leaderboardWithRank,
+          pageCount,
+          timestamp: new Date().toISOString()
+        }
       });
-      const items = pageData.slice(start, end);
+      const items = pageData.values.slice(start, end);
 
       const values: string[] = items.map((user) => {
         const emoji = currentPage === 1 && user.rank <= 3 ? ["🥇", "🥈", "🥉"][user.rank - 1] : "🎖️";

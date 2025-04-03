@@ -17,4 +17,10 @@ declare global {
   interface BotrixUserWithRank extends BotrixUser {
     rank: number;
   }
+
+  interface BotrixCachedLeaderboard {
+    values: BotrixUserWithRank[];
+    pageCount: number;
+    timestamp: string;
+  }
 }

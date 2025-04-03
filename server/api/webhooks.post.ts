@@ -34,7 +34,10 @@ export default defineEventHandler(async (event) => {
     ["btn_reload"]: handlerVideoReload, // Componente /video-reload
     ["btn_baneados_prev"]: handlerBaneadosPagination, // Componente /baneados-pagination
     ["btn_baneados_next"]: handlerBaneadosPagination,
-    ["select_baneados_page"]: handlerBaneadosPagination
+    ["select_baneados_page"]: handlerBaneadosPagination,
+    ["btn_botrix_leaderboard_prev"]: handlerBotrixLeaderboardPagination,
+    ["btn_botrix_leaderboard_next"]: handlerBotrixLeaderboardPagination,
+    ["select_botrix_leaderboard_page"]: handlerBotrixLeaderboardPagination
   };
 
   return create(type, () => {
