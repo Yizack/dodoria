@@ -25,7 +25,7 @@ export const handlerBotRix: CommandHandler = async (event, { body, getValue }) =
         return deferUpdate({
           token,
           application_id: config.discord.applicationId,
-          embeds: errorEmbed("⚠️ Error. No se pudo encontrar el usuario en BotRix.")
+          embeds: errorEmbed("⚠️ Error. No se pudo encontrar el usuario de KICK en BotRix.")
         });
       }
 
@@ -35,7 +35,7 @@ export const handlerBotRix: CommandHandler = async (event, { body, getValue }) =
           name: "BotRix",
           icon_url: "https://dunb17ur4ymx4.cloudfront.net/webstore/logos/aa9c649812ffbd3af3349bd86be145dc15994316.png"
         },
-        description: `El usuario <:kick:1267449535668555788> **${user.name}** tiene **${user.points.toLocaleString()}** puntos en BotRix.`,
+        description: `### El usuario <:kick:1267449535668555788> **${user.name}** tiene **${user.points.toLocaleString()}** puntos en BotRix.`,
         timestamp: new Date().toISOString(),
         footer: {
           icon_url: `${SITE.url}/${CONSTANTS.AVATAR}`

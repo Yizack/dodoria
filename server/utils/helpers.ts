@@ -4,7 +4,7 @@ export { hash } from "ohash";
 export { withQuery, parseURL, getQuery as getQueryUfo } from "ufo";
 export { z } from "zod";
 
-export const getOptionsValue = (name: string, options: WebhookBody["data"]["options"]) => {
+export const getOptionsValue = (name: string, options: DiscordBodyOptions[] | null) => {
   const option = options?.find(option => option.name === name);
   return option?.value ?? "";
 };
