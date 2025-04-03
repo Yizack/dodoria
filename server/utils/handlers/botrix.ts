@@ -29,11 +29,12 @@ export const handlerBotrix: CommandHandler = async (event, { body }) => {
       const currentPage = 1;
       const start = (currentPage - 1) * pageSize;
       const end = start + pageSize;
-      const items = leaderboard.slice(start, end);
+      const leaderboardWithRank = leaderboard.map((user, i) => ({ ...user, rank: i + 1 }));
+      const items = leaderboardWithRank.slice(start, end);
 
-      const values: string[] = items.map((user, i) => {
-        const emoji = currentPage === 1 && i < 3 ? ["🥇", "🥈", "🥉"][i] : "🎖️";
-        return `${emoji} **${user.name}**・${user.points.toLocaleString()} puntos`;
+      const values: string[] = items.map((user) => {
+        const emoji = currentPage === 1 && user.rank <= 3 ? ["🥇", "🥈", "🥉"][user.rank] : "🎖️";
+        return `${user.rank}. ${emoji} **${user.name}**・${user.points.toLocaleString()} puntos`;
       });
 
       embeds.push({
