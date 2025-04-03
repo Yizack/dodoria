@@ -55,6 +55,7 @@ declare global {
     };
     author?: {
       name: string;
+      url?: string;
       icon_url: string;
     };
     thumbnail?: {
