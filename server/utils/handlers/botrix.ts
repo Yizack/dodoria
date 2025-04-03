@@ -35,7 +35,7 @@ export default defineCommandHandler(BOTRIX.name, (event, { body, getValue }) => 
           name: "BotRix",
           icon_url: `${SITE.url}/images/botrix.webp`
         },
-        description: `### <:kick:1267449535668555788> **${user.name}** tiene **${user.points.toLocaleString()}** puntos en BotRix.`,
+        description: `### <:kick:1267449535668555788> **\`${user.name}\`** tiene **${user.points.toLocaleString()}** puntos en BotRix.`,
         timestamp: new Date().toISOString(),
         footer: {
           text: CONSTANTS.BOT,
