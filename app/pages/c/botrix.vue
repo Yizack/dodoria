@@ -55,11 +55,11 @@ const fetchLeaderboard = async () => {
               <tr>
                 <th scope="row">
                   <div class="d-flex justify-content-center align-items-center gap-1">
+                    <span>{{ i + 1 }}</span>
                     <Twemoji v-if="i + 1 === 1" emoji="🥇" size="26px" />
                     <Twemoji v-else-if="i + 1 === 2" emoji="🥈" size="26px" />
                     <Twemoji v-else-if="i + 1 === 3" emoji="🥉" size="26px" />
                     <Twemoji v-else emoji="🎖️" />
-                    <span>{{ i + 1 }}</span>
                   </div>
                 </th>
                 <td><NuxtLink :to="`https://kick.com/${user.name}`" external target="_blank">{{ user.name }}</NuxtLink></td>
