@@ -55,8 +55,8 @@ const fetchLeaderboard = async () => {
             <tr>
               <th scope="col">#</th>
               <th scope="col">Usuario</th>
-              <th scope="col" :class="{ 'leaderboard-highlight-head': sort === 'points' }">Puntos</th>
-              <th scope="col" :class="{ 'leaderboard-highlight-head': sort === 'watchtime' }">Watchtime</th>
+              <th scope="col" :class="{ 'leaderboard-highlight-head': sortType === 'points' }">Puntos</th>
+              <th scope="col" :class="{ 'leaderboard-highlight-head': sortType === 'watchtime' }">Watchtime</th>
               <th scope="col">Seguidor desde</th>
             </tr>
           </thead>
@@ -73,8 +73,8 @@ const fetchLeaderboard = async () => {
                   </div>
                 </th>
                 <td><NuxtLink :to="`https://kick.com/${user.name}`" external target="_blank" class="text-decoration-none">{{ user.name }}</NuxtLink></td>
-                <td :class="{ 'leaderboard-highlight': sort === 'points' }">{{ user.points.toLocaleString() }}</td>
-                <td :class="{ 'leaderboard-highlight': sort === 'watchtime' }">{{ formatWatchtime(user.watchtime) }}</td>
+                <td :class="{ 'leaderboard-highlight': sortType === 'points' }">{{ user.points.toLocaleString() }}</td>
+                <td :class="{ 'leaderboard-highlight': sortType === 'watchtime' }">{{ formatWatchtime(user.watchtime) }}</td>
                 <td>{{ user.followage?.date ? formatDate(user.followage.date) : '' }}</td>
               </tr>
             </template>
