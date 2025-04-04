@@ -95,7 +95,7 @@ const fetchLeaderboard = async () => {
   background-color: #4e0a2d;
 }
 
-a {
+table a {
   &:hover {
     text-decoration: underline!important;
   }
