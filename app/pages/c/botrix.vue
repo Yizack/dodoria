@@ -62,7 +62,7 @@ const fetchLeaderboard = async () => {
                     <Twemoji v-else emoji="🎖️" />
                   </div>
                 </th>
-                <td><NuxtLink :to="`https://kick.com/${user.name}`" external target="_blank">{{ user.name }}</NuxtLink></td>
+                <td><NuxtLink :to="`https://kick.com/${user.name}`" external target="_blank" class="text-decoration-none">{{ user.name }}</NuxtLink></td>
                 <td :class="{ 'leaderboard-highlight': sort === 'points' }">{{ user.points.toLocaleString() }}</td>
                 <td :class="{ 'leaderboard-highlight': sort === 'watchtime' }">{{ formatWatchtime(user.watchtime) }}</td>
                 <td>{{ user.followage?.date ? formatDate(user.followage.date) : '' }}</td>
