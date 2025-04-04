@@ -70,7 +70,8 @@ export default defineNuxtConfig({
   modules: [
     "@nuxt/eslint",
     "nuxt-webhook-validators",
-    "@nuxthub/core"
+    "@nuxthub/core",
+    "nuxt-twemoji"
   ],
 
   runtimeConfig: {

@@ -53,7 +53,15 @@ const fetchLeaderboard = async () => {
           <tbody>
             <template v-for="(user, i) of leaderboard" :key="i">
               <tr>
-                <th scope="row">{{ i + 1 }}</th>
+                <th scope="row">
+                  <div class="d-flex justify-content-center align-items-center gap-1">
+                    <Twemoji v-if="i + 1 === 1" emoji="🥇" size="26px" />
+                    <Twemoji v-else-if="i + 1 === 2" emoji="🥈" size="26px" />
+                    <Twemoji v-else-if="i + 1 === 3" emoji="🥉" size="26px" />
+                    <Twemoji v-else emoji="🎖️" />
+                    <span>{{ i + 1 }}</span>
+                  </div>
+                </th>
                 <td><NuxtLink :to="`https://kick.com/${user.name}`" external target="_blank">{{ user.name }}</NuxtLink></td>
                 <td :class="{ 'leaderboard-highlight': sort === 'points' }">{{ user.points.toLocaleString() }}</td>
                 <td :class="{ 'leaderboard-highlight': sort === 'watchtime' }">{{ formatWatchtime(user.watchtime) }}</td>

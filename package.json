@@ -47,6 +47,7 @@
     "kient": "1.0.1-22",
     "music-metadata": "^11.0.3",
     "nuxt": "^3.16.2",
+    "nuxt-twemoji": "^3.6.3",
     "nuxt-webhook-validators": "^0.1.11",
     "ohash": "^2.0.11",
     "otp": "^1.1.2",
