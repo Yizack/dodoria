@@ -2,6 +2,19 @@
 definePageMeta({ layout: "site" });
 const { data: leaderboard } = await useFetch("/api/botrix/leaderboard");
 const formatDate = (date: string) => new Date(date).toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" });
+
+const sort = ref("points");
+const sortSelect = [
+  { value: "points", label: "Puntos" },
+  { value: "watchtime", label: "Watchtime" }
+];
+
+const fetchLeaderboard = async () => {
+  const newLeaderboard = await $fetch("/api/botrix/leaderboard", {
+    query: { sort: sort.value }
+  });
+  leaderboard.value = newLeaderboard;
+};
 </script>
 
 <template>
@@ -16,6 +29,12 @@ const formatDate = (date: string) => new Date(date).toLocaleDateString("es-MX", 
           <code class="bg-dark p-2 rounded-3">/botrix</code>
         </div>
         <p>Leaderboard de BotRix en el canal de Kick de angar</p>
+      </div>
+      <div class="mb-2 d-flex justify-content-end align-items-center gap-2">
+        <label for="sort" class="form-label m-0">Ordenar por:</label>
+        <select v-model="sort" class="form-select w-auto" @change="fetchLeaderboard">
+          <option v-for="s in sortSelect" :key="s.value" :value="s.value">{{ s.label }}</option>
+        </select>
       </div>
       <div class="overflow-x-auto rounded-3 mb-4">
         <table class="table table-dark table-hover m-0">

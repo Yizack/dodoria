@@ -19,12 +19,13 @@ export class BotRix {
     });
   }
 
-  public async getLeaderboard (options?: { search?: string }): Promise<BotRixUser[]> {
+  public async getLeaderboard (options?: { search?: string, sort?: "points" | "watchtime" }): Promise<BotRixUser[]> {
     return this._fetch<BotRixUser[]>("/public/leaderboard", {
       query: {
         user: "angar",
         platform: "kick",
         search: options?.search,
+        mode: options?.sort || "points",
         t: this.options?.bypassCache ? Date.now() : undefined
       }
     }).catch(() => []);
