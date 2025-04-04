@@ -20,6 +20,7 @@ declare global {
 
   interface BotRixCachedLeaderboard {
     values: BotRixUserWithRank[];
+    sort: string;
     pageSize: number;
     timestamp: string;
   }

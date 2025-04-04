@@ -46,7 +46,7 @@ export const handlerBotRixLeaderboardPagination: ComponentHandler = (event, { bo
       { type: ComponentType.ActionRow, components: stringSelect }
     ];
 
-    const { values: pageData, pageSize, timestamp } = cachedData.value;
+    const { values: pageData, sort, pageSize, timestamp } = cachedData.value;
     const fixedPage = Math.max(1, Math.min(pageCount, newCurrent));
     const start = (fixedPage - 1) * pageSize;
     const end = fixedPage * pageSize;
@@ -54,7 +54,8 @@ export const handlerBotRixLeaderboardPagination: ComponentHandler = (event, { bo
 
     const values: string[] = items.map((user) => {
       const emoji = fixedPage === 1 && user.rank <= 3 ? ["🥇", "🥈", "🥉"][user.rank - 1] : "🎖️";
-      return `${user.rank}. ${emoji} **${user.name}**・${user.points.toLocaleString()} puntos`;
+      const value = sort === "watchtime" ? formatWatchtime(user.watchtime) : `${user.points.toLocaleString()} puntos`;
+      return `${user.rank}. ${emoji} **${user.name}**・${value}`;
     });
 
     const embeds: DiscordEmbed[] = [{
@@ -63,10 +64,8 @@ export const handlerBotRixLeaderboardPagination: ComponentHandler = (event, { bo
         name: "BotRix",
         icon_url: `${SITE.url}/images/botrix.jpg`
       },
-      fields: [{
-        name: "Leaderboard de BotRix en el canal de Kick de ANGAR",
-        value: values.join("\n")
-      }],
+      title: sort === "watchtime" ? "Leaderboard de Watchtime" : "Leaderboard de Puntos",
+      description: values.join("\n"),
       timestamp,
       footer: {
         text: `Página ${fixedPage} de ${pageCount}`,
