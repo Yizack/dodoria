@@ -1,7 +1,7 @@
 import type { NitroFetchOptions } from "nitropack";
 
 export class BotRix {
-  private static BASE_URL = "https://botrix.live//api";
+  private static BASE_URL = "https://botrix.live/api";
   private static STREAMER = "angar";
   private static PLATFORM = "kick";
 
