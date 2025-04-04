@@ -6,7 +6,7 @@ export default defineCommandHandler(LOLPERFIL.name, (event, { body, getValue }) 
   const config = useRuntimeConfig(event);
 
   const followUpRequest = async () => {
-    const riotId = (getValue("riot_id")).replace(/ /g, "").split("#");
+    const riotId = getValue("riot_id")!.replace(/ /g, "").split("#");
     const region = getValue("servidor");
     const riotName = riotId[0];
     const riotTag = riotId[1];

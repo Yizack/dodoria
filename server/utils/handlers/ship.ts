@@ -1,8 +1,8 @@
 export default defineCommandHandler(SHIP.name, (event, { body, getValue }) => {
   const { resolved } = body.data;
 
-  const u1 = getValue("persona1");
-  const u2 = getValue("persona2");
+  const u1 = getValue("persona1")!;
+  const u2 = getValue("persona2")!;
   const p = getRandom({ min: 0, max: 100 });
   const users = resolved?.users;
   const user1 = users && users[u1];

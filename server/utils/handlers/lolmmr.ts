@@ -4,7 +4,7 @@ export default defineCommandHandler(LOLMMR.name, (event, { body, getValue }) => 
   const config = useRuntimeConfig(event);
 
   const followUpRequest = async () => {
-    const riotId = (getValue("riot_id")).replace(/ /g, "").split("#");
+    const riotId = getValue("riot_id")!.replace(/ /g, "").split("#");
     const region = getValue("servidor");
     const queue = getValue("cola");
     const riotName = riotId[0];
