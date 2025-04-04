@@ -60,7 +60,10 @@ export default defineCommandHandler(BOTRIX.name, (event, { body, getValue }) => 
       });
     }
     else if (subCommand === "leaderboard") {
-      const leaderboard = await $fetch("/api/botrix/leaderboard").catch(() => []);
+      const sort = getValue("tipo");
+      const leaderboard = await $fetch("/api/botrix/leaderboard", {
+        query: { sort }
+      }).catch(() => []);
 
       if (!leaderboard.length) {
         return deferUpdate({
@@ -80,6 +83,7 @@ export default defineCommandHandler(BOTRIX.name, (event, { body, getValue }) => 
         id,
         data: {
           values: leaderboardWithRank,
+          sort,
           pageSize,
           timestamp: new Date().toISOString()
         }
@@ -88,7 +92,8 @@ export default defineCommandHandler(BOTRIX.name, (event, { body, getValue }) => 
 
       const values: string[] = items.map((user) => {
         const emoji = currentPage === 1 && user.rank <= 3 ? ["🥇", "🥈", "🥉"][user.rank - 1] : "🎖️";
-        return `${user.rank}. ${emoji} **${user.name}**・${user.points.toLocaleString()} puntos`;
+        const value = sort === "watchtime" ? formatWatchtime(user.watchtime) : `${user.points.toLocaleString()} puntos`;
+        return `${user.rank}. ${emoji} **${user.name}**・${value}`;
       });
 
       embeds.push({
@@ -97,10 +102,8 @@ export default defineCommandHandler(BOTRIX.name, (event, { body, getValue }) => 
           name: "BotRix",
           icon_url: `${SITE.url}/images/botrix.jpg`
         },
-        fields: [{
-          name: "Leaderboard de BotRix en el canal de Kick de ANGAR",
-          value: values.join("\n")
-        }],
+        title: sort === "watchtime" ? "Leaderboard de Watchtime" : "Leaderboard de Puntos",
+        description: values.join("\n"),
         timestamp: new Date().toISOString(),
         footer: {
           text: `Página ${currentPage} de ${pageCount}`,

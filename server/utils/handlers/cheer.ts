@@ -3,7 +3,7 @@ export default defineCommandHandler(CHEER.name, (event, { body, getValue }) => {
 
   const config = useRuntimeConfig(event);
 
-  const mensaje = getValue("mensaje").replace(/(<([^>]+)>)/gi, "").trim();
+  const mensaje = getValue("mensaje")!.replace(/(<([^>]+)>)/gi, "").trim();
   const bits = [
     getEmojiURL("Cheer100"),
     getEmojiURL("Cheer1k"),

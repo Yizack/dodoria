@@ -7,7 +7,7 @@ export { z } from "zod";
 
 export const getOptionsValue = (name: string, options: DiscordBodyOptions[] | null) => {
   const option = options?.find(option => option.name === name);
-  return option?.value ?? "";
+  return option?.value;
 };
 
 export const getRandom = (options: { min?: number, max: number }) => {

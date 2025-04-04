@@ -3,7 +3,7 @@ import { MessageFlags } from "discord-api-types/v10";
 export default defineCommandHandler(COPYS.name, (event, { body, getValue }) => {
   const { token } = body;
   const config = useRuntimeConfig(event);
-  const audioValue = getValue("opcion");
+  const audioValue = getValue("opcion")!;
   const [audioId, audioDuration] = audioValue.split(":");
   const filename = `${audioId}.ogg`;
 

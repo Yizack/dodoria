@@ -249,8 +249,20 @@ export const BOTRIX: Command = {
   options: [
     {
       name: "leaderboard",
-      description: "Muestra el leaderboard de puntos de BotRix",
-      type: ApplicationCommandOptionType.Subcommand
+      description: "Muestra el leaderboard de BotRix",
+      type: ApplicationCommandOptionType.Subcommand,
+      options: [
+        {
+          name: "tipo",
+          description: "Tipo de leaderboard",
+          type: ApplicationCommandOptionType.String,
+          required: false,
+          choices: [
+            { name: "Puntos", value: "points" },
+            { name: "Watchtime", value: "watchtime" }
+          ]
+        }
+      ]
     },
     {
       name: "puntos",

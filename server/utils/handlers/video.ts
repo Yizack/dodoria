@@ -7,7 +7,7 @@ export default defineCommandHandler(VIDEO.name, (event, { body, getValue }) => {
 
   const followUpRequest = async () => {
     const embeds: DiscordEmbed[] = [], button: DiscordButton[] = [], components: DiscordComponent[] = [];
-    const url = getValue("link");
+    const url = getValue("link")!;
     const social = Object.values(VIDEO_SOCIALS).find(({ domains }) => domains.some(domain => url.includes(domain)));
 
     if (!esUrl(url) || !social?.supported) {
