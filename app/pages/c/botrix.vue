@@ -3,6 +3,7 @@ definePageMeta({ layout: "site" });
 const { data: leaderboard } = await useFetch("/api/botrix/leaderboard");
 const formatDate = (date: string) => new Date(date).toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" });
 
+const loading = ref(false);
 const sort = ref("points");
 const sortSelect = [
   { value: "points", label: "Puntos" },
@@ -10,10 +11,12 @@ const sortSelect = [
 ];
 
 const fetchLeaderboard = async () => {
+  loading.value = true;
   const newLeaderboard = await $fetch("/api/botrix/leaderboard", {
     query: { sort: sort.value }
   });
   leaderboard.value = newLeaderboard;
+  loading.value = false;
 };
 </script>
 
@@ -36,14 +39,14 @@ const fetchLeaderboard = async () => {
           <option v-for="s in sortSelect" :key="s.value" :value="s.value">{{ s.label }}</option>
         </select>
       </div>
-      <div class="overflow-x-auto rounded-3 mb-4">
-        <table class="table table-dark table-hover m-0">
+      <div v-if="!loading && leaderboard" class="overflow-x-auto rounded-3 mb-4">
+        <table class="table table-dark m-0">
           <thead>
             <tr>
               <th scope="col">#</th>
               <th scope="col">Usuario</th>
-              <th scope="col">Puntos</th>
-              <th scope="col">Watchtime</th>
+              <th scope="col" :class="{ 'leaderboard-highlight-head': sort === 'points' }">Puntos</th>
+              <th scope="col" :class="{ 'leaderboard-highlight-head': sort === 'watchtime' }">Watchtime</th>
               <th scope="col">Seguidor desde</th>
             </tr>
           </thead>
@@ -52,14 +55,25 @@ const fetchLeaderboard = async () => {
               <tr>
                 <th scope="row">{{ i + 1 }}</th>
                 <td><NuxtLink :to="`https://kick.com/${user.name}`" external target="_blank">{{ user.name }}</NuxtLink></td>
-                <td>{{ user.points.toLocaleString() }}</td>
-                <td>{{ formatWatchtime(user.watchtime) }}</td>
+                <td :class="{ 'leaderboard-highlight': sort === 'points' }">{{ user.points.toLocaleString() }}</td>
+                <td :class="{ 'leaderboard-highlight': sort === 'watchtime' }">{{ formatWatchtime(user.watchtime) }}</td>
                 <td>{{ user.followage?.date ? formatDate(user.followage.date) : '' }}</td>
               </tr>
             </template>
           </tbody>
         </table>
       </div>
+      <SpinnerLoading v-else class="my-5" />
     </div>
   </main>
 </template>
+
+<style scoped>
+.leaderboard-highlight {
+  background-color: #612142;
+}
+
+.leaderboard-highlight-head {
+  background-color: #4e0a2d;
+}
+</style>
