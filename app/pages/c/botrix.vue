@@ -1,10 +1,15 @@
 <script setup lang="ts">
 definePageMeta({ layout: "site" });
-const { data: leaderboard } = await useFetch("/api/botrix/leaderboard");
+const router = useRouter();
+const { sort }: { sort?: "points" | "watchtime" } = useRoute().query;
+const sortType = ref(sort || "points");
+
+const { data: leaderboard } = await useFetch("/api/botrix/leaderboard", {
+  query: { sort: sortType.value }
+});
 const formatDate = (date: string) => new Date(date).toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" });
 
 const loading = ref(false);
-const sort = ref("points");
 const sortSelect = [
   { value: "points", label: "Puntos" },
   { value: "watchtime", label: "Watchtime" }
@@ -13,7 +18,12 @@ const sortSelect = [
 const fetchLeaderboard = async () => {
   loading.value = true;
   const newLeaderboard = await $fetch("/api/botrix/leaderboard", {
-    query: { sort: sort.value }
+    query: { sort: sortType.value }
+  });
+  router.push({
+    query: {
+      ...sortType.value !== "points" && { sort: sortType.value }
+    }
   });
   leaderboard.value = newLeaderboard;
   loading.value = false;
@@ -35,7 +45,7 @@ const fetchLeaderboard = async () => {
       </div>
       <div class="mb-2 d-flex justify-content-end align-items-center gap-2">
         <label for="sort" class="form-label m-0">Ordenar por:</label>
-        <select v-model="sort" class="form-select w-auto" @change="fetchLeaderboard">
+        <select v-model="sortType" class="form-select w-auto" @change="fetchLeaderboard">
           <option v-for="s in sortSelect" :key="s.value" :value="s.value">{{ s.label }}</option>
         </select>
       </div>
@@ -83,5 +93,11 @@ const fetchLeaderboard = async () => {
 
 .leaderboard-highlight-head {
   background-color: #4e0a2d;
+}
+
+a {
+  &:hover {
+    text-decoration: underline!important;
+  }
 }
 </style>
