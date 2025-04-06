@@ -26,7 +26,7 @@ export const handlerVideoReload: ComponentHandler = (event, { body }) => {
         const is_gif = uploaded?.url.includes(".gif");
         const emoji = getSocial(social!);
         const fxUrl = is_gif ? withQuery(uploaded!.url, { t: now }) : withQuery("https://dev.ahmedrangel.com/dc/fx", { video_url: uploaded!.url, redirect_url: short_url, t: now });
-        const fixedCaption = caption.length > 500 ? caption.substring(0, 450) + "..." : caption;
+        const fixedCaption = caption.length > 450 ? caption.substring(0, 450) + "..." : caption;
         const mensaje = `[${emoji}](${fxUrl}) **${social}**: [${short_url.replace("https://", "")}](<${short_url}>)\n${fixedCaption}`;
         return editFollowUpMessage(mensaje, {
           token,
