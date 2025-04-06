@@ -68,11 +68,11 @@ export default defineCommandHandler(VIDEO.name, (event, { body, getValue }) => {
       });
 
       const fxUrl = is_gif ? withQuery(downloadUrl, { t: Date.now() }) : withQuery("https://dev.ahmedrangel.com/dc/fx", { video_url: downloadUrl, redirect_url: short_url, t: Date.now() });
-      const mensaje = `[${social.emoji}](${fxUrl}) **${social.name}**: [${short_url.replace("https://", "")}](<${short_url}>)\n${caption}`;
-      const fixedMsg = mensaje.length > 500 ? mensaje.substring(0, 500) + "..." : mensaje;
+      const fixedCaption = caption.length > 500 ? caption.substring(0, 450) + "..." : caption;
+      const mensaje = `[${social.emoji}](${fxUrl}) **${social.name}**: [${short_url.replace("https://", "")}](<${short_url}>)\n${fixedCaption}`;
 
       return deferUpdate({
-        content: fixedMsg,
+        content: mensaje,
         token,
         application_id: config.discord.applicationId,
         embeds,
