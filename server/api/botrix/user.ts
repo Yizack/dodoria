@@ -11,4 +11,4 @@ export default defineCachedEventHandler(async (event) => {
   }
 
   return user;
-}, { maxAge: 600 });
+}, { maxAge: 600, swr: false });

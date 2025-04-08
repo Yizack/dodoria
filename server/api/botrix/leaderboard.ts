@@ -8,6 +8,7 @@ export default defineCachedEventHandler(async (event) => {
   return leaderboard.filter(user => !bots.includes(user.name.toLowerCase()));
 }, {
   maxAge: 600,
+  swr: false,
   name: "botrix",
   group: "leaderboard",
   getKey: async (event) => {
