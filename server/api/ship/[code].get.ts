@@ -19,4 +19,10 @@ export default defineCachedEventHandler(async (event) => {
   });
 
   return image;
-}, { maxAge: 86400 });
+}, {
+  swr: false,
+  name: "dodoria",
+  group: "ship",
+  getKey: event => getRouterParams(event).code as string,
+  maxAge: 86400
+});
