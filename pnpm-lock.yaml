@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@cloudflare/workers-types':
-        specifier: ^4.20250415.0
-        version: 4.20250415.0
+        specifier: ^4.20250416.0
+        version: 4.20250416.0
       '@nuxt/eslint':
         specifier: ^1.3.0
         version: 1.3.0(@vue/compiler-sfc@3.5.13)(eslint@9.24.0(jiti@2.4.2))(magicast@0.3.5)(typescript@5.8.3)(vite@6.2.6(@types/node@22.14.1)(jiti@2.4.2)(terser@5.39.0)(yaml@2.7.1))
@@ -72,8 +72,8 @@ importers:
         specifier: ^3.16.2
         version: 3.16.2(@parcel/watcher@2.5.1)(@types/node@22.14.1)(db0@0.3.1)(eslint@9.24.0(jiti@2.4.2))(ioredis@5.6.1)(magicast@0.3.5)(meow@13.2.0)(optionator@0.9.4)(rollup@4.40.0)(stylelint@16.18.0(typescript@5.8.3))(terser@5.39.0)(typescript@5.8.3)(vite@6.2.6(@types/node@22.14.1)(jiti@2.4.2)(terser@5.39.0)(yaml@2.7.1))(vue-tsc@2.2.8(typescript@5.8.3))(yaml@2.7.1)
       nuxt-twemoji:
-        specifier: ^3.7.0
-        version: 3.7.0(magicast@0.3.5)
+        specifier: ^3.7.1
+        version: 3.7.1(magicast@0.3.5)
       nuxt-webhook-validators:
         specifier: ^0.2.0
         version: 0.2.0(magicast@0.3.5)
@@ -105,8 +105,8 @@ importers:
         specifier: ^2.2.8
         version: 2.2.8(typescript@5.8.3)
       wrangler:
-        specifier: ^4.11.0
-        version: 4.11.0(@cloudflare/workers-types@4.20250415.0)
+        specifier: ^4.11.1
+        version: 4.11.1(@cloudflare/workers-types@4.20250416.0)
       zod:
         specifier: ^3.24.2
         version: 3.24.2
@@ -286,8 +286,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@cloudflare/workers-types@4.20250415.0':
-    resolution: {integrity: sha512-6N3N7yZEBVhztPUcloHSMm5+kSY0/e1OtoPjNrI5Jw8dyFTNSf875u0D76YFiYCV8WVwbp3RtdEAb6TWdAwoEw==}
+  '@cloudflare/workers-types@4.20250416.0':
+    resolution: {integrity: sha512-i37TX0Clp+MrPdXMBdvKZM7JghCrWD9GtG7E+8ANOAPmtZjUkZfEy9qq46IG3XlNpagPaWDkY3SgJ3s01gPxCw==}
 
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -3106,8 +3106,8 @@ packages:
     resolution: {integrity: sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==}
     engines: {node: '>=4'}
 
-  miniflare@4.20250410.0:
-    resolution: {integrity: sha512-vvbVssljSZathZ0gYQknXW4g/Oye/jAYlQStnbW+8Sa3BnF0u+vhP3MaCGea/OlC9+FsD/2HUwVnb56Tof9UZA==}
+  miniflare@4.20250410.1:
+    resolution: {integrity: sha512-xnJEyLbEBMFTIbiamt/BLQLeTj7iMsnsZANhZIHYBP+4YfwFQ20XAGDZ14U3AQ9yz30N3EhRcim8wIcZn75KLQ==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -3273,8 +3273,8 @@ packages:
   nth-check@2.1.1:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}
 
-  nuxt-twemoji@3.7.0:
-    resolution: {integrity: sha512-iqigF249GWstkwgcnOkXrbmDqPAwvG/68HE71hOtkgwNEJ0I9/DBNcLG3AT4lchK7SwFtT7qm8jCx7eldlswVw==}
+  nuxt-twemoji@3.7.1:
+    resolution: {integrity: sha512-IbuA8+N56pkMXY887SjOcCPgM2b/CFF+PuroBJ0Q5Y+iNDT2lh003dKXL29L2H6OZLmAwOL2BPLh1BmPQF73hw==}
 
   nuxt-webhook-validators@0.2.0:
     resolution: {integrity: sha512-boy4mblKpt8NrpZiK+Uzmb4wX9c9UO2eUeUdQ5CuCVTQzhTBgWifOJC8UUjR4eH6T7UwopWFCSIOF+iQ1LN6BQ==}
@@ -4534,8 +4534,8 @@ packages:
     engines: {node: '>=16'}
     hasBin: true
 
-  wrangler@4.11.0:
-    resolution: {integrity: sha512-P9jyp1wDUmspi9sRMQG16TyeiN8IP7pLkfeknRkqm/3AwkD8L32AvgqDYqk/jZhI+eIGAzue5h1JX6jILX2qBQ==}
+  wrangler@4.11.1:
+    resolution: {integrity: sha512-xA+Z6N/aqarTUcrOb8OSKewITUqtvFW+nGP5hz/5hlJTzdB1a3dh9pGMQop0SPuraa44sxqIQnxNqPSAEuasew==}
     engines: {node: '>=18.0.0'}
     hasBin: true
     peerDependencies:
@@ -4868,7 +4868,7 @@ snapshots:
   '@cloudflare/workerd-windows-64@1.20250410.0':
     optional: true
 
-  '@cloudflare/workers-types@4.20250415.0': {}
+  '@cloudflare/workers-types@4.20250416.0': {}
 
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
@@ -5597,7 +5597,7 @@ snapshots:
 
   '@nuxthub/core@0.8.24(db0@0.3.1)(ioredis@5.6.1)(magicast@0.3.5)(vite@6.2.6(@types/node@22.14.1)(jiti@2.4.2)(terser@5.39.0)(yaml@2.7.1))':
     dependencies:
-      '@cloudflare/workers-types': 4.20250415.0
+      '@cloudflare/workers-types': 4.20250416.0
       '@nuxt/devtools-kit': 2.4.0(magicast@0.3.5)(vite@6.2.6(@types/node@22.14.1)(jiti@2.4.2)(terser@5.39.0)(yaml@2.7.1))
       '@nuxt/kit': 3.16.2(magicast@0.3.5)
       '@uploadthing/mime-types': 0.3.4
@@ -7873,7 +7873,7 @@ snapshots:
 
   min-indent@1.0.1: {}
 
-  miniflare@4.20250410.0:
+  miniflare@4.20250410.1:
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       acorn: 8.14.0
@@ -8124,7 +8124,7 @@ snapshots:
     dependencies:
       boolbase: 1.0.0
 
-  nuxt-twemoji@3.7.0(magicast@0.3.5):
+  nuxt-twemoji@3.7.1(magicast@0.3.5):
     dependencies:
       '@nuxt/kit': 3.16.2(magicast@0.3.5)
       '@twemoji/api': 16.0.1
@@ -9609,18 +9609,18 @@ snapshots:
       '@cloudflare/workerd-linux-arm64': 1.20250410.0
       '@cloudflare/workerd-windows-64': 1.20250410.0
 
-  wrangler@4.11.0(@cloudflare/workers-types@4.20250415.0):
+  wrangler@4.11.1(@cloudflare/workers-types@4.20250416.0):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.4.0
       '@cloudflare/unenv-preset': 2.3.1(unenv@2.0.0-rc.15)(workerd@1.20250410.0)
       blake3-wasm: 2.1.5
       esbuild: 0.25.2
-      miniflare: 4.20250410.0
+      miniflare: 4.20250410.1
       path-to-regexp: 6.3.0
       unenv: 2.0.0-rc.15
       workerd: 1.20250410.0
     optionalDependencies:
-      '@cloudflare/workers-types': 4.20250415.0
+      '@cloudflare/workers-types': 4.20250416.0
       fsevents: 2.3.3
       sharp: 0.33.5
     transitivePeerDependencies:
