@@ -1,4 +1,4 @@
-export default defineCachedEventHandler(async (event) => {
+export default defineEventHandler(async (event) => {
   const { code } = await getValidatedRouterParams(event, z.object({
     code: z.string()
   }).parse);
@@ -14,14 +14,9 @@ export default defineCachedEventHandler(async (event) => {
 
   setResponseHeaders(event, {
     "Content-Disposition": `inline; filename="ship-${u.join("-")}-${p}.png"`,
-    "Content-Type": "image/png"
+    "Content-Type": "image/png",
+    "Cache-Control": "max-age=86400"
   });
 
   return image;
-}, {
-  swr: false,
-  name: "dodoria",
-  group: "ship",
-  getKey: event => getRouterParams(event).code as string,
-  maxAge: 86400
 });
