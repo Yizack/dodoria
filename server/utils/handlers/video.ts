@@ -54,7 +54,7 @@ export default defineCommandHandler(VIDEO.name, (event, { body, getValue }) => {
         {
           type: ComponentType.Button,
           style: ButtonStyle.Primary,
-          custom_id: "btn_reload",
+          custom_id: "videos:btn-reload",
           emoji: {
             name: "reload",
             id: "1292318494943215616"

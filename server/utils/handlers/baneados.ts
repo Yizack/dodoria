@@ -71,7 +71,7 @@ export default defineCommandHandler(BANEADOS.name, (event, { body }) => {
     buttons.push({
       type: ComponentType.Button,
       style: ButtonStyle.Primary,
-      custom_id: "btn_baneados_prev",
+      custom_id: "baneados:btn-prev",
       emoji: {
         name: "arrowLeft",
         id: "1324906526430986291"
@@ -80,7 +80,7 @@ export default defineCommandHandler(BANEADOS.name, (event, { body }) => {
     }, {
       type: ComponentType.Button,
       style: ButtonStyle.Primary,
-      custom_id: "btn_baneados_next",
+      custom_id: "baneados:btn-next",
       emoji: {
         name: "arrowRight",
         id: "1324906542105100390"
@@ -90,7 +90,7 @@ export default defineCommandHandler(BANEADOS.name, (event, { body }) => {
 
     const stringSelect: DiscordStringSelect = {
       type: ComponentType.StringSelect,
-      custom_id: "select_baneados_page",
+      custom_id: "baneados:select-page",
       placeholder: "Selecciona una página",
       options: Array.from({ length: pagesAvailable }, (_, i) => ({
         label: `Página ${i + 1}`,

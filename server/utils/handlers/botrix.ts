@@ -115,7 +115,7 @@ export default defineCommandHandler(BOTRIX.name, (event, { body, getValue }) => 
         {
           type: ComponentType.Button,
           style: ButtonStyle.Primary,
-          custom_id: "btn_botrix_leaderboard_prev",
+          custom_id: "botrix-leaderboard:btn-prev",
           emoji: {
             name: "arrowLeft",
             id: "1324906526430986291"
@@ -125,7 +125,7 @@ export default defineCommandHandler(BOTRIX.name, (event, { body, getValue }) => 
         {
           type: ComponentType.Button,
           style: ButtonStyle.Primary,
-          custom_id: "btn_botrix_leaderboard_next",
+          custom_id: "botrix-leaderboard:btn-next",
           emoji: {
             name: "arrowRight",
             id: "1324906542105100390"
@@ -142,7 +142,7 @@ export default defineCommandHandler(BOTRIX.name, (event, { body, getValue }) => 
 
       const stringSelect: DiscordStringSelect = {
         type: ComponentType.StringSelect,
-        custom_id: "select_botrix_leaderboard_page",
+        custom_id: "botrix-leaderboard:select-page",
         placeholder: "Selecciona una página",
         options: Array.from({ length: pageCount }, (_, i) => ({
           label: `Página ${i + 1}`,

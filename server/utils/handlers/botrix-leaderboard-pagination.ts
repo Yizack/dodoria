@@ -28,10 +28,10 @@ export const handlerBotRixLeaderboardPagination: ComponentHandler = (event, { bo
       });
     }
 
-    const newCurrent = data!.custom_id === "select_botrix_leaderboard_page" ? Number(data!.values?.[0]) : data!.custom_id === "btn_botrix_leaderboard_prev" ? currentPage - 1 : currentPage + 1;
+    const newCurrent = data!.custom_id === "botrix-leaderboard:select-page" ? Number(data!.values?.[0]) : data!.custom_id === "botrix-leaderboard:btn-prev" ? currentPage - 1 : currentPage + 1;
     for (const b of buttons) {
-      if ((data!.custom_id === "btn_botrix_leaderboard_prev" || data!.custom_id === "select_botrix_leaderboard_page") && "btn_botrix_leaderboard_prev" === b.custom_id && (newCurrent <= 1)) b.disabled = true;
-      else if ((data!.custom_id === "btn_botrix_leaderboard_next" || data!.custom_id === "select_botrix_leaderboard_page") && "btn_botrix_leaderboard_next" === b.custom_id && (newCurrent >= pageCount)) b.disabled = true;
+      if ((data!.custom_id === "botrix-leaderboard:btn-prev" || data!.custom_id === "botrix-leaderboard:select-page") && "botrix-leaderboard:btn-prev" === b.custom_id && (newCurrent <= 1)) b.disabled = true;
+      else if ((data!.custom_id === "botrix-leaderboard:btn-next" || data!.custom_id === "botrix-leaderboard:select-page") && "botrix-leaderboard:btn-next" === b.custom_id && (newCurrent >= pageCount)) b.disabled = true;
       else b.disabled = false;
     }
 

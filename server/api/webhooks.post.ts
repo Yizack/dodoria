@@ -29,14 +29,10 @@ export default defineEventHandler(async (event) => {
     handlersBotrix // Comando /botrix
   ];
 
-  const componentHandlers: { [key: string]: ComponentHandler } = {
-    ["btn_reload"]: handlerVideoReload, // Componente /video-reload
-    ["btn_baneados_prev"]: handlerBaneadosPagination, // Componente /baneados-pagination
-    ["btn_baneados_next"]: handlerBaneadosPagination,
-    ["select_baneados_page"]: handlerBaneadosPagination,
-    ["btn_botrix_leaderboard_prev"]: handlerBotRixLeaderboardPagination,
-    ["btn_botrix_leaderboard_next"]: handlerBotRixLeaderboardPagination,
-    ["select_botrix_leaderboard_page"]: handlerBotRixLeaderboardPagination
+  const componentHandlers: { [prefix: string]: ComponentHandler } = {
+    ["videos"]: handlerVideoReload, // Componente /video-reload
+    ["baneados"]: handlerBaneadosPagination, // Componente /baneados-pagination
+    ["botrix-leaderboard"]: handlerBotRixLeaderboardPagination // Componente /botrix-leaderboard-pagination
   };
 
   return create(type, () => {
@@ -49,9 +45,11 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    const componentHandler = componentHandlers[custom_id || ""];
-    if (componentHandler) {
-      return componentHandler(event, { body });
+    if (custom_id) {
+      const handlerKey = Object.keys(componentHandlers).find(key => custom_id.startsWith(`${key}:`));
+      if (handlerKey) {
+        return componentHandlers[handlerKey]!(event, { body });
+      }
     }
 
     throw createError({ statusCode: 400, message: "Unknown interaction type" });

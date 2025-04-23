@@ -30,10 +30,10 @@ export const handlerBaneadosPagination: ComponentHandler = (event, { body }) => 
       });
     }
 
-    const newCurrent = data!.custom_id === "select_baneados_page" ? Number(data!.values?.[0]) : data!.custom_id === "btn_baneados_prev" ? Number(current!) - 1 : Number(current!) + 1;
+    const newCurrent = data!.custom_id === "baneados:select-page" ? Number(data!.values?.[0]) : data!.custom_id === "baneados:btn-prev" ? Number(current!) - 1 : Number(current!) + 1;
     for (const b of buttons) {
-      if ((data!.custom_id === "btn_baneados_prev" || data!.custom_id === "select_baneados_page") && "btn_baneados_prev" === b.custom_id && (newCurrent <= 1)) b.disabled = true;
-      else if ((data!.custom_id === "btn_baneados_next" || data!.custom_id === "select_baneados_page") && "btn_baneados_next" === b.custom_id && (newCurrent >= Number(available))) b.disabled = true;
+      if ((data!.custom_id === "baneados:btn-prev" || data!.custom_id === "baneados:select-page") && "baneados:btn-prev" === b.custom_id && (newCurrent <= 1)) b.disabled = true;
+      else if ((data!.custom_id === "baneados:btn-next" || data!.custom_id === "baneados:select-page") && "baneados:btn-next" === b.custom_id && (newCurrent >= Number(available))) b.disabled = true;
       else b.disabled = false;
     }
 
