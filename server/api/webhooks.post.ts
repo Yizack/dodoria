@@ -46,7 +46,7 @@ export default defineEventHandler(async (event) => {
     }
 
     if (custom_id) {
-      const handlerKey = Object.keys(componentHandlers).find(key => custom_id.startsWith(`${key}:`));
+      const handlerKey = Object.keys(componentHandlers).find(prefix => custom_id.startsWith(`${prefix}:`));
       if (handlerKey) {
         return componentHandlers[handlerKey]!(event, { body });
       }
