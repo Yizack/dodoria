@@ -100,14 +100,14 @@ export const buildBaneadosEmbed = (entries: BaneadoEntry[], pagesAvailable: numb
   return embeds;
 };
 
-export const createCachedData = <T>(name: string, cache: { id: string, data: T }) => {
-  return defineCachedFunction<T>(async () => cache?.data, {
+export const createCachedData = <T>(event: H3Event, name: string, cache: { id: string, data: T }) => {
+  return defineCachedFunction<T>(async (_event: H3Event) => cache?.data, {
     maxAge: 86400,
     swr: false,
     group: "fn",
     name: name,
-    getKey: () => cache?.id
-  })();
+    getKey: (_event: H3Event) => cache?.id
+  })(event);
 };
 
 export const defineCommandHandler = (name: string, handler: CommandHandler) => ({

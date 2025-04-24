@@ -79,7 +79,7 @@ export default defineCommandHandler(BOTRIX.name, (event, { body, getValue }) => 
       const start = (currentPage - 1) * pageSize;
       const end = start + pageSize;
       const leaderboardWithRank = leaderboard.map((user, i) => ({ ...user, rank: i + 1 }));
-      const pageData = await createCachedData<BotRixCachedLeaderboard>("botrix-leaderboard", {
+      const pageData = await createCachedData<BotRixCachedLeaderboard>(event, "botrix-leaderboard", {
         id,
         data: {
           values: leaderboardWithRank,
