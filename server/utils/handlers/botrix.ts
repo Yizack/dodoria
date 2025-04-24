@@ -33,13 +33,13 @@ export default defineCommandHandler(BOTRIX.name, (event, { body, getValue }) => 
         color: CONSTANTS.COLOR,
         author: {
           name: "BotRix",
-          icon_url: `${SITE.url}/images/botrix.jpg`
+          icon_url: `${SITE.host}/images/botrix.jpg`
         },
         description: `### <:kick:1267449535668555788> **\`${user.name}\`** tiene **${user.points.toLocaleString()}** puntos actualmente.`,
         timestamp: new Date().toISOString(),
         footer: {
           text: CONSTANTS.BOT,
-          icon_url: `${SITE.url}/${CONSTANTS.AVATAR}`
+          icon_url: `${SITE.host}/${CONSTANTS.AVATAR}`
         }
       }];
 
@@ -100,14 +100,14 @@ export default defineCommandHandler(BOTRIX.name, (event, { body, getValue }) => 
         color: CONSTANTS.COLOR,
         author: {
           name: "BotRix",
-          icon_url: `${SITE.url}/images/botrix.jpg`
+          icon_url: `${SITE.host}/images/botrix.jpg`
         },
         title: sort === "watchtime" ? "Leaderboard de Watchtime" : "Leaderboard de Puntos",
         description: values.join("\n"),
         timestamp: new Date().toISOString(),
         footer: {
           text: `Página ${currentPage} de ${pageCount}`,
-          icon_url: `${SITE.url}/${CONSTANTS.AVATAR}`
+          icon_url: `${SITE.host}/${CONSTANTS.AVATAR}`
         }
       });
 

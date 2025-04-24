@@ -18,6 +18,7 @@ export default defineNuxtConfig({
         { name: "theme-color", content: "#f697c8" }
       ],
       link: [
+        { rel: "preconnect", href: SITE.cdn },
         { rel: "preload", as: "style", crossorigin: "anonymous", href: "https://fonts.googleapis.com/css?family=Roboto:400,300" },
         { rel: "stylesheet", crossorigin: "anonymous", href: "https://fonts.googleapis.com/css?family=Roboto:400,300" }
       ]

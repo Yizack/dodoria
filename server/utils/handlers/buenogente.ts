@@ -6,7 +6,7 @@ export default defineCommandHandler(BUENOGENTE.name, () => {
       color: CONSTANTS.COLOR,
       author: {
         name: CONSTANTS.BOT,
-        icon_url: `${SITE.url}/${CONSTANTS.AVATAR}`
+        icon_url: `${SITE.host}/${CONSTANTS.AVATAR}`
       },
       image: {
         url: getRandomBuenoGente()

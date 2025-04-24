@@ -24,7 +24,7 @@ export default defineCommandHandler(COMANDOS.name, () => {
       color: CONSTANTS.COLOR,
       author: {
         name: CONSTANTS.BOT,
-        icon_url: `${SITE.url}/${CONSTANTS.AVATAR}`
+        icon_url: `${SITE.host}/${CONSTANTS.AVATAR}`
       },
       image: {
         url: CONSTANTS.GUIDE

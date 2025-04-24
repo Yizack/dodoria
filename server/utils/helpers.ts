@@ -18,7 +18,7 @@ export const getRandom = (options: { min?: number, max: number }) => {
 export const getRandomAngar = async () => {
   const list = await $fetch("/api/angar/images").catch(() => []);
   const number = getRandom({ min: 0, max: list.length - 1 });
-  return `${SITE.cdnUrl}/${list[number]}`;
+  return `${SITE.cdn}/${list[number]}`;
 };
 
 export const getRandomBuenoGente = () => {

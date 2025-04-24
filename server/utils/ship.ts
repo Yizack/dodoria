@@ -38,7 +38,7 @@ export const getBackground = (percent: number) => {
       background = "10";
       break;
   }
-  return `${SITE.url}/images/ship/${background}.jpg`;
+  return `${SITE.host}/images/ship/${background}.jpg`;
 };
 
 const getPercentX = (value: number) => {

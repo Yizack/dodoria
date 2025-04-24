@@ -62,14 +62,14 @@ export const handlerBotRixLeaderboardPagination: ComponentHandler = (event, { bo
       color: CONSTANTS.COLOR,
       author: {
         name: "BotRix",
-        icon_url: `${SITE.url}/images/botrix.jpg`
+        icon_url: `${SITE.host}/images/botrix.jpg`
       },
       title: sort === "watchtime" ? "Leaderboard de Watchtime" : "Leaderboard de Puntos",
       description: values.join("\n"),
       timestamp,
       footer: {
         text: `Página ${fixedPage} de ${pageCount}`,
-        icon_url: `${SITE.url}/${CONSTANTS.AVATAR}`
+        icon_url: `${SITE.host}/${CONSTANTS.AVATAR}`
       }
     }];
 
