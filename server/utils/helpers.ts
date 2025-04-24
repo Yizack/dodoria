@@ -15,9 +15,10 @@ export const getRandom = (options: { min?: number, max: number }) => {
   return Math.round((Math.random() * (options.max - min)) + min);
 };
 
-export const getRandomAngar = () => {
-  const number = getRandom({ min: 1, max: CONSTANTS.ANGAR });
-  return `https://dodoria.yizack.com/images/angar/${number}.jpg`;
+export const getRandomAngar = async () => {
+  const list = await $fetch("/api/angar/images").catch(() => []);
+  const number = getRandom({ min: 0, max: list.length - 1 });
+  return `${SITE.cdnUrl}/${list[number]}`;
 };
 
 export const getRandomBuenoGente = () => {

@@ -1,6 +1,6 @@
 import { ButtonStyle, ComponentType } from "discord-api-types/v10";
 
-export default defineCommandHandler(ANGAR.name, (event, { body }) => {
+export default defineCommandHandler(ANGAR.name, async (event, { body }) => {
   const { member } = body;
 
   const button = [{
@@ -26,7 +26,7 @@ export default defineCommandHandler(ANGAR.name, (event, { body }) => {
         icon_url: `https://cdn.discordapp.com/avatars/${member.user.id}/${member.user.avatar}.png?size=256`
       },
       image: {
-        url: getRandomAngar()
+        url: await getRandomAngar()
       }
     }]
   });

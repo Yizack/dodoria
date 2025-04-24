@@ -9,8 +9,8 @@ export default defineCachedEventHandler(async (event) => {
 }, {
   maxAge: 600,
   swr: false,
-  name: "botrix",
-  group: "leaderboard",
+  group: "api",
+  name: "botrix-leaderboard",
   getKey: async (event) => {
     const query = await getValidatedQuery(event, z.object({
       sort: z.enum(["points", "watchtime"]).optional()
