@@ -71,62 +71,39 @@ const leagueEmblems = {
   unranked: "<:Unranked:1155128109981515786>"
 };
 
+const spellMap: Record<number, string> = {
+  1: summonerspells.cleanse,
+  3: summonerspells.exhaust,
+  4: summonerspells.flash,
+  6: summonerspells.ghost,
+  7: summonerspells.heal,
+  11: summonerspells.smite,
+  12: summonerspells.teleport,
+  13: summonerspells.clarity,
+  14: summonerspells.ignite,
+  21: summonerspells.barrier,
+  32: summonerspells.mark,
+  2202: summonerspells.flash,
+  2201: summonerspells.flee
+};
+
 export const getLolSpell = (number: number) => {
-  switch (number) {
-    case 1:
-      return summonerspells.cleanse;
-    case 3:
-      return summonerspells.exhaust;
-    case 4:
-      return summonerspells.flash;
-    case 6:
-      return summonerspells.ghost;
-    case 7:
-      return summonerspells.heal;
-    case 11:
-      return summonerspells.smite;
-    case 12:
-      return summonerspells.teleport;
-    case 13:
-      return summonerspells.clarity;
-    case 14:
-      return summonerspells.ignite;
-    case 21:
-      return summonerspells.barrier;
-    case 32:
-      return summonerspells.mark;
-    case 2202:
-      return summonerspells.flash;
-    case 2201:
-      return summonerspells.flee;
-    default:
-      return "";
-  }
+  return spellMap[number] || "";
+};
+
+const leagueMap: Record<string, string> = {
+  "hierro": leagueEmblems.iron,
+  "bronce": leagueEmblems.bronce,
+  "plata": leagueEmblems.silver,
+  "oro": leagueEmblems.gold,
+  "platino": leagueEmblems.platinum,
+  "esmeralda": leagueEmblems.emerald,
+  "diamante": leagueEmblems.diamond,
+  "maestro": leagueEmblems.master,
+  "gran maestro": leagueEmblems.grandmaster,
+  "retador": leagueEmblems.challenger
 };
 
 export const getLeagueEmblem = (league: string) => {
-  switch (league?.toLowerCase()) {
-    case "hierro":
-      return leagueEmblems.iron;
-    case "bronce":
-      return leagueEmblems.bronce;
-    case "plata":
-      return leagueEmblems.silver;
-    case "oro":
-      return leagueEmblems.gold;
-    case "platino":
-      return leagueEmblems.platinum;
-    case "esmeralda":
-      return leagueEmblems.emerald;
-    case "diamante":
-      return leagueEmblems.diamond;
-    case "maestro":
-      return leagueEmblems.master;
-    case "gran maestro":
-      return leagueEmblems.grandmaster;
-    case "retador":
-      return leagueEmblems.challenger;
-    default:
-      return leagueEmblems.unranked;
-  }
+  return leagueMap[league?.toLowerCase()] || leagueEmblems.unranked;
 };
