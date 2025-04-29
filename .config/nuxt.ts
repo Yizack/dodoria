@@ -1,4 +1,5 @@
 import { camelCase } from "scule";
+import { SITE } from "../shared/utils/site-info";
 
 export default defineNuxtConfig({
   future: { compatibilityVersion: 4 },
