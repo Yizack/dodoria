@@ -32,7 +32,8 @@ export default defineNuxtConfig({
   ],
 
   experimental: {
-    typedPages: true
+    typedPages: true,
+    purgeCachedData: false
   },
 
   features: {
@@ -101,5 +102,5 @@ export default defineNuxtConfig({
     }
   },
 
-  compatibilityDate: "2024-08-04"
+  compatibilityDate: "2025-04-30"
 });
