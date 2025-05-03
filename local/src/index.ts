@@ -75,10 +75,8 @@ Discord.client.on(Events.MessageCreate, async (message) => {
 
 Discord.client.on(Events.GuildBanAdd, async (event) => {
   const { user, guild } = event;
-  const channelId = guild.channels.cache.find(channel => channel.id === discordChannels.tests)?.id;
-  if (!channelId) return;
-
-  const channel = await Discord.client.channels.fetch(channelId) as TextChannel;
+  if (guild.id !== "525128641684832257") return;
+  const channel = await Discord.client.channels.fetch(discordChannels.tests) as TextChannel;
   try {
     await channel.send(`## ${socials.discord} \`${user.displayName} (${user.username})\` ha sido baneado permanentemente. <:pepoPoint:712364175967518730>`);
   }
