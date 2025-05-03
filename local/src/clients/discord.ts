@@ -7,7 +7,9 @@ const { discordToken } = useLocalConfig();
 const client = new Client({ intents: [
   GatewayIntentBits.Guilds,
   GatewayIntentBits.MessageContent,
-  GatewayIntentBits.GuildMessages
+  GatewayIntentBits.GuildMessages,
+  GatewayIntentBits.GuildModeration,
+  GatewayIntentBits.GuildMembers
 ] });
 
 client.on(Events.ClientReady, async () => {

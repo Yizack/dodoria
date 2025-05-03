@@ -5,6 +5,7 @@ import { hash } from "ohash";
 import { $fetch } from "ofetch";
 import { formatDuration, intervalToDuration } from "date-fns";
 import { es } from "date-fns/locale";
+import { socials } from "../../server/utils/emojis";
 import { Kick } from "./clients/kick";
 import { Discord } from "./clients/discord";
 import { KickBot } from "./clients/kickbot";
@@ -69,6 +70,18 @@ Discord.client.on(Events.MessageCreate, async (message) => {
       });
       ttsMessages = ttsMessages.filter(tts => message.createdTimestamp - tts.createdAt < 300000); // remove 5 minutes old
       break;
+  }
+});
+
+Discord.client.on(Events.GuildBanAdd, async (event) => {
+  const { user, guild } = event;
+  if (guild.id !== discordChannels.tests) return;
+  const channel = await Discord.client.channels.fetch(discordChannels.tests) as TextChannel;
+  try {
+    await channel.send(`## ${socials.discord} \`${user.displayName} (${user.username})\` ha sido baneado permanentemente. <:pepoPoint:712364175967518730>`);
+  }
+  catch (error) {
+    console.info("Error al enviar el mensaje a Discord:", error);
   }
 });
 
@@ -141,7 +154,7 @@ Kick.client.on(Kick.Events.Chatroom.UserBanned, async (event) => {
     const messageHelper = isBanned ? "ha sido baneado permanentemente" : `ha recibido un timeout de ${formattedDuration}`;
     console.info(`${data.user.username} ${messageHelper} por ${data.banned_by.username}`);
     await Kick.client.api.chat.sendMessage(kickChannel.chatroomId, `@${data.user.username} ${messageHelper}`).catch(() => null);
-    await channel.send(`## <:kick:1267449535668555788> \`${data.user.username}\` ${messageHelper}. <:pepoPoint:712364175967518730>`);
+    await channel.send(`## ${socials.discord} \`${data.user.username}\` ${messageHelper}. <:pepoPoint:712364175967518730>`);
   }
   catch (error) {
     console.info("Error al enviar el mensaje a Discord:", error);

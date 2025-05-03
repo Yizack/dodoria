@@ -25,7 +25,7 @@ export const getEmojiURL = (name: keyof typeof angarEmojis) => {
   return `https://cdn.discordapp.com/emojis/${angarEmojis[name]}.webp`;
 };
 
-const socials = {
+export const socials = {
   instagram: "<:instagram:1121001080470372422>",
   tiktok: "<:tiktok:1121003232345473065>",
   /* twitter: "<:twitter:1120999580167852094>", */
@@ -34,7 +34,8 @@ const socials = {
   youtube: "<:youtube:1140938633369628703>",
   twitch: "<:twitch:1167239427987361822>",
   kick: "<:kick:1267449535668555788>",
-  reddit: "<:reddit:1272431634624286730>"
+  reddit: "<:reddit:1272431634624286730>",
+  discord: "<:discord:1368019302518624337>"
 };
 
 export const getSocial = (name: string) => {
