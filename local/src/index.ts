@@ -5,7 +5,7 @@ import { hash } from "ohash";
 import { $fetch } from "ofetch";
 import { formatDuration, intervalToDuration } from "date-fns";
 import { es } from "date-fns/locale";
-import { socials } from "../../server/utils/emojis";
+import { socials } from "./utils/emojis";
 import { Kick } from "./clients/kick";
 import { Discord } from "./clients/discord";
 import { KickBot } from "./clients/kickbot";
