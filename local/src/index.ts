@@ -85,6 +85,18 @@ Discord.client.on(Events.GuildBanAdd, async (event) => {
   }
 });
 
+Discord.client.on(Events.GuildMemberUpdate, async (event) => {
+  const { user, guild } = event;
+  if (guild.id !== "525128641684832257") return;
+  const channel = await Discord.client.channels.fetch(discordChannels.general) as TextChannel;
+  try {
+    console.log(event);
+  }
+  catch (error) {
+    console.info("Error al enviar el mensaje a Discord:", error);
+  }
+});
+
 KickBot.subscribe(kickChannel.id);
 KickBot.client.onclose = () => KickBot.reconnect(kickChannel.id);
 KickBot.client.onmessage = async (message) => {
