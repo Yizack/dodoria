@@ -171,7 +171,7 @@ Kick.client.on(Kick.Events.Chatroom.UserBanned, async (event) => {
     const messageHelper = isBanned ? "ha sido baneado permanentemente" : `ha recibido un timeout de ${formattedDuration}`;
     console.info(`${data.user.username} ${messageHelper} por ${data.banned_by.username}`);
     await Kick.client.api.chat.sendMessage(kickChannel.chatroomId, `@${data.user.username} ${messageHelper}`).catch(() => null);
-    await channel.send(`## ${socials.discord} \`${data.user.username}\` ${messageHelper}. <:pepoPoint:712364175967518730>`);
+    await channel.send(`## ${socials.kick} \`${data.user.username}\` ${messageHelper}. <:pepoPoint:712364175967518730>`);
   }
   catch (error) {
     console.info("Error al enviar el mensaje a Discord:", error);
