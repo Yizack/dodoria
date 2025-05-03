@@ -1,16 +1,20 @@
-import { Client, Events, GatewayIntentBits } from "discord.js";
+import { Client, Events, GatewayIntentBits, Partials } from "discord.js";
 import { $fetch } from "ofetch";
 import { useLocalConfig } from "../utils/config";
 
 const { discordToken } = useLocalConfig();
 
-const client = new Client({ intents: [
-  GatewayIntentBits.Guilds,
-  GatewayIntentBits.MessageContent,
-  GatewayIntentBits.GuildMessages,
-  GatewayIntentBits.GuildModeration,
-  GatewayIntentBits.GuildMembers
-] });
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildModeration,
+    GatewayIntentBits.GuildMembers
+  ],
+  rest: { offset: 0 },
+  partials: [Partials.GuildMember]
+});
 
 client.on(Events.ClientReady, async () => {
   if (!client.user) throw new Error("Discord Client user not found");
