@@ -85,6 +85,12 @@ Discord.client.on(Events.GuildBanAdd, async (event) => {
   }
 });
 
+Discord.client.once(Events.ClientReady, async () => {
+  // Populate the guild members cache
+  const guild = await Discord.client.guilds.fetch("607559322175668248");
+  await guild.members.fetch();
+});
+
 Discord.client.on(Events.GuildMemberUpdate, async (oldMember, newMember) => {
   const oldTimeout = oldMember.communicationDisabledUntilTimestamp;
   const newTimeout = newMember.communicationDisabledUntilTimestamp;
