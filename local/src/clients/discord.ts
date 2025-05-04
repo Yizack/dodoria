@@ -11,9 +11,7 @@ const client = new Client({
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.GuildModeration,
     GatewayIntentBits.GuildMembers
-  ],
-  rest: { offset: 0 },
-  partials: [Partials.GuildMember]
+  ]
 });
 
 client.on(Events.ClientReady, async () => {
