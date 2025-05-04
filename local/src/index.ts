@@ -91,13 +91,13 @@ Discord.client.on(Events.GuildMemberUpdate, async (oldMember, newMember) => {
   const { guild } = newMember;
   const channel = await Discord.client.channels.fetch(discordChannels.general) as TextChannel;
   if (guild.id !== "607559322175668248" || oldTimeout === newTimeout) return;
-  if (newTimeout) {
+  if (newTimeout && newTimeout > Date.now()) {
     const duration = intervalToDuration({ start: new Date(Date.now()), end: new Date(newTimeout) });
     const fixedDuration = duration ? duration.days ? { days: duration.days, hours: duration.hours } : { hours: duration.hours, minutes: duration.minutes, seconds: duration.seconds } : null;
     const formattedDuration = fixedDuration ? formatDuration(fixedDuration, { format: ["days", "hours", "minutes", "seconds"], locale: es }) : null;
     await channel.send(`## ${socials.discord} \`${newMember.displayName} (${newMember.user.username})\` ha recibido un timeout de ${formattedDuration}. <:pepoPoint:712364175967518730>`);
   }
-  else {
+  else if (oldTimeout && !newTimeout && oldTimeout < Date.now()) {
     await channel.send(`## ${socials.discord} \`${newMember.displayName} (${newMember.user.username})\` ha sido liberado de la prisión de los basados. <:Chadge:1225320321507135630>`);
   }
 });
