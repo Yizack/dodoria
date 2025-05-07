@@ -16,6 +16,7 @@ export default defineNitroPlugin((nitroApp) => {
       if (!original.content && !original.embeds.length && !original.components.length && !original.attachments.length) {
         return handleWebhook(event, webhook);
       }
+      console.info("Webhook already processed, skipping...");
     }
   });
 });
