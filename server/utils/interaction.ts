@@ -18,7 +18,11 @@ const toDiscordEndpoint = (
     return $fetch(endpointURL, {
       ...Object.keys(body).length ? { body } : {},
       method: options.method,
-      headers: options.headers
+      headers: {
+        "Content-Type": "application/json",
+        "User-Agent": "Dodoria (Cloudflare Workers)",
+        ...options.headers
+      }
     });
   }
 
