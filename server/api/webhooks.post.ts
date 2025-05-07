@@ -4,6 +4,7 @@ export default defineEventHandler(async (event) => {
 
   const webhook = await readBody<WebhookBody>(event);
   const config = useRuntimeConfig(event);
+  const { token, id } = webhook;
   const registerCallback = async () => {
     await createInteractionCallback({
       id,
@@ -12,7 +13,6 @@ export default defineEventHandler(async (event) => {
     });
     await event.context.cloudflare.env.QUEUE.send({ webhook, event });
   };
-  const { token, id } = webhook;
   event.waitUntil(registerCallback());
   return handleWebhook(event, webhook);
 });
