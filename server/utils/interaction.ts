@@ -150,9 +150,12 @@ export const guildAuditLog = async <T>(options: {
 export const getOriginalInteraction = async (options: {
   token: string;
   application_id: string;
-}): Promise<DiscordMessage> => {
+}) => {
   const { token, application_id } = options;
-  return $fetch(`${API.BASE}${Routes.webhookMessage(application_id, token, "@original")}`);
+  const endpoint = `${API.BASE}${Routes.webhookMessage(application_id, token, "@original")}`;
+  return toDiscordEndpoint(endpoint, {
+    method: "GET"
+  }) as Promise<DiscordMessage>;
 };
 
 export const createInteractionCallback = async (options: {
@@ -161,13 +164,10 @@ export const createInteractionCallback = async (options: {
   authorization: string;
 }) => {
   const { token, id, authorization } = options;
-  return $fetch(`${API.BASE}${Routes.interactionCallback(id, token)}`, {
+  const endpoint = `${API.BASE}${Routes.interactionCallback(id, token)}`;
+  return toDiscordEndpoint(endpoint, {
     method: "POST",
-    body: {
-      type: InteractionResponseType.DeferredChannelMessageWithSource
-    },
-    headers: {
-      Authorization: authorization
-    }
+    body: { type: InteractionResponseType.DeferredChannelMessageWithSource },
+    headers: { Authorization: authorization }
   });
 };
