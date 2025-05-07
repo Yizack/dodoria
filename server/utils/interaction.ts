@@ -1,4 +1,7 @@
-import { InteractionResponseType, InteractionType, type MessageFlags } from "discord-api-types/v10";
+import { InteractionResponseType, InteractionType, type MessageFlags, Routes } from "discord-api-types/v10";
+import { REST } from "@discordjs/rest";
+
+const rest = new REST({ version: "10" });
 
 const API = {
   BASE: "https://discord.com/api/v10"
@@ -89,14 +92,15 @@ export const deferUpdate = (
     files?: unknown;
     attachments?: unknown[];
     headers?: Record<string, string>;
+    fromQueue?: boolean;
   }
 ) => {
-  const followupEndpoint = `/webhooks/${options.application_id}/${options.token}`;
+  const followupEndpoint = !options?.fromQueue ? `/webhooks/${options.application_id}/${options.token}` : `/webhooks/${options.application_id}/${options.token}/messages/@original`;
   return toDiscordEndpoint(followupEndpoint, {
-    method: "POST",
+    method: !options?.fromQueue ? "POST" : "PATCH",
     body: {
       flags: options?.flags,
-      type: InteractionResponseType.DeferredMessageUpdate,
+      ...!options?.fromQueue && { type: InteractionResponseType.DeferredMessageUpdate },
       content: options?.content,
       embeds: options?.embeds,
       components: options?.components,
@@ -144,4 +148,28 @@ export const guildAuditLog = async <T>(options: {
     method: "GET",
     headers: { Authorization: `Bot ${options.token}` }
   }) as T;
+};
+
+export const getOriginalInteraction = async (options: {
+  token: string;
+  application_id: string;
+}) => {
+  const { token, application_id } = options;
+  return rest.get(Routes.webhookMessage(application_id, token, "@original")) as Promise<DiscordMessage>;
+};
+
+export const createInteractionCallback = async (options: {
+  token: string;
+  id: string;
+  authorization: string;
+}) => {
+  const { token, id, authorization } = options;
+  return rest.post(Routes.interactionCallback(id, token), {
+    body: {
+      type: InteractionResponseType.DeferredChannelMessageWithSource
+    },
+    headers: {
+      Authorization: authorization
+    }
+  });
 };

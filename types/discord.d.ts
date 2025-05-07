@@ -27,6 +27,7 @@ declare global {
   interface WebhookBody {
     type: number;
     id: string;
+    application_id: string;
     data: {
       name: string;
       options: DiscordBodyOptions[] | null;
@@ -45,6 +46,7 @@ declare global {
     context: 0 | 1 | 2;
     message: DiscordMessage;
     embeds: DiscordEmbed[];
+    fromQueue?: boolean;
   }
 
   interface DiscordEmbed {

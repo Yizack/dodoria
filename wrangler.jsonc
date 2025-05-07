@@ -23,5 +23,21 @@
       "binding": "BLOB",
       "bucket_name": "dodoria"
     }
-  ]
+  ],
+  "queues": {
+    "consumers": [
+      {
+        "queue": "dodoria-queue",
+        "max_batch_size": 10,
+        "max_batch_timeout": 1,
+        "max_retries": 1
+      }
+    ],
+    "producers": [
+      {
+        "queue": "dodoria-queue",
+        "binding": "QUEUE",
+      }
+    ]
+  }
 }

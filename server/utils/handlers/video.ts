@@ -1,7 +1,7 @@
 import { ButtonStyle, ComponentType } from "discord-api-types/v10";
 
-export default defineCommandHandler(VIDEO.name, (event, { body, getValue }) => {
-  const { token } = body;
+export default defineCommandHandler(VIDEO.name, async (event, { body, getValue }) => {
+  const { token, fromQueue } = body;
 
   const config = useRuntimeConfig(event);
 
@@ -16,7 +16,8 @@ export default defineCommandHandler(VIDEO.name, (event, { body, getValue }) => {
       return deferUpdate({
         token,
         application_id: config.discord.applicationId,
-        embeds: errorEmbed(error)
+        embeds: errorEmbed(error),
+        fromQueue
       });
     }
 
@@ -25,7 +26,8 @@ export default defineCommandHandler(VIDEO.name, (event, { body, getValue }) => {
     const deferUpdateError = (message?: string) => deferUpdate({
       token,
       application_id: config.discord.applicationId,
-      embeds: errorEmbed(message || ":x: Error. Ha ocurrido un error obteniendo el video.")
+      embeds: errorEmbed(message || ":x: Error. Ha ocurrido un error obteniendo el video."),
+      fromQueue
     });
 
     if (!scraper) {
@@ -76,7 +78,8 @@ export default defineCommandHandler(VIDEO.name, (event, { body, getValue }) => {
         token,
         application_id: config.discord.applicationId,
         embeds,
-        components
+        components,
+        fromQueue
       });
     };
 
@@ -119,6 +122,10 @@ export default defineCommandHandler(VIDEO.name, (event, { body, getValue }) => {
 
     return finalReply(uploaded.url);
   };
-  event.waitUntil(followUpRequest());
-  return deferReply();
+
+  if (!fromQueue) {
+    event.waitUntil(followUpRequest());
+    return deferReply();
+  }
+  await followUpRequest();
 });
