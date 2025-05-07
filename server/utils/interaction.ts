@@ -1,7 +1,4 @@
 import { InteractionResponseType, InteractionType, type MessageFlags, Routes } from "discord-api-types/v10";
-import { REST } from "@discordjs/rest";
-
-const rest = new REST({ version: "10" });
 
 const API = {
   BASE: "https://discord.com/api/v10"
@@ -153,9 +150,9 @@ export const guildAuditLog = async <T>(options: {
 export const getOriginalInteraction = async (options: {
   token: string;
   application_id: string;
-}) => {
+}): Promise<DiscordMessage> => {
   const { token, application_id } = options;
-  return rest.get(Routes.webhookMessage(application_id, token, "@original")) as Promise<DiscordMessage>;
+  return $fetch(`${API.BASE}${Routes.webhookMessage(application_id, token, "@original")}`);
 };
 
 export const createInteractionCallback = async (options: {
@@ -164,7 +161,8 @@ export const createInteractionCallback = async (options: {
   authorization: string;
 }) => {
   const { token, id, authorization } = options;
-  return rest.post(Routes.interactionCallback(id, token), {
+  return $fetch(`${API.BASE}${Routes.interactionCallback(id, token)}`, {
+    method: "POST",
     body: {
       type: InteractionResponseType.DeferredChannelMessageWithSource
     },
