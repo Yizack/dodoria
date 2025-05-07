@@ -152,7 +152,7 @@ export const getOriginalInteraction = async (options: {
   application_id: string;
 }) => {
   const { token, application_id } = options;
-  const endpoint = `${API.BASE}${Routes.webhookMessage(application_id, token, "@original")}`;
+  const endpoint = Routes.webhookMessage(application_id, token, "@original");
   return toDiscordEndpoint(endpoint, {
     method: "GET"
   }) as Promise<DiscordMessage>;
@@ -164,7 +164,7 @@ export const createInteractionCallback = async (options: {
   authorization: string;
 }) => {
   const { token, id, authorization } = options;
-  const endpoint = `${API.BASE}${Routes.interactionCallback(id, token)}`;
+  const endpoint = Routes.interactionCallback(id, token);
   return toDiscordEndpoint(endpoint, {
     method: "POST",
     body: { type: InteractionResponseType.DeferredChannelMessageWithSource },
