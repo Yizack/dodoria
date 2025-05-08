@@ -29,7 +29,7 @@
       {
         "queue": "dodoria-queue",
         "max_batch_size": 10,
-        "max_batch_timeout": 30,
+        "max_batch_timeout": 1,
         "max_retries": 1
       }
     ],
