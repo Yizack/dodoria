@@ -1,7 +1,7 @@
 import { InteractionType } from "discord-api-types/v10";
 import type { H3Event } from "h3";
 
-export const handleWebhook = (event: H3Event, body: WebhookBody) => {
+export const handleWebhook = (event: H3Event | null, body: WebhookBody) => {
   const { type, data } = body;
   if (type === InteractionType.Ping) {
     return create(type);

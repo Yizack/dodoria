@@ -8,13 +8,13 @@ export default defineNitroPlugin((nitroApp) => {
     const { messages } = batch;
     for (const message of messages) {
       const { body } = message as Message<{ webhook: WebhookBody, event: H3Event }>;
-      const { event, webhook } = body;
+      const { webhook } = body;
       const { token, application_id } = webhook;
       webhook.fromQueue = true;
       const original = await getOriginalInteraction({ token, application_id }).catch(() => null);
       if (!original) return;
       if (!original.content && !original.embeds.length && !original.components.length && !original.attachments.length) {
-        return handleWebhook(event, webhook);
+        return handleWebhook(null, webhook);
       }
       console.info("Webhook already processed, skipping...");
     }
