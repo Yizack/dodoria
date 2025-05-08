@@ -161,17 +161,3 @@ export const getOriginalInteraction = async (options: {
     method: "GET"
   }) as Promise<DiscordMessage>;
 };
-
-export const createInteractionCallback = async (options: {
-  token: string;
-  id: string;
-  authorization: string;
-}) => {
-  const { token, id, authorization } = options;
-  const endpoint = Routes.interactionCallback(id, token);
-  return toDiscordEndpoint(endpoint, {
-    method: "POST",
-    body: { type: InteractionResponseType.DeferredChannelMessageWithSource },
-    headers: { Authorization: authorization }
-  });
-};

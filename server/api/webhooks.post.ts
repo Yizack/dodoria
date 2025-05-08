@@ -3,14 +3,7 @@ export default defineEventHandler(async (event) => {
   if (!isValidWebhook) throw createError({ statusCode: 401, message: "Unauthorized: webhook is not valid" });
 
   const webhook = await readBody<WebhookBody>(event);
-  const config = useRuntimeConfig(event);
-  const { token, id } = webhook;
   const registerCallback = async () => {
-    await createInteractionCallback({
-      id,
-      token,
-      authorization: `Bot ${config.discord.token}`
-    });
     await event.context.cloudflare.env.QUEUE.send({ webhook, event });
   };
   event.waitUntil(registerCallback());
