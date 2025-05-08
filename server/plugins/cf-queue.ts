@@ -14,7 +14,7 @@ export default defineNitroPlugin((nitroApp) => {
       const original = await getOriginalInteraction({ token, application_id }).catch(() => null);
       if (!original) return;
       if (!original.content && !original.embeds.length && !original.components.length && !original.attachments.length) {
-        return handleWebhook((undefined) as unknown as H3Event, webhook);
+        return handleWebhook(undefined as unknown as H3Event, webhook);
       }
       console.info("Webhook already processed, skipping...");
     }
