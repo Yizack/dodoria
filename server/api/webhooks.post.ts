@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
 
   const webhook = await readBody<WebhookBody>(event);
   const registerCallback = async () => {
-    await event.context.cloudflare.env.QUEUE.send({ webhook });
+    await event.context.cloudflare.env.QUEUE.send({ webhook }, { delaySeconds: 30 });
   };
   event.waitUntil(registerCallback());
   return handleWebhook(event, webhook);
