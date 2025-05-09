@@ -124,6 +124,7 @@ export default defineCommandHandler(VIDEO.name, async (event, { body, getValue }
   };
 
   if (!fromQueue) {
+    event.waitUntil(event.context.cloudflare.env.QUEUE.send(body, { delaySeconds: 5 }));
     event.waitUntil(followUpRequest());
     return deferReply();
   }
