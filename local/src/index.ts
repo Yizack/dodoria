@@ -169,15 +169,30 @@ Kick.client.on(Kick.Events.Chatroom.UserBanned, async (event) => {
   const { data } = event;
   try {
     const channel = await Discord.client.channels.fetch(discordChannels.general) as TextChannel;
+    const kickLiveStream = await Kick.getLivestream();
     const isBanned = !data.expires_at;
     const timeoutUntil = data.expires_at;
-    const duration = timeoutUntil ? intervalToDuration({ start: new Date(Date.now()), end: timeoutUntil }) : null;
+    const now = new Date(Date.now());
+    const duration = timeoutUntil ? intervalToDuration({ start: now, end: timeoutUntil }) : null;
     const fixedDuration = duration ? duration.days ? { days: duration.days, hours: duration.hours } : { hours: duration.hours, minutes: duration.minutes } : null;
     const formattedDuration = fixedDuration ? formatDuration(fixedDuration, { format: ["days", "hours", "minutes"], locale: es }) : null;
     const messageHelper = isBanned ? "ha sido baneado permanentemente" : `ha recibido un timeout de ${formattedDuration}`;
+
+    let streamMessageHelper = "";
+    const startedDate = kickLiveStream?.data?.created_at;
+    if (kickLiveStream && startedDate) {
+      const diff = Math.abs(now.getTime() - new Date(startedDate).getTime());
+      const diffInMinutes = Math.floor(diff / (1000 * 60));
+      const hours = Math.floor(diffInMinutes / 60);
+      const minutes = Math.floor(diffInMinutes % 60);
+      const seconds = Math.floor(diffInMinutes % 60);
+      const formattedTime = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+      streamMessageHelper = `\n:watch:  ~\`${formattedTime}\` del stream.`;
+    }
+
     console.info(`${data.user.username} ${messageHelper} por ${data.banned_by.username}`);
-    await Kick.client.api.chat.sendMessage(kickChannel.chatroomId, `@${data.user.username} ${messageHelper}`).catch(() => null);
-    await channel.send(`## ${socials.kick} \`${data.user.username}\` ${messageHelper}. <:pepoPoint:712364175967518730>`);
+    await Kick.client.api.chat.sendMessage(kickChannel.chatroomId, `@${data.user.username}${messageHelper}`).catch(() => null);
+    await channel.send(`## ${socials.kick} \`${data.user.username}\` ${messageHelper}. <:pepoPoint:712364175967518730>${streamMessageHelper}`);
   }
   catch (error) {
     console.info("Error al enviar el mensaje a Discord:", error);
