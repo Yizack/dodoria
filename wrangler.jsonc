@@ -4,6 +4,9 @@
   "compatibility_date": "2025-04-30",
   "main": "dist/server/index.mjs",
   "compatibility_flags": ["nodejs_compat"],
+  "limits": {
+    "cpu_ms": 300000
+  },
   "assets": {
     "binding": "ASSETS",
     "directory": "dist/public"
@@ -28,7 +31,7 @@
     "consumers": [
       {
         "queue": "dodoria-queue",
-        "max_batch_size": 10,
+        "max_batch_size": 20,
         "max_batch_timeout": 1,
         "max_retries": 1
       }
