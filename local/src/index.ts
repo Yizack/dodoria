@@ -193,7 +193,7 @@ Kick.client.on(Kick.Events.Chatroom.UserBanned, async (event) => {
     }
 
     console.info(`${data.user.username} ${messageHelper} por ${data.banned_by.username}`);
-    await Kick.client.api.chat.sendMessage(kickChannel.chatroomId, `@${data.user.username}${messageHelper}`).catch(() => null);
+    await Kick.client.api.chat.sendMessage(kickChannel.chatroomId, `@${data.user.username} ${messageHelper}`).catch(() => null);
     await channel.send(`## ${socials.kick} \`${data.user.username}\` ${messageHelper}. <:pepoPoint:712364175967518730>${streamMessageHelper}`);
   }
   catch (error) {
