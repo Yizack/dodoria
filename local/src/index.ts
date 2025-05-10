@@ -181,7 +181,7 @@ Kick.client.on(Kick.Events.Chatroom.UserBanned, async (event) => {
     let streamMessageHelper = "";
     const startedDate = kickLiveStream?.data?.created_at;
     if (kickLiveStream && startedDate) {
-      // restar 20 segundos al now por el delay
+      // restar 20 segundos al now para anticipar el momento del ban
       const fixedNow = new Date(now.getTime() - 20000);
       const diff = Math.abs(fixedNow.getTime() - new Date(startedDate).getTime());
       const diffInMinutes = Math.floor(diff / (1000 * 60));
