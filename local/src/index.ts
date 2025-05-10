@@ -187,7 +187,7 @@ Kick.client.on(Kick.Events.Chatroom.UserBanned, async (event) => {
       const diffInMinutes = Math.floor(diff / (1000 * 60));
       const hours = Math.floor(diffInMinutes / 60);
       const minutes = Math.floor(diffInMinutes % 60);
-      const seconds = Math.floor(diffInMinutes % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
       const formattedTime = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
       streamMessageHelper = `\n:watch:  ~\`${formattedTime}\` del stream.`;
     }
