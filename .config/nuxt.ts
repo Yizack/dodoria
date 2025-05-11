@@ -93,7 +93,8 @@ export default defineNuxtConfig({
   hub: {
     blob: true,
     cache: true,
-    workers: true
+    workers: true,
+    database: true
   },
 
   eslint: {

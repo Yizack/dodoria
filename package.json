@@ -34,7 +34,8 @@
     "dev:cf": "set NITRO_PRESET=cloudflare-pages&&npm run build && wrangler pages dev dist",
     "test:types": "vue-tsc --noEmit",
     "start": "node local/build/index.mjs",
-    "start:pm2": "pm2 start local/build/index.mjs --name dodoria"
+    "start:pm2": "pm2 start local/build/index.mjs --name dodoria",
+    "db:migrate": "drizzle-kit generate --config=.config/drizzle.ts"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250430.0",
@@ -50,6 +51,8 @@
     "date-fns": "^4.1.0",
     "discord-api-types": "^0.38.1",
     "discord.js": "^14.19.2",
+    "drizzle-kit": "^0.31.1",
+    "drizzle-orm": "^0.43.1",
     "eslint": "^9.25.1",
     "fast-levenshtein": "^3.0.0",
     "fluent-ffmpeg": "^2.1.3",

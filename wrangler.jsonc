@@ -11,6 +11,13 @@
     "binding": "ASSETS",
     "directory": "dist/public"
   },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "dodoria",
+      "database_id": "0284f3b7-b2b3-497b-ae56-196260247cd0"
+    }
+  ],
   "kv_namespaces": [
     {
       "binding": "CACHE",
