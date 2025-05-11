@@ -200,7 +200,7 @@ Kick.client.on(Kick.Events.Chatroom.UserBanned, async (event) => {
     // Send to D1
     const query = useDB().insert(tables.kickBans).values({
       username: data.user.username,
-      bannedBy: data.banned_by.username,
+      actionBy: data.banned_by.username,
       type: "ban",
       expiresAt: timeoutUntil?.getTime()
     }).toSQL();
@@ -218,7 +218,7 @@ Kick.client.on(Kick.Events.Chatroom.UserUnbanned, async (event) => {
   // Send to D1
   const query = useDB().insert(tables.kickBans).values({
     username: data.user.username,
-    bannedBy: data.unbanned_by.username,
+    actionBy: data.unbanned_by.username,
     type: "unban"
   }).toSQL();
 

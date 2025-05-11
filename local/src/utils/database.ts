@@ -18,7 +18,7 @@ function unixepoch ({ mode }: { mode?: "ms" | "s" }) {
 const kickBans = sqliteTable("kick_bans", {
   id: integer().primaryKey(),
   username: text().notNull(),
-  bannedBy: text().notNull(),
+  actionBy: text().notNull(),
   expiresAt: integer(),
   type: text().notNull().$type<"ban" | "unban">(),
   createdAt: integer().notNull().default(unixepoch({ mode: "ms" }))
