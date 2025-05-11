@@ -197,6 +197,6 @@ Kick.client.on(Kick.Events.Chatroom.UserBanned, async (event) => {
     await channel.send(`## ${socials.kick} \`${data.user.username}\` ${messageHelper}. <:pepoPoint:712364175967518730>${streamMessageHelper}`);
   }
   catch (error) {
-    console.info("Error al enviar el mensaje a Discord:", error);
+    console.warn("Error al enviar el mensaje a Discord:", error);
   }
 });
