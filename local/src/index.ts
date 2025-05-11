@@ -12,8 +12,7 @@ import { KickBot } from "./clients/kickbot";
 import { mp3ToOgg } from "./utils/mp3-to-ogg";
 import { findMostSimilar } from "./utils/levenshtein";
 import { startApiServer } from "./clients/router";
-import { tables, useDB } from "./utils/database";
-import { useLocalConfig } from "./utils/config";
+import { queryD1, tables, useDB } from "./utils/database";
 
 startApiServer();
 const kickChannel = await Kick.getChannel();
@@ -198,27 +197,30 @@ Kick.client.on(Kick.Events.Chatroom.UserBanned, async (event) => {
     await Kick.client.api.chat.sendMessage(kickChannel.chatroomId, `@${data.user.username} ${messageHelper}`).catch(() => null);
     await channel.send(`## ${socials.kick} \`${data.user.username}\` ${messageHelper}. <:pepoPoint:712364175967518730>${streamMessageHelper}`);
 
-    // Generate D1 API query
+    // Send to D1
     const query = useDB().insert(tables.kickBans).values({
       username: data.user.username,
       bannedBy: data.banned_by.username,
+      type: "ban",
       expiresAt: timeoutUntil?.getTime()
     }).toSQL();
 
-    // Send the query to Cloudflare D1
-    const { cloudflareAccount, cloudflareD1, cloudflareAuthorization } = useLocalConfig();
-    await $fetch(`https://api.cloudflare.com/client/v4/accounts/${cloudflareAccount}/d1/database/${cloudflareD1}/query`, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${cloudflareAuthorization}`,
-        "Content-Type": "application/json"
-      },
-      body: query
-    }).catch((error) => {
-      console.warn("Error al insertar el ban de kick en la base de datos", error);
-    });
+    await queryD1(query);
   }
   catch (error) {
     console.warn("Error al enviar el mensaje a Discord:", error);
   }
+});
+
+Kick.client.on(Kick.Events.Chatroom.UserUnbanned, async (event) => {
+  const { data } = event;
+
+  // Send to D1
+  const query = useDB().insert(tables.kickBans).values({
+    username: data.user.username,
+    bannedBy: data.unbanned_by.username,
+    type: "unban"
+  }).toSQL();
+
+  await queryD1(query);
 });

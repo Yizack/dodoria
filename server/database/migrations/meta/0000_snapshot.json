@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "3717f0b4-2ef3-40a1-abd7-7821f4e42dc1",
+  "id": "c82a536c-b18f-455b-bdca-984572cb569b",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "kick_bans": {
@@ -33,6 +33,13 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
           "autoincrement": false
         },
         "created_at": {

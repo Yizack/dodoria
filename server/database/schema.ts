@@ -6,5 +6,6 @@ export const kickBans = sqliteTable("kick_bans", {
   username: text().notNull(),
   bannedBy: text().notNull(),
   expiresAt: integer(),
+  type: text().notNull().$type<"ban" | "unban">(),
   createdAt: integer().notNull().default(unixepoch({ mode: "ms" }))
 });
