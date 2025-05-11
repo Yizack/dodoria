@@ -12,6 +12,8 @@ import { KickBot } from "./clients/kickbot";
 import { mp3ToOgg } from "./utils/mp3-to-ogg";
 import { findMostSimilar } from "./utils/levenshtein";
 import { startApiServer } from "./clients/router";
+import { tables, useDB } from "./utils/database";
+import { useLocalConfig } from "./utils/config";
 
 startApiServer();
 const kickChannel = await Kick.getChannel();
@@ -195,6 +197,26 @@ Kick.client.on(Kick.Events.Chatroom.UserBanned, async (event) => {
     console.info(`${data.user.username} ${messageHelper} por ${data.banned_by.username}`);
     await Kick.client.api.chat.sendMessage(kickChannel.chatroomId, `@${data.user.username} ${messageHelper}`).catch(() => null);
     await channel.send(`## ${socials.kick} \`${data.user.username}\` ${messageHelper}. <:pepoPoint:712364175967518730>${streamMessageHelper}`);
+
+    // Generate D1 API query
+    const query = useDB().insert(tables.kickBans).values({
+      username: data.user.username,
+      bannedBy: data.banned_by.username,
+      expiresAt: timeoutUntil?.getTime()
+    }).toSQL();
+
+    // Send the query to Cloudflare D1
+    const { cloudflareAccount, cloudflareD1, cloudflareAuthorization } = useLocalConfig();
+    await $fetch(`https://api.cloudflare.com/client/v4/accounts/${cloudflareAccount}/d1/database/${cloudflareD1}/query`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${cloudflareAuthorization}`,
+        "Content-Type": "application/json"
+      },
+      body: query
+    }).catch((error) => {
+      console.warn("Error al insertar el ban de kick en la base de datos", error);
+    });
   }
   catch (error) {
     console.warn("Error al enviar el mensaje a Discord:", error);
