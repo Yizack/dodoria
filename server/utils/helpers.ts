@@ -83,8 +83,7 @@ export const getBansEmbedValues = (entries: BaneadoEntry[], plataforma?: "discor
         const date = typeof entry.timeoutUntil === "number" ? Math.floor(entry.timeoutUntil / 1000) : null;
         const now = Math.floor(Date.now() / 1000);
         const timeout = date ? `<t:${date}:d>, <t:${date}:t>` : "N/A";
-        const removedTimeout = !date && entry.action === "unban" ? " removido" : "";
-        const action = !date && entry.action === "ban" ? "baneado" : entry.action === "unban" ? "desbaneado" : `timeout${removedTimeout}`;
+        const action = !date && entry.action === "ban" ? "baneado" : entry.action === "unban" ? "ha sido liberado" : "timeout";
         const timeoutEmoji = now > date! || !date ? "🟩" : "🟨";
         const banUnbanEmoji = action === "baneado" ? "🟥" : "🟩";
         const messageValue = action === "timeout" ? `${timeoutEmoji} **${entry.username}**・${action} hasta: ${timeout}` : `${banUnbanEmoji} **${entry.username}**・${action}`;
