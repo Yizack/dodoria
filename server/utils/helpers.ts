@@ -5,9 +5,9 @@ export { hash } from "ohash";
 export { withQuery, parseURL, getQuery as getQueryUfo } from "ufo";
 export { z } from "zod";
 
-export const getOptionsValue = (name: string, options: DiscordBodyOptions[] | null) => {
+export const getOptionsValue = <T = string | undefined>(name: string, options: DiscordBodyOptions[] | null) => {
   const option = options?.find(option => option.name === name);
-  return option?.value;
+  return option?.value as T;
 };
 
 export const getRandom = (options: { min?: number, max: number }) => {
@@ -75,30 +75,35 @@ export const getAvatarURL = (options: {
   return discordCDN + (avatarHash ? imageURI : defaultAvatarURI) + `.${format}?size=${size}`;
 };
 
-export const buildBaneadosEmbed = (entries: BaneadoEntry[], pagesAvailable: number, currentPage: number) => {
-  const values = entries.map((el) => {
-    const date = el.timeoutUntil ? Math.floor(new Date(el.timeoutUntil).getTime() / 1000) : null;
-    const now = Math.floor(Date.now() / 1000);
-    const timeout = date ? `<t:${date}:d>, <t:${date}:t>` : "N/A";
-    const removedTimeout = !date && el.action === AuditLogEvent.MemberUpdate ? " removido" : "";
-    const action = el.action === AuditLogEvent.MemberBanAdd ? "baneado" : el.action === AuditLogEvent.MemberBanRemove ? "desbaneado" : `timeout${removedTimeout}`;
-    const timeoutEmoji = now > date! || !date ? "🟩" : "🟨";
-    const banUnbanEmoji = action === "baneado" ? "🟥" : "🟩";
-    const messageValue = action === "timeout" ? `${timeoutEmoji} **${el.username}**・${action} hasta: ${timeout}` : `${banUnbanEmoji} **${el.username}**・${action}`;
-    return messageValue;
-  });
-  const embeds: DiscordEmbed[] = [];
-  embeds.push({
-    color: CONSTANTS.COLOR,
-    fields: [{
-      name: "Historial de bans, timeouts y unbans recientes en discord",
-      value: values.join("\n")
-    }],
-    footer: {
-      text: `Página ${currentPage} de ${pagesAvailable}`
-    }
-  });
-  return embeds;
+export const getBansEmbedValues = (entries: BaneadoEntry[], plataforma?: "discord" | "kick") => {
+  // TODO: Improve code
+  switch (plataforma) {
+    case "kick":
+      return entries.map((entry) => {
+        const date = typeof entry.timeoutUntil === "number" ? Math.floor(entry.timeoutUntil / 1000) : null;
+        const now = Math.floor(Date.now() / 1000);
+        const timeout = date ? `<t:${date}:d>, <t:${date}:t>` : "N/A";
+        const removedTimeout = !date && entry.action === "unban" ? " removido" : "";
+        const action = !date && entry.action === "ban" ? "baneado" : entry.action === "unban" ? "desbaneado" : `timeout${removedTimeout}`;
+        const timeoutEmoji = now > date! || !date ? "🟩" : "🟨";
+        const banUnbanEmoji = action === "baneado" ? "🟥" : "🟩";
+        const messageValue = action === "timeout" ? `${timeoutEmoji} **${entry.username}**・${action} hasta: ${timeout}` : `${banUnbanEmoji} **${entry.username}**・${action}`;
+        return messageValue;
+      });
+    case "discord":
+    default:
+      return entries.map((entry) => {
+        const date = entry.timeoutUntil ? Math.floor(new Date(entry.timeoutUntil).getTime() / 1000) : null;
+        const now = Math.floor(Date.now() / 1000);
+        const timeout = date ? `<t:${date}:d>, <t:${date}:t>` : "N/A";
+        const removedTimeout = !date && entry.action === AuditLogEvent.MemberUpdate ? " removido" : "";
+        const action = entry.action === AuditLogEvent.MemberBanAdd ? "baneado" : entry.action === AuditLogEvent.MemberBanRemove ? "desbaneado" : `timeout${removedTimeout}`;
+        const timeoutEmoji = now > date! || !date ? "🟩" : "🟨";
+        const banUnbanEmoji = action === "baneado" ? "🟥" : "🟩";
+        const messageValue = action === "timeout" ? `${timeoutEmoji} **${entry.username}**・${action} hasta: ${timeout}` : `${banUnbanEmoji} **${entry.username}**・${action}`;
+        return messageValue;
+      });
+  }
 };
 
 export const createCachedData = <T>(event: H3Event, name: string, cache: { id: string, data: T }) => {

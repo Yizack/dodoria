@@ -34,10 +34,10 @@ declare global {
   }
 
   interface BaneadoEntry {
-    timeoutUntil: string | undefined;
-    id: string;
+    timeoutUntil?: number | string | null;
+    id: string | number;
     username: string;
-    action: number;
+    action: number | string;
     timestamp: number;
   }
 }

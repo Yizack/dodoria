@@ -192,6 +192,18 @@ export const AVATAR: Command = {
 export const BANEADOS: Command = {
   name: "baneados",
   description: "Muestra una lista de los usuarios baneados, timeouteados y desbaneados más recientes",
+  options: [
+    {
+      name: "plataforma",
+      description: "Selecciona la plataforma",
+      type: ApplicationCommandOptionType.String,
+      required: false,
+      choices: [
+        { name: "Discord", value: "discord" },
+        { name: "Kick", value: "kick" }
+      ]
+    }
+  ],
   cid: "1341276787719802935"
 };
 

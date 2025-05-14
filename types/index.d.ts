@@ -5,7 +5,7 @@ export {};
 declare global {
   interface CommandHelpers {
     body: WebhookBody;
-    getValue: (name: string) => string | undefined;
+    getValue: <T = string | undefined>(name: string) => T;
   }
 
   interface CommandHandler {
