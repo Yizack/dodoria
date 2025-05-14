@@ -175,7 +175,7 @@ Kick.client.on(Kick.Events.Chatroom.UserBanned, async (event) => {
     const timeoutUntil = data.expires_at;
     const now = new Date();
     const duration = timeoutUntil ? intervalToDuration({ start: now, end: timeoutUntil }) : null;
-    const fixedDuration = duration ? duration.days ? { days: duration.days, hours: duration.hours } : { hours: duration.hours, minutes: duration.minutes } : null;
+    const fixedDuration = duration ? duration.days ? { days: duration.days, hours: duration.hours } : { hours: duration.hours, minutes: duration.minutes, seconds: duration.seconds } : null;
     const formattedDuration = fixedDuration ? formatDuration(fixedDuration, { format: ["days", "hours", "minutes"], locale: es }) : null;
     const messageHelper = isBanned ? "ha sido baneado permanentemente" : `ha recibido un timeout de ${formattedDuration}`;
 
