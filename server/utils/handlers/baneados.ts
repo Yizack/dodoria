@@ -1,4 +1,5 @@
 import { AuditLogEvent, ButtonStyle, ComponentType } from "discord-api-types/v10";
+import { upperFirst } from "scule";
 
 export default defineCommandHandler(BANEADOS.name, (event, { body, getValue }) => {
   const { token, guild_id, id } = body;
@@ -86,7 +87,7 @@ export default defineCommandHandler(BANEADOS.name, (event, { body, getValue }) =
       const embeds: DiscordEmbed[] = [];
       embeds.push({
         color: CONSTANTS.COLOR,
-        title: `${socials[plataforma]} Historial de bans, timeouts y unbans recientes en ${plataforma}`,
+        title: `${socials[plataforma]} Historial de bans, timeouts y unbans recientes en ${upperFirst(plataforma)}`,
         description: values.join("\n"),
         timestamp: new Date().toISOString(),
         footer: {
