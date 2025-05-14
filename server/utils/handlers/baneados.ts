@@ -4,7 +4,7 @@ import { upperFirst } from "scule";
 export default defineCommandHandler(BANEADOS.name, (event, { body, getValue }) => {
   const { token, guild_id, id } = body;
   const config = useRuntimeConfig(event);
-  const plataforma = getValue<"discord" | "kick">("plataforma");
+  const plataforma = getValue<"discord" | "kick">("plataforma") || "discord";
 
   const getDiscordEntries = async () => {
     const banLogs = await guildAuditLog<AuditLog>({
