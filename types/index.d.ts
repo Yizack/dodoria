@@ -15,4 +15,8 @@ declare global {
   interface ComponentHandler {
     (event: H3Event, helpers: { body: WebhookBody }): unknown;
   }
+
+  interface ApplicationHandler {
+    (event: H3Event, helpers: { body: WebhookBody }): unknown;
+  }
 }

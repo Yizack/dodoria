@@ -1,3 +1,5 @@
+import type { APIWebhookEventApplicationAuthorizedData, APIWebhookEventEntitlementCreateData, APIWebhookEventQuestUserEnrollmentData, ApplicationWebhookEventType } from "discord-api-types/v10";
+
 export {};
 
 declare global {
@@ -46,8 +48,23 @@ declare global {
     context: 0 | 1 | 2;
     message: DiscordMessage;
     embeds: DiscordEmbed[];
+    event?: WebhookEvent;
     fromQueue?: boolean;
   }
+
+  type WebhookEvent = | {
+    type: ApplicationWebhookEventType.ApplicationAuthorized;
+    timestamp: string;
+    data: APIWebhookEventApplicationAuthorizedData;
+  } | {
+    type: ApplicationWebhookEventType.EntitlementCreate;
+    timestamp: string;
+    data: APIWebhookEventEntitlementCreateData;
+  } | {
+    type: ApplicationWebhookEventType.QuestUserEnrollment;
+    timestamp: string;
+    data: APIWebhookEventQuestUserEnrollmentData;
+  };
 
   interface DiscordEmbed {
     type?: string;

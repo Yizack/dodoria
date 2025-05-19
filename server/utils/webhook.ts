@@ -1,10 +1,14 @@
-import { InteractionType } from "discord-api-types/v10";
+import { ApplicationWebhookType, InteractionType } from "discord-api-types/v10";
 import type { H3Event } from "h3";
 
 export const handleWebhook = (event: H3Event, body: WebhookBody) => {
   const { type, data } = body;
-  if (type === InteractionType.Ping) {
+  if ((type === InteractionType.Ping && !body.event) || ApplicationWebhookType.Ping) {
     return create(type);
+  }
+
+  if (type === ApplicationWebhookType.Event && body.event) {
+    return applicationHandler(event, { body });
   }
 
   const commands: { name: string, handler: CommandHandler }[] = [

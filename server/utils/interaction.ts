@@ -161,3 +161,25 @@ export const getOriginalInteraction = async (options: {
     method: "GET"
   }) as Promise<DiscordMessage>;
 };
+
+export const sendToChannel = async (options: {
+  channel_id: string;
+  token: string;
+  content?: string;
+  embeds?: DiscordEmbed[];
+  components?: DiscordComponent[];
+  files?: unknown;
+}) => {
+  const { channel_id } = options;
+  const endpoint = Routes.channelMessages(channel_id);
+  return toDiscordEndpoint(endpoint, {
+    method: "POST",
+    body: {
+      content: options?.content,
+      embeds: options?.embeds,
+      components: options?.components,
+      files: options?.files
+    },
+    headers: { Authorization: `Bot ${options.token}` }
+  });
+};
