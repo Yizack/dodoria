@@ -16,6 +16,11 @@ export const applicationHandler: ApplicationHandler = async (event, { body }) =>
       description: message,
       timestamp: new Date().toISOString()
     }];
+    console.info({
+      channel_id: CONSTANTS.CHANNEL_PRUEBAS,
+      embeds,
+      token: config.discord.token
+    });
     await sendToChannel({
       channel_id: CONSTANTS.CHANNEL_PRUEBAS,
       embeds,
