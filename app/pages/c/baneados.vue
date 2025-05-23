@@ -9,7 +9,7 @@ interface BanEntry {
   timeoutUntil: number | null;
 }
 
-const { data: entries } = await useFetch<BanEntry[]>("https://dodoria.yizack.com/api/baneados/kick");
+const { data: entries } = await useFetch<BanEntry[]>("/api/baneados/kick");
 const formatDateTime = (date: number) => new Date(date).toLocaleTimeString("es-MX", {
   hour: "2-digit",
   minute: "2-digit",
@@ -46,6 +46,9 @@ const rankingByBansAndTimeouts = computed(() => {
   const sortedRanking = Object.entries(ranking).sort((a, b) => {
     const aTotal = a[1].bans + a[1].timeouts;
     const bTotal = b[1].bans + b[1].timeouts;
+    if (aTotal === bTotal) {
+      return b[1].bans - a[1].bans;
+    }
     return bTotal - aTotal;
   });
   return sortedRanking;
