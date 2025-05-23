@@ -66,21 +66,7 @@ const rankingByBansAndTimeouts = computed(() => {
         <p>Baneados en el canal de Kick de angar</p>
       </div>
       <div class="mb-2 row justify-content-end align-items-start">
-        <div class="col-7">
-          <p>Historial de baneos</p>
-          <table class="table table-dark m-0 text-start">
-            <tbody>
-              <tr v-for="(entry, index) in entries" :key="index" :class="entry.action === 'ban' ? entry.timeoutUntil ? 'timeout' : 'ban' : 'unban'">
-                <td>
-                  <p class="m-0">{{ entry.username }}</p>
-                  <span style="color: #cdcdcd; font-size: 12px;">{{ formatDateTime(entry.timestamp) }}</span>
-                </td>
-                <td class="align-content-center">{{ entryMessage(entry) }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="col-5">
+        <div class="col-12 col-md-5">
           <p>Top usuarios más baneados (a partir del 14 mayo 2025)</p>
           <table class="table table-dark m-0 text-center">
             <thead>
@@ -99,6 +85,20 @@ const rankingByBansAndTimeouts = computed(() => {
                 <td>{{ entry[1].bans }} baneos</td>
                 <td>{{ entry[1].timeouts }} timeouts</td>
                 <td class="leaderboard-highlight">{{ entry[1].bans + entry[1].timeouts }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-12 col-md-7">
+          <p>Historial de baneos</p>
+          <table class="table table-dark m-0 text-start">
+            <tbody>
+              <tr v-for="(entry, index) in entries" :key="index" :class="entry.action === 'ban' ? entry.timeoutUntil ? 'timeout' : 'ban' : 'unban'">
+                <td>
+                  <p class="m-0">{{ entry.username }}</p>
+                  <span style="color: #cdcdcd; font-size: 12px;">{{ formatDateTime(entry.timestamp) }}</span>
+                </td>
+                <td class="align-content-center">{{ entryMessage(entry) }}</td>
               </tr>
             </tbody>
           </table>
