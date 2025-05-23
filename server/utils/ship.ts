@@ -52,7 +52,7 @@ const getPercentX = (value: number) => {
 };
 
 const getBase64Image = async (url: string) => {
-  const buffer = await $fetch(url, { responseType: "arrayBuffer" }) as ArrayBuffer;
+  const buffer = await $fetch<ArrayBuffer>(url, { responseType: "arrayBuffer" });
   return Buffer.from(buffer).toString("base64");
 };
 
