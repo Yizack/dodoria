@@ -51,7 +51,7 @@ const rankingByBansAndTimeouts = computed(() => {
     }
     return bTotal - aTotal;
   });
-  return sortedRanking;
+  return sortedRanking.filter(entry => entry[1].bans || entry[1].timeouts);
 });
 </script>
 
@@ -86,8 +86,8 @@ const rankingByBansAndTimeouts = computed(() => {
                 <tr v-for="(entry, index) in rankingByBansAndTimeouts" :key="index">
                   <td>{{ index + 1 }}</td>
                   <td>{{ entry[0] }}</td>
-                  <td>{{ entry[1].bans }} baneos</td>
-                  <td>{{ entry[1].timeouts }} timeouts</td>
+                  <td>{{ entry[1].bans }}</td>
+                  <td>{{ entry[1].timeouts }}</td>
                   <td class="leaderboard-highlight">{{ entry[1].bans + entry[1].timeouts }}</td>
                 </tr>
               </tbody>
