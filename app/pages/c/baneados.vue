@@ -9,7 +9,7 @@ interface BanEntry {
   timeoutUntil: number | null;
 }
 
-const { data: entries } = await useFetch<BanEntry[]>("/api/baneados/kick");
+const { data: entries } = await useFetch<BanEntry[]>("https://dodoria.yizack.com/api/baneados/kick");
 const formatDateTime = (date: number) => new Date(date).toLocaleTimeString("es-MX", {
   hour: "2-digit",
   minute: "2-digit",
@@ -65,43 +65,47 @@ const rankingByBansAndTimeouts = computed(() => {
         </div>
         <p>Baneados en el canal de Kick de angar</p>
       </div>
-      <div class="mb-2 row justify-content-end align-items-start">
-        <div class="col-12 col-md-5">
+      <div class="mb-2 row justify-content-end align-items-start gy-5">
+        <div class="col-12 col-md-5 overflow-hidden">
           <p>Top usuarios más baneados (a partir del 14 mayo 2025)</p>
-          <table class="table table-dark m-0 text-center">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Usuario</th>
-                <th scope="col">Baneos</th>
-                <th scope="col">Timeouts</th>
-                <th scope="col" class="leaderboard-highlight-head">Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(entry, index) in rankingByBansAndTimeouts" :key="index">
-                <td>{{ index + 1 }}</td>
-                <td>{{ entry[0] }}</td>
-                <td>{{ entry[1].bans }} baneos</td>
-                <td>{{ entry[1].timeouts }} timeouts</td>
-                <td class="leaderboard-highlight">{{ entry[1].bans + entry[1].timeouts }}</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="overflow-auto">
+            <table class="table table-dark m-0 text-center">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Usuario</th>
+                  <th scope="col">Baneos</th>
+                  <th scope="col">Timeouts</th>
+                  <th scope="col" class="leaderboard-highlight-head">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(entry, index) in rankingByBansAndTimeouts" :key="index">
+                  <td>{{ index + 1 }}</td>
+                  <td>{{ entry[0] }}</td>
+                  <td>{{ entry[1].bans }} baneos</td>
+                  <td>{{ entry[1].timeouts }} timeouts</td>
+                  <td class="leaderboard-highlight">{{ entry[1].bans + entry[1].timeouts }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-        <div class="col-12 col-md-7">
+        <div class="col-12 col-md-7 overflow-hidden">
           <p>Historial de baneos</p>
-          <table class="table table-dark m-0 text-start">
-            <tbody>
-              <tr v-for="(entry, index) in entries" :key="index" :class="entry.action === 'ban' ? entry.timeoutUntil ? 'timeout' : 'ban' : 'unban'">
-                <td>
-                  <p class="m-0">{{ entry.username }}</p>
-                  <span style="color: #cdcdcd; font-size: 12px;">{{ formatDateTime(entry.timestamp) }}</span>
-                </td>
-                <td class="align-content-center">{{ entryMessage(entry) }}</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="overflow-auto">
+            <table class="table table-dark m-0 text-start overflow-auto">
+              <tbody>
+                <tr v-for="(entry, index) in entries" :key="index" :class="entry.action === 'ban' ? entry.timeoutUntil ? 'timeout' : 'ban' : 'unban'">
+                  <td>
+                    <p class="m-0">{{ entry.username }}</p>
+                    <span style="color: #cdcdcd; font-size: 12px;">{{ formatDateTime(entry.timestamp) }}</span>
+                  </td>
+                  <td class="align-content-center">{{ entryMessage(entry) }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
