@@ -1,32 +1,15 @@
 <script setup lang="ts">
 definePageMeta({ layout: "site" });
 
-interface BanEntry {
-  id: number;
-  username: string;
-  action: "ban" | "unban";
-  timestamp: number;
-  timeoutUntil: number | null;
-}
+const { data: entries } = await useFetch("/api/baneados/kick");
 
-const { data: entries } = await useFetch<BanEntry[]>("/api/baneados/kick");
-const formatDateTime = (date: number) => new Date(date).toLocaleTimeString("es-MX", {
+const timeBind = {
   hour: "2-digit",
   minute: "2-digit",
   year: "numeric",
   month: "2-digit",
   day: "2-digit"
-}).replace(/(\d{2})\/(\d{2})\/(\d{4}), (\d{2}:\d{2}:\d{2})/, "$3-$2-$1 $4");
-
-const entryMessage = (entry: BanEntry) => {
-  if (entry.action === "ban") {
-    if (entry.timeoutUntil) {
-      return `timeout hasta ${formatDateTime(entry.timeoutUntil)}`;
-    }
-    return "baneado";
-  }
-  return "desbaneado";
-};
+} as const;
 
 const rankingByBansAndTimeouts = computed(() => {
   const ranking = (entries.value ?? []).reduce((acc: {
@@ -102,9 +85,20 @@ const rankingByBansAndTimeouts = computed(() => {
                 <tr v-for="(entry, index) in entries" :key="index" :class="entry.action === 'ban' ? entry.timeoutUntil ? 'timeout' : 'ban' : 'unban'">
                   <td>
                     <p class="m-0">{{ entry.username }}</p>
-                    <span style="color: #cdcdcd; font-size: 12px;">{{ formatDateTime(entry.timestamp) }}</span>
+                    <span style="color: #cdcdcd; font-size: 12px;">
+                      <NuxtTime :datetime="entry.timestamp" locale="es-MX" v-bind="timeBind" />
+                    </span>
                   </td>
-                  <td class="align-content-center">{{ entryMessage(entry) }}</td>
+                  <td class="align-content-center">
+                    <p class="m-0">
+                      <span v-if="entry.action === 'ban' && entry.timeoutUntil">
+                        timeout hasta
+                        <NuxtTime :datetime="entry.timestamp" locale="es-MX" v-bind="timeBind" />
+                      </span>
+                      <span v-else-if="entry.action === 'ban'">baneado</span>
+                      <span v-else>desbaneado</span>
+                    </p>
+                  </td>
                 </tr>
               </tbody>
             </table>
