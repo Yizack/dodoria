@@ -69,7 +69,7 @@ const rankingByBansAndTimeouts = computed(() => {
         <p>Baneados en el canal de Kick de angar</p>
       </div>
       <div class="mb-2 row justify-content-end align-items-start gy-5">
-        <div class="col-12 col-md-5 overflow-hidden">
+        <div class="col-12 col-xl-5 overflow-hidden">
           <p>Top usuarios más baneados (a partir del 14 mayo 2025)</p>
           <div class="overflow-auto">
             <table class="table table-dark m-0 text-center">
@@ -94,7 +94,7 @@ const rankingByBansAndTimeouts = computed(() => {
             </table>
           </div>
         </div>
-        <div class="col-12 col-md-7 overflow-hidden">
+        <div class="col-12 col-xl-7 overflow-hidden">
           <p>Historial de baneos</p>
           <div class="overflow-auto">
             <table class="table table-dark m-0 text-start overflow-auto">
