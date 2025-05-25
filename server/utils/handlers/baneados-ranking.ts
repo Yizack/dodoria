@@ -45,7 +45,7 @@ export default defineCommandHandler(BANEADOS_RANKING.name, (event, { body, getVa
       const embeds: DiscordEmbed[] = [];
       embeds.push({
         color: CONSTANTS.COLOR,
-        title: `${socials[plataforma]} Ranking de basados en ${upperFirst(plataforma)}`,
+        title: `${socials[plataforma]} Ranking de basados en ${upperFirst(plataforma)} (a partir del 14 de mayo de 2025)`,
         description: values.join("\n"),
         timestamp: new Date().toISOString(),
         footer: {
