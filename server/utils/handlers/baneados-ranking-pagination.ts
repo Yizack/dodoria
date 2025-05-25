@@ -59,11 +59,12 @@ export const handlerBaneadosRankingPagination: ComponentHandler = (event, { body
     const { values: entries, plataforma } = baneados.value;
     const pagedData = entries.slice((fixedPage - 1) * 16, fixedPage * 16);
     const values = pagedData.map((entry, index) => {
-      const emoji = fixedPage === 1 && index <= 3 ? ["🥇", "🥈", "🥉"][index - 1] : "🎖️";
+      const emoji = fixedPage === 1 && index <= 3 ? ["🥇", "🥈", "🥉"][index] : "🎖️";
       const bans = entry.bans;
       const timeouts = entry.timeouts;
       const total = bans + timeouts;
-      return `${index + 1}. ${emoji} **${entry.username}**・${bans} bans・${timeouts} timeouts・Total: ${total}`;
+      const globalIndex = (fixedPage - 1) * 16 + index + 1;
+      return `${globalIndex}. ${emoji} **${entry.username}**・${bans} bans・${timeouts} timeouts・Total: ${total}`;
     });
 
     const embeds: DiscordEmbed[] = [];

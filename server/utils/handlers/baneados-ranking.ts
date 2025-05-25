@@ -35,11 +35,12 @@ export default defineCommandHandler(BANEADOS_RANKING.name, (event, { body, getVa
       const pagedEntries = pagedData.values.slice((currentPage - 1) * 16, currentPage * 16);
 
       const values = pagedEntries.map((entry, index) => {
-        const emoji = currentPage === 1 && index <= 3 ? ["🥇", "🥈", "🥉"][index - 1] : "🎖️";
+        const emoji = currentPage === 1 && index <= 3 ? ["🥇", "🥈", "🥉"][index] : "🎖️";
         const bans = entry.bans;
         const timeouts = entry.timeouts;
         const total = bans + timeouts;
-        return `${index + 1}. ${emoji} **${entry.username}**・${bans} bans・${timeouts} timeouts・Total: ${total}`;
+        const globalIndex = (currentPage - 1) * 16 + index + 1;
+        return `${globalIndex}. ${emoji} **${entry.username}**・${bans} bans・${timeouts} timeouts・Total: ${total}`;
       });
       const embeds: DiscordEmbed[] = [];
       embeds.push({
