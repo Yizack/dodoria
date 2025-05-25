@@ -27,13 +27,15 @@ export const handleWebhook = (event: H3Event, body: WebhookBody) => {
     handlersBaneados, // Comando /baneados
     handlersCopys, // Comando /copys
     handlersDonoclips, // Comando /donoclips
-    handlersBotrix // Comando /botrix
+    handlersBotrix, // Comando /botrix
+    handlersBaneadosRanking // Comando /baneados-ranking
   ];
 
   const componentHandlers: { [prefix: string]: ComponentHandler } = {
     ["videos"]: handlerVideoReload, // Componente /video-reload
     ["baneados"]: handlerBaneadosPagination, // Componente /baneados-pagination
-    ["botrix-leaderboard"]: handlerBotRixLeaderboardPagination // Componente /botrix-leaderboard-pagination
+    ["botrix-leaderboard"]: handlerBotRixLeaderboardPagination, // Componente /botrix-leaderboard-pagination
+    ["baneados-ranking"]: handlerBaneadosRankingPagination // Componente /baneados-ranking-pagination
   };
 
   return create(type, () => {

@@ -292,3 +292,20 @@ export const BOTRIX: Command = {
   ],
   cid: "1357314549434552372"
 };
+
+export const BANEADOS_RANKING: Command = {
+  name: "baneados-ranking",
+  description: "Muestra una lista de los usuarios más baneados",
+  options: [
+    {
+      name: "plataforma",
+      description: "Selecciona la plataforma",
+      type: ApplicationCommandOptionType.String,
+      required: false,
+      choices: [
+        { name: "Kick", value: "kick" }
+      ]
+    }
+  ],
+  cid: ""
+};
