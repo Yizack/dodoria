@@ -14,8 +14,8 @@ export default defineCommandHandler(BANEADOS_RANKING.name, (event, { body, getVa
       timeouts: sql<number>`SUM(CASE WHEN ${tables.kickBans.expiresAt} IS NOT NULL THEN 1 ELSE 0 END)`.as("timeouts")
     }).from(tables.kickBans).where(eq(tables.kickBans.type, "ban")).groupBy(tables.kickBans.username)
       .orderBy(
-        sql`SUM(CASE WHEN ${tables.kickBans.expiresAt} IS NULL THEN 1 ELSE 0 END) > SUM(CASE WHEN ${tables.kickBans.expiresAt} IS NOT NULL THEN 1 ELSE 0 END) DESC`,
-        sql`COUNT(*) DESC`
+        sql`COUNT(*) DESC`, // Total primero
+        sql`SUM(CASE WHEN ${tables.kickBans.expiresAt} IS NULL THEN 1 ELSE 0 END) DESC` // Bans como desempate
       ).limit(100).all();
 
     if (!entries.length) {
@@ -35,10 +35,11 @@ export default defineCommandHandler(BANEADOS_RANKING.name, (event, { body, getVa
       const pagedEntries = pagedData.values.slice((currentPage - 1) * 16, currentPage * 16);
 
       const values = pagedEntries.map((entry, index) => {
+        const emoji = currentPage === 1 && index <= 3 ? ["🥇", "🥈", "🥉"][index - 1] : "🎖️";
         const bans = entry.bans;
         const timeouts = entry.timeouts;
         const total = bans + timeouts;
-        return `${index + 1} **${entry.username}**・Bans: ${bans}・Timeouts: ${timeouts}・Total: ${total}`;
+        return `${index + 1}. ${emoji} **${entry.username}**・${bans} bans・${timeouts} timeouts・Total: ${total}`;
       });
       const embeds: DiscordEmbed[] = [];
       embeds.push({
