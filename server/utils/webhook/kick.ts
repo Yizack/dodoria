@@ -5,15 +5,15 @@ import { es } from "date-fns/locale";
 export const handleKickWebhook = async (event: H3Event, body: KickWebhookBody) => {
   const { broadcaster, banned_user, metadata, moderator } = body;
   const config = useRuntimeConfig(event);
-  // const db = useDB();
+  const db = useDB();
   const kick = useKickApi(config.kick.clientId, config.kick.clientSecret);
+  const now = new Date();
 
   if (!broadcaster || !banned_user || !metadata || !moderator) return;
 
   const liveStream = await kick.getLiveStream(broadcaster.user_id);
   const isBanned = !metadata.expires_at;
   const timeoutUntil = metadata.expires_at ? new Date(metadata.expires_at) : null;
-  const now = new Date();
   const duration = timeoutUntil ? intervalToDuration({ start: now, end: timeoutUntil }) : null;
   const fixedDuration = duration ? duration.days ? { days: duration.days, hours: duration.hours } : { hours: duration.hours, minutes: duration.minutes, seconds: duration.seconds } : null;
   const formattedDuration = fixedDuration ? formatDuration(fixedDuration, { format: ["days", "hours", "minutes", "seconds"], locale: es }) : null;
@@ -36,23 +36,14 @@ export const handleKickWebhook = async (event: H3Event, body: KickWebhookBody) =
 
   await sendToChannel({
     content: `## ${socials.kick} \`${banned_user.username}\` ${messageHelper}. <:pepoPoint:712364175967518730>${streamMessageHelper}`,
-    channel_id: CONSTANTS.CHANNEL_PRUEBAS,
+    channel_id: CONSTANTS.CHANNEL_GENERAL,
     token: config.discord.token
   });
 
-  console.info(JSON.stringify({
-    username: banned_user.username,
-    actionBy: moderator.username,
-    type: "ban",
-    expiresAt: timeoutUntil?.getTime()
-  }));
-
-  /*
   await db.insert(tables.kickBans).values({
     username: banned_user.username,
     actionBy: moderator.username,
     type: "ban",
     expiresAt: timeoutUntil?.getTime()
   }).run();
-  */
 };
