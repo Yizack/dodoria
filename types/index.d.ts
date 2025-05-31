@@ -4,7 +4,7 @@ export {};
 
 declare global {
   interface CommandHelpers {
-    body: WebhookBody;
+    body: DiscordWebhookBody;
     getValue: <T = string>(name: string) => T | undefined;
   }
 
@@ -13,10 +13,10 @@ declare global {
   }
 
   interface ComponentHandler {
-    (event: H3Event, helpers: { body: WebhookBody }): unknown;
+    (event: H3Event, helpers: { body: DiscordWebhookBody }): unknown;
   }
 
   interface ApplicationHandler {
-    (event: H3Event, helpers: { body: WebhookBody }): unknown;
+    (event: H3Event, helpers: { body: DiscordWebhookBody }): unknown;
   }
 }

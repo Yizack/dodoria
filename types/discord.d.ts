@@ -26,7 +26,7 @@ declare global {
     options: DiscordBodyOptions[] | null;
   }
 
-  interface WebhookBody {
+  interface DiscordWebhookBody {
     type: number;
     id: string;
     application_id: string;

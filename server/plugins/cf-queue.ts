@@ -7,7 +7,7 @@ export default defineNitroPlugin((nitroApp) => {
     const { batch } = options;
     const { messages } = batch;
     for (const message of messages) {
-      const { body } = message as Message<WebhookBody>;
+      const { body } = message as Message<DiscordWebhookBody>;
       const { token, application_id } = body;
       body.fromQueue = true;
       const original = await getOriginalInteraction({ token, application_id }).catch(() => null);
