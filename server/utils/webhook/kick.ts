@@ -40,10 +40,19 @@ export const handleKickWebhook = async (event: H3Event, body: KickWebhookBody) =
     token: config.discord.token
   });
 
+  console.info(JSON.stringify({
+    username: banned_user.username,
+    actionBy: moderator.username,
+    type: "ban",
+    expiresAt: timeoutUntil?.getTime()
+  }));
+
+  /*
   await db.insert(tables.kickBans).values({
     username: banned_user.username,
     actionBy: moderator.username,
     type: "ban",
     expiresAt: timeoutUntil?.getTime()
   }).run();
+  */
 };
