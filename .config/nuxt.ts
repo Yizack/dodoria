@@ -87,7 +87,11 @@ export default defineNuxtConfig({
       token: "",
       applicationId: ""
     },
-    cdnToken: ""
+    cdnToken: "",
+    kick: {
+      clientId: "",
+      clientSecret: ""
+    }
   },
 
   hub: {
