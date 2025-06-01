@@ -1,3 +1,5 @@
+import { stringifyQuery } from "ufo";
+
 class kickApi {
   clientId: string;
   clientSecret: string;
@@ -11,13 +13,13 @@ class kickApi {
   }
 
   async getAppAccessToken (): Promise<string> {
-    const formData = new URLSearchParams();
-    formData.append("grant_type", "client_credentials");
-    formData.append("client_id", this.clientId);
-    formData.append("client_secret", this.clientSecret);
     const { access_token } = await $fetch<{ access_token: string }>(this.tokenURL, {
       method: "POST",
-      body: formData,
+      body: stringifyQuery({
+        grant_type: "client_credentials",
+        client_id: this.clientId,
+        client_secret: this.clientSecret
+      }),
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       }
