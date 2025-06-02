@@ -30,7 +30,7 @@ class kickApi {
     return access_token;
   }
 
-  async getLiveStream (broadcasterId: number): Promise<KickLiveStream> {
+  async getLiveStream (broadcasterId: number): Promise<KickLiveStream | undefined> {
     const accessToken = await this.getAppAccessToken();
     const { data } = await $fetch<{ data: KickLiveStream[] }>(`${this.baseURL}/public/v1/livestreams`, {
       query: { broadcaster_user_id: broadcasterId },
