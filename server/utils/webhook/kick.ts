@@ -46,4 +46,6 @@ export const handleKickWebhook = async (event: H3Event, body: KickWebhookBody) =
     type: "ban",
     expiresAt: timeoutUntil?.getTime()
   }).run();
+
+  return {};
 };
