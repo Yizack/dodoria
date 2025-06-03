@@ -47,5 +47,5 @@ export const handleKickWebhook = async (event: H3Event, body: KickWebhookBody) =
     expiresAt: timeoutUntil?.getTime()
   }).run();
 
-  setResponseStatus(event, 200);
+  return true;
 };
