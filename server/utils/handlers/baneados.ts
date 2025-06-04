@@ -2,9 +2,14 @@ import { AuditLogEvent, ButtonStyle, ComponentType } from "discord-api-types/v10
 import { upperFirst } from "scule";
 
 export default defineCommandHandler(BANEADOS.name, (event, { body, getValue }) => {
-  const { token, guild_id, id } = body;
+  const { token, id } = body;
   const config = useRuntimeConfig(event);
   const plataforma = getValue<"discord" | "kick">("plataforma") || "discord";
+
+  let guild_id = body.guild_id;
+  if (guild_id === "1379436393117388932") { // not DODORITOS Guild ID
+    guild_id = "607559322175668248"; // ANGAR Guild ID
+  }
 
   const getDiscordEntries = async () => {
     const banLogs = await guildAuditLog<AuditLog>({
