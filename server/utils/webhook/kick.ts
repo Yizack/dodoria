@@ -47,7 +47,7 @@ export const handleKickWebhook = async (event: H3Event, body: KickWebhookBody) =
     actionBy: moderator.username,
     type: "ban",
     expiresAt: timeoutUntil?.getTime()
-  }).run().catch(() => null);
+  }).returning().get().catch(() => null);
 
   return true;
 };
