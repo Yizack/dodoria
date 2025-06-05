@@ -12,7 +12,7 @@ class kickApi {
     this.tokenURL = "https://id.kick.com/oauth/token";
   }
 
-  async getAppAccessToken (): Promise<string> {
+  async getAppAccessToken (): Promise<string | undefined> {
     const { access_token } = await $fetch<{ access_token: string }>(this.tokenURL, {
       method: "POST",
       body: stringifyQuery({
@@ -25,19 +25,22 @@ class kickApi {
       }
     });
     if (!access_token) {
-      throw new Error("Failed to retrieve access token from Kick API");
+      console.info("Failed to retrieve access token from Kick API");
+      return;
     }
     return access_token;
   }
 
   async getLiveStream (broadcasterId: number): Promise<KickLiveStream | undefined> {
     const accessToken = await this.getAppAccessToken();
+    if (!accessToken) return;
     const { data } = await $fetch<{ data: KickLiveStream[] }>(`${this.baseURL}/public/v1/livestreams`, {
       query: { broadcaster_user_id: broadcasterId },
       headers: { Authorization: `Bearer ${accessToken}` }
     });
     if (!data.length) {
-      throw new Error(`Failed to retrieve live stream for broadcaster ID ${broadcasterId}`);
+      console.info(`Failed to retrieve live stream for broadcaster ID ${broadcasterId}`);
+      return;
     }
     return data[0];
   }
