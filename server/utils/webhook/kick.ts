@@ -35,9 +35,11 @@ export const handleKickWebhook = async (event: H3Event, body: KickWebhookBody) =
 
   console.info(`${banned_user.username} ${messageHelper} por ${moderator.username}`);
 
+  const channel_id = broadcaster.channel_slug === "angar" ? CONSTANTS.CHANNEL_GENERAL : CONSTANTS.CHANNEL_PRUEBAS;
+
   await sendToChannel({
     content: `## ${socials.kick} \`${banned_user.username}\` ${messageHelper}. <:pepoPoint:712364175967518730>${streamMessageHelper}`,
-    channel_id: CONSTANTS.CHANNEL_GENERAL,
+    channel_id,
     token: config.discord.token
   }).catch(() => null);
 
