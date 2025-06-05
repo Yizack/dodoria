@@ -4,6 +4,7 @@ import { es } from "date-fns/locale";
 
 export const handleKickWebhook = async (event: H3Event, body: KickWebhookBody) => {
   const { broadcaster, banned_user, metadata, moderator } = body;
+  console.info(body);
   const config = useRuntimeConfig(event);
   const db = useDB();
   const kick = useKickApi(config.kick.clientId, config.kick.clientSecret);
