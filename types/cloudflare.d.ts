@@ -11,6 +11,7 @@ declare module "h3" {
         CDN: R2Bucket;
         EDUCAR: KVNamespace;
         QUEUE: Queue;
+        CACHE: KVNamespace;
       };
       context: ExecutionContext;
     };

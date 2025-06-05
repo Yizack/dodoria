@@ -3,6 +3,16 @@ import { formatDuration, intervalToDuration } from "date-fns";
 import { es } from "date-fns/locale";
 
 export const handleKickWebhook = async (event: H3Event, body: KickWebhookBody) => {
+  const headers = getRequestHeaders(event);
+  const kickEventMessageId = headers["kick-event-message-id"];
+  const KV = event.context.cloudflare.env.CACHE;
+  const processedKey = `kick-webhook-processed-${kickEventMessageId}`;
+  const isProcessed = await KV.get(processedKey);
+  if (Number(isProcessed)) {
+    console.info(`Kick webhook already processed for message ID: ${kickEventMessageId}`);
+    return true;
+  }
+  await KV.put(processedKey, "1", { expirationTtl: 60 });
   const { broadcaster, banned_user, metadata, moderator } = body;
   const config = useRuntimeConfig(event);
   const db = useDB();
