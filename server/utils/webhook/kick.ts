@@ -42,16 +42,12 @@ export const handleKickWebhook = async (event: H3Event, body: KickWebhookBody) =
     token: config.discord.token
   }).catch(() => null);
 
-  const returning = await db.insert(tables.kickBans).values({
+  await db.insert(tables.kickBans).values({
     username: banned_user.username,
     actionBy: moderator.username,
     type: "ban",
     expiresAt: timeoutUntil?.getTime()
-  }).returning().get().catch((error) => {
-    console.info("Error creating kick ban entry:", error);
-    return null;
-  });
-  console.info("Kick ban entry created:", returning);
+  }).run().catch(() => null);
 
   return true;
 };
