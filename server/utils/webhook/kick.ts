@@ -4,7 +4,6 @@ import { es } from "date-fns/locale";
 
 export const handleKickWebhook = async (event: H3Event, body: KickWebhookBody) => {
   const { broadcaster, banned_user, metadata, moderator } = body;
-  console.info(body);
   const config = useRuntimeConfig(event);
   const db = useDB();
   const kick = useKickApi(config.kick.clientId, config.kick.clientSecret);
@@ -43,12 +42,16 @@ export const handleKickWebhook = async (event: H3Event, body: KickWebhookBody) =
     token: config.discord.token
   }).catch(() => null);
 
-  await db.insert(tables.kickBans).values({
+  const returning = await db.insert(tables.kickBans).values({
     username: banned_user.username,
     actionBy: moderator.username,
     type: "ban",
     expiresAt: timeoutUntil?.getTime()
-  }).run();
+  }).returning().get().catch((error) => {
+    console.info("Error creating kick ban entry:", error);
+    return null;
+  });
+  console.info("Kick ban entry created:", returning);
 
   return true;
 };
