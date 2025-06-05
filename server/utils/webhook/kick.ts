@@ -38,7 +38,7 @@ export const handleKickWebhook = async (event: H3Event, body: KickWebhookBody) =
     content: `## ${socials.kick} \`${banned_user.username}\` ${messageHelper}. <:pepoPoint:712364175967518730>${streamMessageHelper}`,
     channel_id: CONSTANTS.CHANNEL_GENERAL,
     token: config.discord.token
-  });
+  }).catch(() => null);
 
   await db.insert(tables.kickBans).values({
     username: banned_user.username,
