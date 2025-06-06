@@ -32,6 +32,13 @@ export default defineEventHandler(async (event) => {
   const formattedDuration = fixedDuration ? formatDuration(fixedDuration, { format: ["days", "hours", "minutes", "seconds"], locale: es }) : null;
   const messageHelper = isBanned ? "ha sido baneado permanentemente" : `ha recibido un timeout de ${formattedDuration}`;
 
+  await db.insert(tables.kickBans).values({
+    username: banned_user.username,
+    actionBy: moderator.username,
+    type: "ban",
+    expiresAt: timeoutUntil?.getTime()
+  }).returning().get();
+
   let streamMessageHelper = "";
   const startedDate = liveStream?.started_at;
   if (liveStream && startedDate) {
@@ -55,11 +62,5 @@ export default defineEventHandler(async (event) => {
     token: config.discord.token
   }).catch(() => null);
 
-  await db.insert(tables.kickBans).values({
-    username: banned_user.username,
-    actionBy: moderator.username,
-    type: "ban",
-    expiresAt: timeoutUntil?.getTime()
-  }).returning().get();
   return true;
 });
