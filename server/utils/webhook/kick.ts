@@ -3,21 +3,22 @@ import { formatDuration, intervalToDuration } from "date-fns";
 import { es } from "date-fns/locale";
 
 export const handleKickWebhook = async (event: H3Event, body: KickWebhookBody) => {
+  const now = new Date();
   const headers = getRequestHeaders(event);
   const kickEventMessageId = headers["kick-event-message-id"];
   const KV = event.context.cloudflare.env.CACHE;
-  const processedKey = `kick-webhook-processed-${kickEventMessageId}`;
+  const processedKey = `kick-webhook-processed:${kickEventMessageId}`;
   const isProcessed = await KV.get(processedKey);
   if (Number(isProcessed)) {
     console.info(`Kick webhook already processed for message ID: ${kickEventMessageId}`);
-    return;
+    return true;
   }
   await KV.put(processedKey, "1", { expirationTtl: 60 });
+
   const { broadcaster, banned_user, metadata, moderator } = body;
   const config = useRuntimeConfig(event);
   const db = useDB();
   const kick = useKickApi(config.kick.clientId, config.kick.clientSecret);
-  const now = new Date();
 
   if (!broadcaster || !banned_user || !metadata || !moderator) return;
 
@@ -28,6 +29,13 @@ export const handleKickWebhook = async (event: H3Event, body: KickWebhookBody) =
   const fixedDuration = duration ? duration.days ? { days: duration.days, hours: duration.hours } : { hours: duration.hours, minutes: duration.minutes, seconds: duration.seconds } : null;
   const formattedDuration = fixedDuration ? formatDuration(fixedDuration, { format: ["days", "hours", "minutes", "seconds"], locale: es }) : null;
   const messageHelper = isBanned ? "ha sido baneado permanentemente" : `ha recibido un timeout de ${formattedDuration}`;
+
+  await db.insert(tables.kickBans).values({
+    username: banned_user.username,
+    actionBy: moderator.username,
+    type: "ban",
+    expiresAt: timeoutUntil?.getTime()
+  }).returning().get();
 
   let streamMessageHelper = "";
   const startedDate = liveStream?.started_at;
@@ -52,10 +60,5 @@ export const handleKickWebhook = async (event: H3Event, body: KickWebhookBody) =
     token: config.discord.token
   }).catch(() => null);
 
-  await db.insert(tables.kickBans).values({
-    username: banned_user.username,
-    actionBy: moderator.username,
-    type: "ban",
-    expiresAt: timeoutUntil?.getTime()
-  }).returning().get();
+  return true;
 };
