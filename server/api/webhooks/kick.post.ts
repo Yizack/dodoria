@@ -4,7 +4,9 @@ import { es } from "date-fns/locale";
 export default defineEventHandler(async (event) => {
   const isValidWebhook = await isValidKickWebhook(event);
   if (!isValidWebhook) throw createError({ statusCode: 401, message: "Unauthorized: webhook is not valid" });
+  const now = new Date();
 
+  await new Promise(resolve => setTimeout(resolve, 3000)); // Delay to avoid duplicated events
   const headers = getRequestHeaders(event);
   const kickEventMessageId = headers["kick-event-message-id"];
   const KV = event.context.cloudflare.env.CACHE;
@@ -12,7 +14,7 @@ export default defineEventHandler(async (event) => {
   const isProcessed = await KV.get(processedKey);
   if (Number(isProcessed)) {
     console.info(`Kick webhook already processed for message ID: ${kickEventMessageId}`);
-    return;
+    return true;
   }
   await KV.put(processedKey, "1", { expirationTtl: 60 });
 
@@ -21,7 +23,6 @@ export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig(event);
   const db = useDB();
   const kick = useKickApi(config.kick.clientId, config.kick.clientSecret);
-  const now = new Date();
 
   if (!broadcaster || !banned_user || !metadata || !moderator) return;
 
