@@ -1,5 +1,5 @@
 export default defineEventHandler(async (event) => {
-  const body = await readBody<{ content: string; channel_id: string; token: string }>(event);
+  const body = await readBody<{ content: string, channel_id: string, token: string }>(event);
   const { content, channel_id, token } = body;
   const config = useRuntimeConfig(event);
   if (token !== config.discord.token) {
