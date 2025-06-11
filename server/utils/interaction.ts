@@ -1,4 +1,5 @@
 import { InteractionResponseType, InteractionType, type MessageFlags, Routes } from "discord-api-types/v10";
+import { $fetch } from "ofetch";
 
 const API = {
   BASE: "https://discord.com/api/v10"
@@ -8,7 +9,7 @@ const toDiscordEndpoint = (
   endpoint: string,
   options: {
     body?: Record<string, unknown>;
-    method: "GET" | "POST" | "PATCH";
+    method: "GET" | "POST" | "PATCH" | "DELETE";
     headers?: Record<string, string>;
   }
 ) => {
@@ -181,5 +182,18 @@ export const sendToChannel = async (options: {
       files: options?.files
     },
     headers: { Authorization: `Bot ${options.token}` }
+  });
+};
+
+export const deleteMessage = async (options: {
+  channel_id: string;
+  token: string;
+  message_id: string;
+}) => {
+  const { channel_id, token, message_id } = options;
+  const endpoint = Routes.channelMessage(channel_id, message_id);
+  return toDiscordEndpoint(endpoint, {
+    method: "DELETE",
+    headers: { Authorization: `Bot ${token}` }
   });
 };
