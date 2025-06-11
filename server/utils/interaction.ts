@@ -1,5 +1,4 @@
 import { InteractionResponseType, InteractionType, type MessageFlags, Routes } from "discord-api-types/v10";
-import { $fetch } from "ofetch";
 
 const API = {
   BASE: "https://discord.com/api/v10"
