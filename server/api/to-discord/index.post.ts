@@ -1,14 +1,17 @@
 export default defineEventHandler(async (event) => {
-  const body = await readBody<{ content: string, channel_id: string, token: string }>(event);
-  const { content, channel_id, token } = body;
+  const body = await readValidatedBody(event, z.object({
+    content: z.string().min(1),
+    channel_id: z.string().min(1),
+    token: z.string()
+  }).parse);
+
   const config = useRuntimeConfig(event);
-  if (token !== config.discord.token) {
+  if (body.token !== config.discord.token) {
     throw createError({
       statusCode: 403,
       statusMessage: "Forbidden",
       message: "Invalid token"
     });
   }
-  await sendToChannel({ content, channel_id, token });
-  return true;
+  await sendToChannel(body);
 });
