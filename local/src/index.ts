@@ -42,15 +42,16 @@ Discord.client.on(Events.MessageCreate, async (message) => {
   switch (command) {
     case "!ttsraw":
     case "!tts":
+      if (!allowedDiscordChannels.includes(channelId) || !textHasMessage) return;
+
       const livestream = await Kick.getLivestream();
       if (livestream && livestream.data) {
         message.reply("No puedes enviar tts mientras ANGAR está en directo.");
         return;
       }
 
-      if (!textHasMessage) return;
       const voice = text.split(" ")[0]!.toLowerCase().replace("!", "");
-      if (!allowedDiscordChannels.includes(channelId) || !text.startsWith("!") || !availableVoices.includes(voice) || !textHasMessage) return;
+      if (!text.startsWith("!") || !availableVoices.includes(voice)) return;
       if (text.length > 300) {
         message.reply("El mensaje es muy largo, no puede contener más de 300 caracteres.");
         return;
