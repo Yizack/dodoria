@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
 import { Events, type TextChannel } from "discord.js";
-import { MessageFlags } from "discord-api-types/v10";
+import { AuditLogEvent, MessageFlags } from "discord-api-types/v10";
 import { hash } from "ohash";
 import { $fetch } from "ofetch";
 import { formatDuration, intervalToDuration } from "date-fns";
@@ -100,12 +100,20 @@ Discord.client.on(Events.GuildMemberUpdate, async (oldMember, newMember) => {
   const newTimeout = newMember.communicationDisabledUntilTimestamp;
   const { guild } = newMember;
   const channel = await Discord.client.channels.fetch(discordChannels.general) as TextChannel;
+  const channelNotDodoritos = await Discord.client.channels.fetch("1379439298503250013") as TextChannel;
   if (guild.id !== "607559322175668248" || oldTimeout === newTimeout) return;
   if (newTimeout && newTimeout > now) {
     const duration = intervalToDuration({ start: new Date(now), end: new Date(newTimeout) });
     const fixedDuration = duration ? duration.days ? { days: duration.days, hours: duration.hours } : { hours: duration.hours, minutes: duration.minutes, seconds: duration.seconds } : null;
     const formattedDuration = fixedDuration ? formatDuration(fixedDuration, { format: ["days", "hours", "minutes", "seconds"], locale: es }) : null;
-    await channel.send(`## ${socials.discord} \`${newMember.displayName} (${newMember.user.username})\` ha recibido un timeout de ${formattedDuration}. <:pepoPoint:712364175967518730>`);
+    const pepoPoint = "<:pepoPoint:712364175967518730>";
+    await channel.send(`## ${socials.discord} \`${newMember.displayName} (${newMember.user.username})\` ha recibido un timeout de ${formattedDuration}. ${pepoPoint}`);
+
+    const auditLogs = await guild.fetchAuditLogs({ limit: 100, type: AuditLogEvent.MemberUpdate });
+    const logEntry = auditLogs.entries.find(entry => entry.targetId === newMember.id && entry?.changes?.some(change => change.key === "communication_disabled_until" && change.new === new Date(newTimeout).toISOString()));
+    const moderator = logEntry?.executor;
+    const moderatorName = moderator ? ` por ${moderator?.displayName} (${moderator?.username})` : "";
+    await channelNotDodoritos.send(`## ${socials.discord} \`${newMember.displayName} (${newMember.user.username})\` ha recibido un timeout de ${formattedDuration}${moderatorName}. ${pepoPoint}`);
   }
   else if (oldTimeout && !newTimeout && oldTimeout > now) {
     await channel.send(`## ${socials.discord} \`${newMember.displayName} (${newMember.user.username})\` ha sido liberado de la prisión de los basados. <:Chadge:1225320321507135630>`);
