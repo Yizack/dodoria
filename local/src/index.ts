@@ -1,27 +1,27 @@
 /* eslint-disable no-case-declarations */
 import { Events, type TextChannel } from "discord.js";
-import { AuditLogEvent /* , MessageFlags */ } from "discord-api-types/v10";
-// import { hash } from "ohash";
-// import { $fetch } from "ofetch";
+import { AuditLogEvent, MessageFlags } from "discord-api-types/v10";
+import { hash } from "ohash";
+import { $fetch } from "ofetch";
 import { formatDuration, intervalToDuration } from "date-fns";
 import { es } from "date-fns/locale";
 import { socials } from "./utils/emojis";
-// import { Kick } from "./clients/kick";
+import { Kick } from "./clients/kick";
 import { Discord } from "./clients/discord";
-// import { KickBot } from "./clients/kickbot";
-// import { mp3ToOgg } from "./utils/mp3-to-ogg";
-// import { findMostSimilar } from "./utils/levenshtein";
-// import { startApiServer } from "./clients/router";
-// import { queryD1, tables, useDB } from "./utils/database";
+import { KickBot } from "./clients/kickbot";
+import { mp3ToOgg } from "./utils/mp3-to-ogg";
+import { findMostSimilar } from "./utils/levenshtein";
+import { startApiServer } from "./clients/router";
+import { queryD1, tables, useDB } from "./utils/database";
 
-// startApiServer();
-// const kickChannel = await Kick.getChannel();
+startApiServer();
+const kickChannel = await Kick.getChannel();
 const discordChannels = {
   tests: "1048659746137317498",
   general: "610323743155421194",
   copys: "800811897804292138"
 };
-/*
+
 const allowedDiscordChannels = Object.values(discordChannels);
 const availableVoices = [
   "tilin", "angar", "chino", "lotrial", "dross", "temach",
@@ -44,8 +44,8 @@ Discord.client.on(Events.MessageCreate, async (message) => {
     case "!tts":
       if (!allowedDiscordChannels.includes(channelId) || !textHasMessage) return;
 
-      const livestream = await Kick.getLivestream();
-      if (livestream && livestream.data) {
+      const isLive = await Kick.isLive();
+      if (isLive) {
         message.reply("No puedes enviar tts mientras ANGAR está en directo.");
         return;
       }
@@ -56,7 +56,8 @@ Discord.client.on(Events.MessageCreate, async (message) => {
         message.reply("El mensaje es muy largo, no puede contener más de 300 caracteres.");
         return;
       }
-      const chat = await Kick.client.api.chat.sendMessage(kickChannel.chatroomId, text).catch((e) => {
+      await Kick.refreshToken();
+      const chat = await Kick.api.chat.send({ message: text, type: "user", userId: kickChannel.broadcasterId }).catch((e) => {
         console.warn(e);
         return null;
       });
@@ -75,7 +76,7 @@ Discord.client.on(Events.MessageCreate, async (message) => {
       break;
   }
 });
-*/
+
 Discord.client.on(Events.GuildBanAdd, async (event) => {
   const { user, guild } = event;
   if (guild.id !== "607559322175668248") return;
@@ -120,13 +121,12 @@ Discord.client.on(Events.GuildMemberUpdate, async (oldMember, newMember) => {
   }
 });
 
-/*
 KickBot.subscribe(kickChannel.id);
 KickBot.client.onclose = () => KickBot.reconnect(kickChannel.id);
 KickBot.client.onmessage = async (message) => {
   const event: KickbotEvent = JSON.parse(message.data.toString());
   const { data } = event;
-  if (data.event_type !== "TTS_MESSAGE" || data.payload.viewer_username !== Kick.user.username) return;
+  if (data.event_type !== "TTS_MESSAGE" || data.payload.viewer_username.toLowerCase() !== Kick.user.slug.toLowerCase()) return;
   const text = `!${data.payload.command} ${data.payload.message}`;
   const mostSimilarText = findMostSimilar(text, ttsMessages.map(tts => tts.text));
   const tts = ttsMessages.find(tts => tts.text === mostSimilarText);
@@ -191,4 +191,3 @@ Kick.client.on(Kick.Events.Chatroom.UserUnbanned, async (event) => {
 
   await queryD1(query);
 });
-*/

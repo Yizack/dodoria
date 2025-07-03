@@ -6,22 +6,22 @@ process.loadEnvFile();
 
 const {
   NUXT_DISCORD_TOKEN,
-  KICK_2FA,
-  KICK_PASSWORD,
-  KICK_EMAIL,
+  NUXT_OAUTH_KICK_CLIENT_ID,
+  NUXT_OAUTH_KICK_CLIENT_SECRET,
   KICK_CHAT_CHANNEL,
   CLOUDFLARE_ACCOUNT,
   CLOUDFLARE_D1,
-  CLOUDFLARE_AUTHORIZATION
+  CLOUDFLARE_AUTHORIZATION,
+  CLOUDFLARE_KV_ID
 } = process.env;
 
 export const useLocalConfig = () => ({
   discordToken: NUXT_DISCORD_TOKEN,
-  kick2FA: KICK_2FA,
-  kickPassword: KICK_PASSWORD,
-  kickEmail: KICK_EMAIL,
+  kickClientId: NUXT_OAUTH_KICK_CLIENT_ID,
+  kickClientSecret: NUXT_OAUTH_KICK_CLIENT_SECRET,
   kickChatChannel: KICK_CHAT_CHANNEL,
   cloudflareAccount: CLOUDFLARE_ACCOUNT,
   cloudflareD1: CLOUDFLARE_D1,
-  cloudflareAuthorization: CLOUDFLARE_AUTHORIZATION
+  cloudflareAuthorization: CLOUDFLARE_AUTHORIZATION,
+  cloudflareKVId: CLOUDFLARE_KV_ID
 });

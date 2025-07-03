@@ -74,10 +74,20 @@ export default defineNuxtConfig({
     "@nuxt/eslint",
     "nuxt-webhook-validators",
     "@nuxthub/core",
-    "nuxt-twemoji"
+    "nuxt-twemoji",
+    "nuxt-auth-utils"
   ],
 
   runtimeConfig: {
+    session: {
+      password: ""
+    },
+    oauth: {
+      kick: {
+        clientId: "",
+        clientSecret: ""
+      }
+    },
     webhook: {
       discord: {
         publicKey: ""

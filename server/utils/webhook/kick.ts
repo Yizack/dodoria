@@ -18,7 +18,10 @@ export const handleKickWebhook = async (event: H3Event, body: KickWebhookBody) =
   const { broadcaster, banned_user, metadata, moderator } = body;
   const config = useRuntimeConfig(event);
   const db = useDB();
-  const kick = useKickApi(config.kick.clientId, config.kick.clientSecret);
+  const kick = useKickApi({
+    clientId: config.oauth.kick.clientId,
+    clientSecret: config.oauth.kick.clientSecret
+  });
 
   if (!broadcaster || !banned_user || !metadata || !moderator) return;
 
@@ -66,6 +69,9 @@ export const handleKickWebhook = async (event: H3Event, body: KickWebhookBody) =
     channel_id: "1379439298503250013",
     token: config.discord.token
   }).catch(() => null);
+
+  await kick.refreshUserToken(event);
+  await kick.sendToChat(broadcaster.user_id, `@${banned_user.username} ${messageHelper}`);
 
   return true;
 };

@@ -1,24 +1,44 @@
-import { Events, Kient } from "kient";
-import OTP from "otp";
+import { Kient, KientUserTokenAuthentication, type TokenDataParams } from "kient";
+import { Events, Kient as OldKient } from "@ahmedrangel/kient";
 import { useLocalConfig } from "../utils/config";
+import { getKV, putKV } from "../utils/kv";
 
-const { kick2FA, kickPassword, kickEmail, kickChatChannel } = useLocalConfig();
+const { kickClientId, kickClientSecret, kickChatChannel } = useLocalConfig();
 
-const client = await Kient.create();
-const token = new OTP({ secret: kick2FA }).totp(Date.now());
+const kient = new Kient();
+if (!kickClientId) throw new Error("Missing KICK_CLIENT_ID");
+if (!kickClientSecret) throw new Error("Missing KICK_CLIENT_SECRET");
 
-if (!kickPassword || !kickEmail) throw new Error("Missing KICK_PASSWORD or KICK_EMAIL");
-
-await client.api.authentication.login({
-  email: kickEmail,
-  password: kickPassword,
-  otc: token
+const authentication = new KientUserTokenAuthentication({
+  clientId: kickClientId,
+  clientSecret: kickClientSecret,
+  redirectUri: ""
 });
 
-if (!client.authenticated) throw new Error("Failed to authenticate with Kient");
+const refreshToken = async () => {
+  const key = "kick-refresh-token";
+  const kv = await getKV<TokenDataParams & { updatedAt: number }>(key);
+  const currentTime = Date.now();
+  const tokenAge = (currentTime - kv.value.updatedAt) / 1000;
+  const isExpired = tokenAge > kv.value.expiresIn;
 
-const user = await client.api.authentication.currentUser();
-console.info(`Logged in on Kick as ${user.username}!`);
+  if (!isExpired) {
+    console.info(`Using cached Kick token, will expire in ${kv.value.expiresIn - tokenAge} seconds`);
+    return kient.setAuthToken(kv.value.accessToken);
+  }
+
+  console.info("Kick token expired, refreshing...");
+  const token = await authentication.refeshToken({ refreshToken: kv.value.refreshToken! });
+  await putKV(key, { ...token, updatedAt: currentTime });
+  return kient.setAuthToken(token.accessToken);
+};
+
+await refreshToken();
+
+const client = await OldKient.create();
+const user = await kient.api.channel.getAuthorisedUser();
+
+console.info(`Connected to Kient client for KICK as ${user.slug}`);
 
 const getChannel = (name?: string) => {
   const channelName = name || kickChatChannel || "";
@@ -27,17 +47,20 @@ const getChannel = (name?: string) => {
     case "angar":
       return {
         id: 32694,
+        broadcasterId: 12115552,
         chatroomId: 11183564
       };
     case "yizack":
       return {
         id: 34243,
+        broadcasterId: 15502718,
         chatroomId: 14527954
       };
     default:
       return client.api.channel.getChannel(channelName).then((channel) => {
         return {
           id: channel.data.id,
+          broadcasterId: channel.data.user_id,
           chatroomId: channel.data.chatroom.id
         };
       });
@@ -55,17 +78,21 @@ const subscribe = (roomId: number) => {
   console.info("Subscribed to Kick channel events");
 };
 
-const getLivestream = () => {
-  if (!kickChatChannel) return null;
-  return client.api.channel.getLivestream(kickChatChannel).catch(() => null);
+const isLive = async () => {
+  if (!kickChatChannel) return false;
+  return kient.api.channel.getBySlug(kickChatChannel).then((channel) => {
+    return channel.stream.isLive;
+  }).catch(() => false);
 };
 
 export const Kick = {
   client,
+  api: kient.api,
   user,
   getChannel,
-  getLivestream,
+  isLive,
   getBans,
   subscribe,
+  refreshToken,
   Events
 };
