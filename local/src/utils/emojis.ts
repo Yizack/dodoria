@@ -1,5 +1,3 @@
-import { th } from "date-fns/locale";
-
 export const socials = {
   instagram: "<:instagram:1121001080470372422>",
   tiktok: "<:tiktok:1121003232345473065>",

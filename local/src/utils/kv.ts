@@ -1,6 +1,6 @@
 import { $fetch } from "ofetch";
-import { useLocalConfig } from "./config";
 import type { KVNamespacePutOptions } from "@cloudflare/workers-types";
+import { useLocalConfig } from "./config";
 
 const { cloudflareAccount, cloudflareAuthorization, cloudflareKVId } = useLocalConfig();
 
