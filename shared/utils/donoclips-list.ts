@@ -18,5 +18,6 @@ export const DONOCLIPS_LIST = [
   { name: "Te va a hackear vestida de sakura card captor", value: "4c0b8e13-1953-47b8-8f26-32cc3cb8056a:10" },
   { name: "Burro y cachudo", value: "bf5dc797-003c-4419-b81a-dbb2b058fff3:7" },
   { name: "Devolveme el vip boludo", value: "df57e7d5-d11c-4f47-a9db-a7b062f3e4b0:9" },
-  { name: "Deja de hablar pelotudeces", value: "3938c450-149c-41f3-b174-9c79469ed2c5:10" }
+  { name: "Deja de hablar pelotudeces", value: "3938c450-149c-41f3-b174-9c79469ed2c5:10" },
+  { name: "Estás bien Cerdo", value: "3b7e175c-8f82-47b6-9dac-d44c21f26a79:6" }
 ].sort((a, b) => a.name.localeCompare(b.name));
