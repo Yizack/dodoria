@@ -46,5 +46,11 @@ export const VIDEO_SOCIALS = {
     name: "Reddit",
     emoji: "<:reddit:1272431634624286730>",
     supported: true
+  },
+  threads: {
+    domains: ["threads.com/@"],
+    name: "Threads",
+    emoji: "<:threads:1390877477156552746>",
+    supported: true
   }
 };

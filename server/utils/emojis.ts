@@ -35,7 +35,8 @@ export const socials = {
   twitch: "<:twitch:1167239427987361822>",
   kick: "<:kick:1267449535668555788>",
   reddit: "<:reddit:1272431634624286730>",
-  discord: "<:discord:1368019302518624337>"
+  discord: "<:discord:1368019302518624337>",
+  threads: "<:threads:1390877477156552746>"
 };
 
 export const getSocial = (name: string) => {

@@ -77,7 +77,7 @@ export const COMANDOS: Command = {
 
 export const VIDEO: Command = {
   name: "video",
-  description: "Obtener un video de Instagram, Facebook, TikTok, X, YouTube, Twitch, Kick o Reddit en formato MP4",
+  description: "Obtener un video de Instagram, Facebook, TikTok, X, YouTube, Twitch, Kick, Reddit o Threads en formato MP4",
   integration_types: [
     ApplicationIntegrationType.GuildInstall,
     ApplicationIntegrationType.UserInstall
@@ -90,7 +90,7 @@ export const VIDEO: Command = {
   options: [
     {
       name: "link",
-      description: "Link de Instagram, Facebook, TikTok, X, YouTube, Twitch, Kick o Reddit",
+      description: "Link de Instagram, Facebook, TikTok, X, YouTube, Twitch, Kick, Reddit o Threads",
       type: ApplicationCommandOptionType.String,
       required: true
     }
