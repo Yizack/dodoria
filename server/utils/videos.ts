@@ -2,7 +2,7 @@ export const scrapeVideo = async (url: string, social?: string) => {
   if (!social)
     social = Object.values(VIDEO_SOCIALS).find(({ domains }) => domains.some(domain => url.includes(domain)))?.name;
   const encodedUrl = encodeURIComponent(url.startsWith("http://") || url.startsWith("https://") ? url : `https://${url}`);
-  const scraperUrl = `https://dev.ahmedrangel.com/dc/${social?.toLowerCase()}-video-scrapper`;
+  const scraperUrl = `https://dev.ahmedrangel.com/dc/video-scraper/${social?.toLowerCase()}`;
   const req = await $fetch<VideoScrapping>(scraperUrl, {
     query: { url: encodedUrl, filter: "video" },
     retry: 3,
