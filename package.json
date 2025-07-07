@@ -39,17 +39,17 @@
   },
   "devDependencies": {
     "@ahmedrangel/kient": "1.0.1-23",
-    "@nuxt/eslint": "^1.5.1",
+    "@nuxt/eslint": "^1.5.2",
     "@nuxthub/core": "^0.9.0",
     "@resvg/resvg-wasm": "^2.6.2",
     "@types/fast-levenshtein": "^0.0.4",
     "@types/fluent-ffmpeg": "^2.1.27",
     "@whatwg-node/server": "^0.10.10",
-    "@yeger/vue-masonry-wall": "^5.0.20",
+    "@yeger/vue-masonry-wall": "^5.0.21",
     "bootstrap": "^5.3.7",
     "consola": "^3.4.2",
     "date-fns": "^4.1.0",
-    "discord-api-types": "^0.38.14",
+    "discord-api-types": "^0.38.15",
     "discord.js": "^14.21.0",
     "drizzle-kit": "^0.31.4",
     "drizzle-orm": "^0.44.2",
@@ -74,7 +74,7 @@
     "unwasm": "^0.3.9",
     "vue-tsc": "^3.0.1",
     "wrangler": "^4.23.0",
-    "zod": "^3.25.71"
+    "zod": "^3.25.74"
   },
   "packageManager": "pnpm@10.12.4"
 }
