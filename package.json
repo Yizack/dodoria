@@ -73,8 +73,8 @@
     "unbuild": "^3.5.0",
     "unwasm": "^0.3.9",
     "vue-tsc": "^3.0.1",
-    "wrangler": "^4.23.0",
-    "zod": "^3.25.74"
+    "wrangler": "^4.24.0",
+    "zod": "^3.25.76"
   },
   "packageManager": "pnpm@10.12.4"
 }
