@@ -113,7 +113,7 @@ Discord.client.on(Events.GuildMemberUpdate, async (oldMember, newMember) => {
     await channel.send(`## ${socials.discord} \`${newMember.displayName} (${newMember.user.username})\` ha recibido un timeout de ${formattedDuration}. ${pepoPoint}`);
 
     const auditLogs = await guild.fetchAuditLogs({ limit: 100, type: AuditLogEvent.MemberUpdate });
-    const logEntry = auditLogs.entries.find(entry => entry.targetId === newMember.id && entry?.changes?.some(change => change.key === "communication_disabled_until" && change.new === new Date(newTimeout).toISOString()));
+    const logEntry = auditLogs.entries.find(entry => entry.targetId === newMember.id && entry?.changes?.some(change => change.key === "communication_disabled_until" && change.new && new Date(change.new).toISOString() === new Date(newTimeout).toISOString()));
     const moderator = logEntry?.executor;
     const moderatorName = moderator ? ` por ${moderator?.displayName} (${moderator?.username})` : "";
     await channelNotDodoritos.send(`## ${socials.discord} \`${newMember.displayName} (${newMember.user.username})\` ha recibido un timeout de ${formattedDuration}${moderatorName}. ${pepoPoint}`);
