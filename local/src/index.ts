@@ -84,7 +84,11 @@ Discord.client.on(Events.GuildBanAdd, async (event) => {
   const channelNotDodoritos = await Discord.client.channels.fetch("1379439298503250013") as TextChannel;
   try {
     await channel.send(`## ${socials.discord} \`${user.displayName} (${user.username})\` ha sido baneado permanentemente. <:pepoPoint:712364175967518730>`);
-    await channelNotDodoritos.send(`## ${socials.discord} \`${user.displayName} (${user.username})\` ha sido baneado permanentemente. <:pepoPoint:712364175967518730>`);
+    const auditLogs = await guild.fetchAuditLogs({ limit: 100, type: AuditLogEvent.MemberBanAdd });
+    const logEntry = auditLogs.entries.find(entry => entry.targetId === user.id && entry.action === AuditLogEvent.MemberBanAdd);
+    const moderator = logEntry?.executor;
+    const moderatorName = moderator ? ` por ${moderator?.displayName} (${moderator?.username})` : "";
+    await channelNotDodoritos.send(`## ${socials.discord} \`${user.displayName} (${user.username})\` ha sido baneado permanentemente${moderatorName}. <:pepoPoint:712364175967518730>`);
   }
   catch (error) {
     console.info("Error al enviar el mensaje a Discord:", error);
