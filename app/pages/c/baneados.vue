@@ -93,7 +93,7 @@ const rankingByBansAndTimeouts = computed(() => {
                     <p class="m-0">
                       <span v-if="entry.action === 'ban' && entry.timeoutUntil">
                         timeout hasta
-                        <NuxtTime :datetime="entry.timestamp" locale="es-MX" v-bind="timeBind" />
+                        <NuxtTime :datetime="entry.timeoutUntil" locale="es-MX" v-bind="timeBind" />
                       </span>
                       <span v-else-if="entry.action === 'ban'">baneado</span>
                       <span v-else>desbaneado</span>
