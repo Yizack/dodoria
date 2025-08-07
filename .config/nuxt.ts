@@ -2,7 +2,7 @@ import { camelCase } from "scule";
 import { SITE } from "../shared/utils/site-info";
 
 export default defineNuxtConfig({
-  future: { compatibilityVersion: 4 },
+  // future: { compatibilityVersion: 4 },
 
   app: {
     head: {
@@ -118,5 +118,5 @@ export default defineNuxtConfig({
     }
   },
 
-  compatibilityDate: "2025-04-30"
+  compatibilityDate: "2025-08-07"
 });

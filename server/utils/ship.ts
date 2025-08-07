@@ -122,7 +122,7 @@ export const decodeCode = (encodedCode: string) => {
     const params = JSON.parse(decodedString);
 
     const paramsSchema = z.object({
-      p: z.number({ coerce: true }).int().min(0).max(100),
+      p: z.coerce.number().int().min(0).max(100),
       u: z.array(z.string()).length(2),
       a: z.array(z.string().nullable()).length(2),
       d: z.array(z.number()).length(2)
