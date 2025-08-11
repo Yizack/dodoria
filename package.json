@@ -22,7 +22,7 @@
     "dev": "nuxt dev --port=5173 --host",
     "dev:local": "jiti local/src/index",
     "generate": "nuxt generate",
-    "preview": "nuxt preview",
+    "preview": "wrangler dev dist/server/index.mjs --assets dist/public",
     "postinstall": "nuxt prepare",
     "typecheck": "nuxt typecheck",
     "register": "jiti scripts/register",
