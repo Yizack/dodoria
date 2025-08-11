@@ -64,7 +64,7 @@ export default defineCommandHandler(VIDEO.name, async (event, { body, getValue }
         }
       );
 
-      components.push ({
+      components.push({
         type: ComponentType.ActionRow,
         components: button
       });
